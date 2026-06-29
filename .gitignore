@@ -1,0 +1,30 @@
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+*.glo
+*.gls
+*.glg
+*.glsdefs
+*.ist
+
+# Overleaf local export
+output.pdf
+
+# Editor backups
+*~
+.DS_Store

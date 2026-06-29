@@ -1,0 +1,140 @@
+% =========================================================================
+% Making the Invisible Intelligible
+% MSc Thesis — Enrico Vaccari
+% Sustainability, Innovation & Technology — Tomorrow University
+% =========================================================================
+
+\documentclass[11pt, a4paper, twoside, openright]{book}
+
+% ---------- core packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+
+% ---------- typography ----------
+% Charter is a warm, readable academic serif; switch to lmodern if you prefer
+\usepackage{charter}
+\linespread{1.15}
+
+% ---------- page geometry (sober, academic) ----------
+\usepackage[
+    a4paper,
+    top=2.8cm,
+    bottom=3cm,
+    inner=3cm,
+    outer=2.5cm,
+    headheight=14pt
+]{geometry}
+
+% ---------- math & symbols ----------
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{siunitx}
+\sisetup{detect-all}
+
+% ---------- figures, tables ----------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, format=plain}
+\usepackage{subcaption}
+\usepackage{float}
+
+% ---------- lists, layout ----------
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt}
+\usepackage{parskip}
+
+% ---------- headers & footers ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\textit{\nouppercase{\leftmark}}}
+\fancyhead[LO]{\textit{\nouppercase{\rightmark}}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- chapter style: sober, no decorative junk ----------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+    {\normalfont\Huge\bfseries}
+    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-30pt}{40pt}
+
+% ---------- hyperlinks ----------
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black,
+    bookmarksnumbered=true
+]{hyperref}
+
+% ---------- bibliography: APA 7th, via biblatex/biber ----------
+\usepackage[
+    backend=biber,
+    style=apa,
+    sortlocale=en_GB,
+    natbib=true
+]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- abbreviations / glossary ----------
+% Uncomment if you decide to use a glossary (recommended for AMOC/RAPID/PCA etc.)
+% \usepackage[acronym, nonumberlist]{glossaries}
+% \makeglossaries
+% \input{frontmatter/acronyms}
+
+% ---------- custom commands ----------
+\newcommand{\amoc}{AMOC\xspace}  % example, requires \usepackage{xspace}
+\usepackage{xspace}
+
+% =========================================================================
+\begin{document}
+
+% ---------- front matter ----------
+\frontmatter
+\pagenumbering{roman}
+
+\input{frontmatter/titlepage}
+\input{frontmatter/abstract}
+\input{frontmatter/acknowledgements}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ---------- main matter ----------
+\mainmatter
+\pagenumbering{arabic}
+
+\part{Foundations: The Problem and the System}
+\input{chapters/01_introduction}
+\input{chapters/02_research_questions}
+\input{chapters/03_literature}
+\input{chapters/04_background}
+
+\part{Translation: From Data to Experience}
+\input{chapters/05_methodology}
+\input{chapters/06_data_pipeline}
+\input{chapters/07_translation}
+
+\part{Evaluation \& Reflection}
+\input{chapters/08_evaluation}
+\input{chapters/09_results}
+\input{chapters/10_discussion}
+\input{chapters/11_conclusion}
+
+% ---------- back matter ----------
+\backmatter
+
+\printbibliography[heading=bibintoc, title={References}]
+
+\appendix
+\input{appendix/A_ethics}
+\input{appendix/B_protocols}
+\input{appendix/C_code}
+
+\end{document}
