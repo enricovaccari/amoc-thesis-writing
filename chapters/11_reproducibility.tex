@@ -1,0 +1,59 @@
+\chapter{Code and Reproducibility}
+\label{app:code}
+
+\section{Repository Structure}
+\label{sec:app-repos}
+
+% Structure of the two repositories with full directory paths
+% A table or directory tree
+% Brief explanation of why the project is split into two repositories
+% (different development lifecycles, cleaner commit histories)
+
+\section{Computational Environment}
+\label{sec:app-env}
+
+% Conda environment name: amoc-thesis
+% Python version, Jupyter version
+% List of core packages with fixed versions:
+% numpy, xarray, netCDF4, scikit-learn, PyTorch, matplotlib, plotly
+% Dedicated Jupyter kernel
+
+\section{Data Access and Preprocessing}
+\label{sec:app-data}
+
+% Links to the RAPID and Copernicus datasets
+% Explanation of why the datasets are not included in Git
+% (file size, licensing constraints)
+% Scripts/commands for downloading the datasets
+% Expected directory: /03_Data/raw/
+
+\section{Analytical Pipeline}
+\label{sec:app-pipeline}
+
+% Execution order of notebooks NB01–NB05
+% Output produced by each notebook
+% Expected execution time
+% Instructions for reproducing the main figures
+
+\section{Bibliographic Management}
+\label{sec:app-biblio}
+
+% Zotero + Better BibTeX
+% Citation key convention: [auth:lower][year]
+% Automatic export workflow to references.bib
+
+\section{Thesis Compilation}
+\label{sec:app-latex}
+
+% TeX Live 2026, biblatex + biber
+% VS Code + LaTeX Workshop
+% Build command: latexmk -pdf main.tex
+% .gitignore file for build artifacts
+
+\section{Version Control Workflow}
+\label{sec:app-git}
+
+% Commit message conventions
+% Protected main branch and feature branches
+% How to restore a previous project state
+% Backup strategy

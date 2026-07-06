@@ -31,6 +31,7 @@
 % ---------- math & symbols ----------
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \usepackage{siunitx}
+\DeclareSIUnit{\sverdrup}{Sv}
 \sisetup{detect-all}
 
 % ---------- figures, tables ----------
@@ -45,7 +46,8 @@
 % ---------- lists, layout ----------
 \usepackage{enumitem}
 \setlist[itemize]{itemsep=2pt, topsep=4pt}
-\usepackage{parskip}
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{6pt}
 
 % ---------- headers & footers ----------
 \usepackage{fancyhdr}
@@ -91,6 +93,13 @@
 \newcommand{\amoc}{AMOC\xspace}  % example, requires \usepackage{xspace}
 \usepackage{xspace}
 
+% ---------- footnote formatting: no first-line indent, proper spacing ----------
+\makeatletter
+\renewcommand\@makefntext[1]{%
+  \parindent 0em%
+  \noindent\@thefnmark\enspace #1}
+\makeatother
+
 % =========================================================================
 \begin{document}
 
@@ -105,12 +114,13 @@
 \tableofcontents
 \listoffigures
 \listoftables
+\input{frontmatter/abbreviations}
 
 % ---------- main matter ----------
 \mainmatter
 \pagenumbering{arabic}
 
-\part{Foundations: The Problem and the System}
+\part{Foundations: The Context, The Problem And The System}
 \input{chapters/01_introduction}
 \input{chapters/02_research_questions}
 \input{chapters/03_literature}

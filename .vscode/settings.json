@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/c:\\Users\\Vaccari\\Desktop\\iCloudDrive\\Desktop\\ENRICO\\05_LEARNING\\University\\ToU\\Phases\\04_Activation_Phase\\07_Thesis_Writing\\amoc-thesis-latex\\main.aux": true,
+        "**/c:\\Users\\Vaccari\\Desktop\\iCloudDrive\\Desktop\\ENRICO\\05_LEARNING\\University\\ToU\\Phases\\04_Activation_Phase\\07_Thesis_Writing\\amoc-thesis-latex\\main.log": true,
+        "**/c:\\Users\\Vaccari\\Desktop\\iCloudDrive\\Desktop\\ENRICO\\05_LEARNING\\University\\ToU\\Phases\\04_Activation_Phase\\07_Thesis_Writing\\amoc-thesis-latex\\main.gz": true,
+        "**/c:\\Users\\Vaccari\\Desktop\\iCloudDrive\\Desktop\\ENRICO\\05_LEARNING\\University\\ToU\\Phases\\04_Activation_Phase\\07_Thesis_Writing\\amoc-thesis-latex\\main.out": true
+    }
+}

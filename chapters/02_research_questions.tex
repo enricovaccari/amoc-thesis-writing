@@ -1,8 +1,191 @@
+% =========================================================================
+% CHAPTER 2 — RESEARCH QUESTIONS, OBJECTIVES AND HYPOTHESES
+% Sections 2.1–2.3
+% =========================================================================
+
 \chapter{Research Questions, Objectives and Hypotheses}
 \label{ch:rqs}
 
-\textit{[To be ported from the working document, with the corrections we
-agreed on: O1.3 reframed as documented future work (LSTM deferred);
-O3.2 reframed as a qualitative, exploratory study (N=8--12, think-aloud,
-thematic analysis); the umbrella hypotheses H-A and H-B established at
-the head, and the technical hypotheses H1--H5 derived from them.]}
+% -------------------------------------------------------------------------
+\section{Research Framework}
+\label{sec:rq-framework}
+
+The argument developed in Chapter~\ref{ch:introduction} identified a representational problem: complex climate tipping systems remain cognitively inaccessible to non-specialist audiences even when the underlying data are open, abundant and technically legible. This chapter formalises the research programme through which that problem is addressed. The programme is organised around a single central research question and three subordinate sub-questions, each of which investigates the central question through a different epistemic mode. This structure is not a matter of layout: it reflects the actual architecture of the work. The three sub-questions are not three parallel investigations that happen to share a topic. They are three complementary observations of the same phenomenon --- the way in which representation mediates understanding --- taken with instruments of different kinds.
+
+The framework that organises them is the tripartite arc of \emph{detect, translate, and evaluate}. This arc is not novel: it belongs to the family of design-based research methodologies developed in the learning sciences over the past two decades \citep{barab2004, andersonshattuck2012}, which treat design not as an ancillary activity to research but as a mode of enquiry with its own epistemic commitments. In this tradition, an artefact is designed in response to a theoretically grounded problem, its design is documented as a form of knowledge production, and its consequences are evaluated empirically in the context for which it was designed. The three phases feed one another: what is detected constrains what can be translated; what is translated becomes the object of evaluation; what is evaluated returns to inform the detection and design of subsequent iterations. The three sub-questions of this thesis correspond to these three phases, and the central research question is the question that all three sub-questions are attempting, from different angles, to answer.
+
+% -------------------------------------------------------------------------
+\section{Research Questions}
+\label{sec:rqs}
+
+The central research question orients the thesis as a whole:
+
+\begin{quote}
+\textbf{RQ.} \emph{How can machine-learning-derived representations of AMOC instability be designed to improve public understanding of complex climate tipping risk?}
+\end{quote}
+
+Every clause of this question carries argumentative weight. The verb \emph{designed} places the enquiry within the design-based tradition rather than the predictive one; the beneficiary \emph{public understanding} names an outcome that is neither scientific prediction nor visual aesthetics but the mediating cognitive process between them; the domain \emph{complex climate tipping risk} identifies a class of phenomena of which the AMOC is one representative case. The question does not ask whether machine learning can detect an AMOC tipping point, a question already contested within oceanography \citep{ditlevsen2023, benyami2024}. It asks whether the latent structure that machine learning recovers from the observational record can be made available to non-specialist perception in ways that support the understanding of a system too complex for direct intuition.
+
+Three subordinate research questions articulate the central enquiry through the detect–translate–evaluate arc. 
+
+\begin{quote}
+\textbf{RQ1} (analytical). \emph{What latent structural patterns and dynamical signatures of AMOC variability can machine learning methods recover from the RAPID observational record and the Copernicus reanalysis ensemble, and how do these representations compare with what classical statistical approaches capture?}
+\end{quote}
+
+This sub-question is descriptive and exploratory in its epistemic character. It does not commit the thesis to finding a novel oceanographic result. It commits the thesis to investigating, honestly and comparatively, what is in the data --- and what is not --- when the data are analysed with methods drawn from both dimensionality-reduction traditions and classical dynamical statistics. The value of the analytical phase, as Chapter~\ref{ch:detect} will demonstrate, lies in what it authorises the next phase to attempt.
+
+\begin{quote}
+\textbf{RQ2} (design-based). \emph{How can the latent structures recovered in \textup{RQ1} be translated into interactive and experiential representations that encode the AMOC's dynamics, invisibility and tipping-point risk in perceptually meaningful form?}
+\end{quote}
+
+This sub-question is generative rather than descriptive. Its epistemic character is that of design research: the question does not have a single correct answer to be discovered, but a class of well-justified answers to be constructed, documented and defended. Chapter~\ref{ch:translate} answers RQ2 by producing three representational conditions of increasing experiential richness, each grounded in a documented design grammar that maps machine-learning-derived features onto perceptual dimensions in ways consistent with established principles of embodied cognition and pre-attentive visual processing.
+
+\begin{quote}
+\textbf{RQ3} (empirical). \emph{To what extent do experiential representations of AMOC dynamics, compared with conventional static visualisation, support the ways in which non-specialist audiences articulate their conceptual understanding of complex system behaviour?}
+\end{quote}
+
+This sub-question is comparative and empirical, but qualitative and exploratory in scale. It does not claim to test the population-level effectiveness of experiential representations, which would require a study design outside the scope of this thesis. It claims something more modest and more scientifically honest: to observe closely, through the think-aloud methodology, the ways in which a small number of non-specialist participants articulate their understanding of the AMOC when they encounter it in three progressively richer representational forms. The evidence such a study can bear is qualitative depth, not statistical inference, and the phrasing of the question reflects that commitment explicitly.
+
+Taken together, the three sub-questions constitute the operational articulation of the central question. RQ1 establishes what there is to represent; RQ2 constructs the representations; RQ3 investigates whether the representations do the work the central question asks of them. No single sub-question can answer the central question alone. Their combination is the answer.
+
+% -------------------------------------------------------------------------
+\section{Objectives}
+\label{sec:objectives}
+
+Each sub-question translates into a set of research objectives, formulated with active verbs and specified outputs. The objectives are the operational commitments the thesis makes: what it undertakes to produce, and how those products will be recognisable in the chapters that follow. Ten objectives across the three sub-questions define the concrete work of the thesis.
+
+The analytical objectives derived from RQ1 organise the work of Chapter~\ref{ch:detect}. \textbf{O1.1} decomposes the vertical structure of AMOC variability from the RAPID stream-function record using principal component analysis and identifies the dominant modes of circulation behaviour. Its output is a set of interpretable latent components, quantified by explained variance and characterised through comparison against the physical modes recognised in the oceanographic literature \citep{buckley2016}. \textbf{O1.2} compares the linear latent representation obtained via PCA against a non-linear autoencoder architecture at matched latent dimensionality, in order to assess whether the AMOC vertical manifold exhibits non-linear structure exploitable for representation. Its output is a comparative reconstruction analysis whose interpretation, developed in Chapter~\ref{ch:detect}, has direct implications for the coordinate system on which the representational work of Chapter~\ref{ch:translate} is built. \textbf{O1.3} applies classical Early Warning Signal methodology and unsupervised anomaly detection to the RAPID record, and characterises their convergence and divergence with respect to known dynamical events. Its output is a rigorous statistical analysis with corrected significance testing, in which methodological honesty about statistical power is treated as itself a form of scientific contribution. \textbf{O1.4} specifies, and explicitly defers to future work, a probabilistic short-range forecasting layer (an LSTM-based architecture) for the AMOC transport time series. Its output is a scoped future-work specification with documented methodological rationale, presented in Chapter~\ref{ch:conclusion}. The choice to specify the forecasting layer without implementing it is a deliberate act of scope discipline, addressed further in §\ref{sec:rq-feasibility}.
+
+The design objectives derived from RQ2 organise the work of Chapter~\ref{ch:translate}. \textbf{O2.1} designs three representational conditions of increasing experiential richness: a conventional static condition (C1), an interactive dynamic condition (C2), and a machine-learning-driven experiential condition (C3). Each condition encodes the same underlying data through a different perceptual mode, ensuring that any differences observed in the evaluation phase are attributable to representational form rather than to informational content. Its output is three working prototype conditions accompanied by documented design rationales. \textbf{O2.2} develops a design grammar that maps machine-learning-derived features --- latent position, anomaly score, ensemble uncertainty --- onto perceptual dimensions such as colour, motion, density and sound, grounded in principles of embodied cognition and pre-attentive processing \citep{ware2021, hermann2011}. Its output is a documented, transferable design grammar that the thesis intends to be reusable for representational work on other invisible climate systems. \textbf{O2.3} encodes the boundary between the historical observational record and the region of probabilistic uncertainty as an experiential perceptual quality --- rather than as a numerical annotation, an error bar or a shaded envelope. Its output is a prototypical implementation of experiential uncertainty encoding, defended in Chapter~\ref{ch:translate} as a design contribution to the broader problem of uncertainty communication.
+
+The empirical objectives derived from RQ3 organise the work of Chapters~\ref{ch:evaluate} and~\ref{ch:results}. \textbf{O3.1} designs a qualitative evaluation instrument comprising a think-aloud protocol, a semi-structured post-task interview and a thematic coding scheme, appropriate to a small-N exploratory study \citep{braunclarke2006}. Its output is a reusable evaluation instrument together with ethics documentation in Appendix~\ref{app:ethics} and study protocols in Appendix~\ref{app:protocols}. \textbf{O3.2} conducts an exploratory user study with 8 to 12 participants of mixed technical background, exposing each participant to the three representational conditions and recording their articulated understanding of the AMOC's behaviour under each. Its output is a set of anonymised transcripts and a thematic analysis reported in Chapter~\ref{ch:results}. \textbf{O3.3} assesses whether the machine-learning-derived perceptual encodings introduced in condition C3 --- latent-structure transitions and ensemble uncertainty as felt quality --- are correctly interpreted by non-specialist participants, or whether they add representational noise. Its output is an honest reporting, in Chapter~\ref{ch:discussion}, of the communicative effectiveness of the machine-learning-as-perceptual-layer approach, defended regardless of whether the finding is positive or negative.
+
+The relationship between objectives, hypotheses and chapters is summarised in the alignment matrix presented in §\ref{sec:alignment-matrix}. Each objective corresponds to a chapter in which its output is realised, and to a claim (hypothesis, design proposition or empirical expectation) formulated in §\ref{sec:hypotheses}. This traceability between what the thesis undertakes and where it delivers is the structural mechanism through which the thesis makes itself accountable to its own commitments.
+
+% -------------------------------------------------------------------------
+% -------------------------------------------------------------------------
+\section{Hypotheses and Design Propositions}
+\label{sec:hypotheses}
+
+The three sub-questions differ in epistemic character, and the claims this thesis advances are framed accordingly. RQ1 is analytical and exploratory, and admits directional hypotheses about what the machine-learning analysis will reveal in the observational record. RQ2 is design-based: its claims take the form of \emph{design propositions}, which are realised and assessed rather than confirmed or refuted. RQ3 is empirical, but qualitative and small in scale; its claims are therefore stated as \emph{expectations} that orient the analysis rather than as hypotheses subjected to statistical test. Stating this distinction explicitly is itself a methodological commitment: a directional hypothesis, a design proposition and an exploratory expectation are different kinds of claim, and conflating them would misrepresent the evidence each can bear \citep{cronbach1975, mckenney2018}.
+
+Two \emph{umbrella hypotheses} frame the enquiry as a whole. They are not tested through a single instrument but through the coordinated evidence produced by all three sub-questions, and their fate is discussed in Chapter~\ref{ch:discussion}.
+
+\begin{quote}
+\textbf{H-A} (the problem). \emph{Conventional representations of complex climate tipping systems --- static, graphic and quantitatively annotated --- are perceptually suboptimal for non-specialist audiences, because they treat systemic complexity as an object to be read rather than as a dynamic to be inhabited.}
+\end{quote}
+
+\begin{quote}
+\textbf{H-B} (the response). \emph{Machine-learning-derived representations, translated into interactive and experiential forms, can support the conceptual understanding, engagement and retention of complex system behaviour among non-specialist audiences more effectively than the conventional format, not by replacing quantitative analysis but by rendering its structure perceptually available.}
+\end{quote}
+
+\subsection*{Analytical hypotheses (RQ1)}
+
+Three directional hypotheses guide the analytical phase. Their empirical fate is reported in Chapter~\ref{ch:detect} and interpreted in Chapter~\ref{ch:discussion}.
+
+\begin{quote}
+\textbf{H1.} \emph{A small number of linear modes accounts for the dominant share of variance in the AMOC vertical profiles, reflecting a circulation regime governed by a few large-scale modes rather than by high-dimensional structure} \citep{hannachi2007, buckley2016}.
+\end{quote}
+
+\begin{quote}
+\textbf{H2.} \emph{A non-linear autoencoder does not materially outperform linear PCA at equal latent dimensionality, indicating that the AMOC vertical manifold is essentially flat and that interpretable linear coordinates lose little relative to a more expressive model} \citep{baldi1989}.
+\end{quote}
+
+\begin{quote}
+\textbf{H3.} \emph{Classical Early Warning Signals --- rising lag-1 autocorrelation and rising variance --- show a statistically significant monotonic trend across the RAPID record, once the effective sample size is properly accounted for through correction for autocorrelation of overlapping windows} \citep{dakos2012, scheffer2009}.
+\end{quote}
+
+\subsection*{Design propositions (RQ2)}
+
+The design phase advances propositions rather than hypotheses, because a representation is realised, defended and assessed against design criteria rather than falsified against ground truth. The realisation of these propositions is documented in Chapter~\ref{ch:translate}.
+
+\begin{quote}
+\textbf{DP2.1.} \emph{Machine-learning-derived features --- latent position, anomaly score, ensemble uncertainty --- can be mapped onto perceptual dimensions such as colour, motion, density and sound in a manner consistent with established principles of pre-attentive processing and embodied cognition} \citep{ware2021, lakoff1999}.
+\end{quote}
+
+\begin{quote}
+\textbf{DP2.2.} \emph{The boundary between the historical observational record and the region of probabilistic projection can be encoded as a felt perceptual transition rather than as a numerical annotation, rendering uncertainty an experiential quality rather than a bracketed error.}
+\end{quote}
+
+\subsection*{Empirical expectations (RQ3)}
+
+Because the user study is qualitative, exploratory and small in scale, its guiding claims are stated as expectations that orient the thematic analysis, not as hypotheses subjected to inferential test. The empirical study through which these expectations are engaged is designed in Chapter~\ref{ch:evaluate} and reported in Chapter~\ref{ch:results}.
+
+\begin{quote}
+\textbf{E3.1.} \emph{Increasing experiential richness across the three representational conditions is associated with differences in how participants articulate their understanding of the system's behaviour, rather than with a measurable gain in comprehension scores.}
+\end{quote}
+
+\begin{quote}
+\textbf{E3.2.} \emph{The perceptual encoding of uncertainty in condition C3 is interpreted by non-specialist participants in ways that the think-aloud protocol can surface, whether or not the interpretation matches the intended reading.}
+\end{quote}
+
+The empirical fate of H1--H3 is reported in Chapter~\ref{ch:detect} and revisited in Chapter~\ref{ch:discussion}; DP2.1 and DP2.2 are realised in Chapter~\ref{ch:translate} and defended there; E3.1 and E3.2 frame the interpretive analysis of Chapters~\ref{ch:results} and~\ref{ch:discussion}. This structural correspondence between claim and chapter is the mechanism through which the thesis makes itself accountable to its own commitments, and it is made visible at a glance in the alignment matrix presented in §\ref{sec:alignment-matrix}.
+
+% -------------------------------------------------------------------------
+\section{Alignment Matrix}
+\label{sec:alignment-matrix}
+
+The alignment matrix (Table~\ref{tab:alignment}) synthesises the correspondence between the three sub-questions and the operational structure of the thesis. Each column represents one sub-question and one phase of the detect–translate–evaluate arc; each row identifies a category of correspondence --- the epistemic character of the contribution, the chapters in which it is delivered, the objectives that operationalise it, the claims (hypotheses, design propositions or empirical expectations) it advances, the material with which it works, the output it produces, its alignment with the Sustainable Development Goals and the explicit scope discipline that keeps it defensible in the time available. The matrix is intended to be readable at a glance, and it functions as a promissory contract between the thesis and its reader: for every commitment made in this chapter, a locatable delivery in a specific later chapter.
+
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption{Alignment between the three sub-questions and the operational structure of the thesis.}
+    \label{tab:alignment}
+    \begin{tabular}{@{}p{3.2cm}p{3.6cm}p{3.6cm}p{3.6cm}@{}}
+        \toprule
+        & \textbf{RQ1 --- Detect} & \textbf{RQ2 --- Translate} & \textbf{RQ3 --- Evaluate} \\
+        \midrule
+        Epistemic character
+            & Analytical, comparative and exploratory
+            & Design-based and generative
+            & Empirical and qualitative \\[0.5em]
+        Chapters
+            & Ch.~\ref{ch:background}, Ch.~\ref{ch:detect}
+            & Ch.~\ref{ch:methodology}, Ch.~\ref{ch:translate}
+            & Ch.~\ref{ch:methodology}, Ch.~\ref{ch:evaluate}, Ch.~\ref{ch:results} \\[0.5em]
+        Objectives
+            & O1.1--O1.4
+            & O2.1--O2.3
+            & O3.1--O3.3 \\[0.5em]
+        Claims
+            & H1, H2, H3
+            & DP2.1, DP2.2
+            & E3.1, E3.2 \\[0.5em]
+        Material
+            & RAPID observations, Copernicus reanalysis ensemble
+            & Latent structures recovered in RQ1
+            & Prototypes produced in RQ2, participants \\[0.5em]
+        Output
+            & Latent structure analysis; EWS null result; anomaly characterisation
+            & Three representational conditions; documented design grammar
+            & Anonymised transcripts; thematic analysis; cross-condition comparison \\[0.5em]
+        SDG anchoring
+            & 13 (Climate Action), 14 (Life Below Water)
+            & 4 (Quality Education), 13
+            & 4, 13 \\[0.5em]
+        Scope discipline
+            & LSTM forecasting deferred as future work
+            & Research prototype, not production artefact
+            & Exploratory qualitative, not statistically powered \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Reading the matrix vertically clarifies the three coherent programmes of work the thesis undertakes: an analytical programme grounded in the observational record, a design programme grounded in the analytical outputs and an empirical programme grounded in the design outputs. Reading the matrix horizontally makes explicit the mechanism through which each phase feeds the next: the material of RQ2 is the output of RQ1, and the material of RQ3 is the output of RQ2. Neither reading is complete on its own; the alignment matrix is legible only through both.
+
+% -------------------------------------------------------------------------
+\section{Feasibility and Scope Discipline}
+\label{sec:rq-feasibility}
+
+The programme of work formalised in this chapter is ambitious in its combination but bounded in its individual commitments, and this section makes the reasoning behind that balance explicit. Three considerations govern the feasibility of the thesis as a whole: the availability of the material infrastructure required to execute each phase, the temporal budget available for its completion and the discipline of scope through which each phase has been protected from overextension.
+
+The material infrastructure is largely in place at the moment of writing. The analytical phase, corresponding to RQ1, is substantially complete: the pipeline over the RAPID observational record and the Copernicus reanalysis ensemble has been developed across five sequentially numbered Jupyter notebooks, and its principal quantitative results --- the linear latent decomposition, the autoencoder comparison, the corrected Early Warning Signals analysis and the anomaly characterisation --- are reported in Chapter~\ref{ch:detect}. The analytical objectives O1.1 through O1.3 have therefore already been operationalised; O1.4, concerning the deferred forecasting layer, is by design a specification exercise rather than an implementation one. The empirical infrastructure for RQ3 is comparatively lightweight: eight to twelve participants recruited from a mixed technical background, a think-aloud protocol implemented in individual sessions of forty to sixty minutes each, transcription supported by open-source speech-to-text tooling and thematic analysis conducted in NVivo or a comparable qualitative-analysis environment. The recruitment target is realistic for the timeframe, and the exploratory qualitative framing --- explicitly endorsed in supervisory guidance --- releases the study from the sample-size requirements of statistically powered designs \citep{braunclarke2006, smithmcgannon2018}. The infrastructure required by RQ2, the design phase, is the most substantial and is discussed in Chapters~\ref{ch:methodology} and~\ref{ch:translate}.
+
+The temporal budget is the principal binding constraint. The thesis is scheduled for completion by the end of August 2026, which allocates approximately nine to ten weeks from the writing of this chapter to the final submission. The distribution of work across that budget is planned as follows: the completion of the theoretical chapters (\ref{ch:literature} and~\ref{ch:background}) and the drafting of the methodology (Chapter~\ref{ch:methodology}) in the first three weeks; the design and implementation of the three representational conditions (Chapter~\ref{ch:translate}) across four weeks, with parallel drafting of the analytical results chapter (Chapter~\ref{ch:detect}) which reports work already conducted; the user study (Chapters~\ref{ch:evaluate} and~\ref{ch:results}) across two weeks; and the discussion, conclusion and final revisions across the last week. This allocation deliberately front-loads the theoretical and analytical writing, so that the technically riskiest phase --- the implementation of condition C3 in Chapter~\ref{ch:translate} --- is undertaken with the surrounding text already stable.
+
+The discipline of scope is treated in this thesis not as a concession but as a methodological principle, and it operates at three distinct levels of the programme. At the level of the analytical phase, the forecasting layer has been specified but deferred, on the grounds that its addition would shift the argumentative centre of gravity from representation --- where the thesis claims a contribution --- towards prediction, where it would be adding only an incremental result to a well-populated literature \citep{sonnewald2021}. At the level of the design phase, the experiential prototype is constrained to be a research artefact rather than a production system: it is designed to be legible to a small number of participants under controlled conditions, not to be deployed to an unbounded public audience whose diverse accessibility, robustness and cultural-translatability requirements would define a research programme of their own. At the level of the empirical phase, the user study is qualitative and exploratory: it does not claim, and its design cannot support, statistical inference to a wider population. These three constraints are not weaknesses admitted defensively; they are decisions taken consciously, defended in Chapter~\ref{ch:introduction} in the discussion of scope (§\ref{sec:scope}), and mirrored in the sub-question formulations of §\ref{sec:rqs}.
+
+Two flexibility mechanisms are embedded in the plan. If the user study slips beyond its allocated window, the design and analytical chapters (Chapters~\ref{ch:translate} and~\ref{ch:detect}) can absorb the additional writing time without compromising the analytical claims. If the technical implementation of condition C3 encounters an obstacle that cannot be resolved within the four allocated weeks, the design grammar remains a documented contribution in its own right (O2.2), and Chapter~\ref{ch:translate} can defend the thesis's design claims with the two simpler conditions and the specification of the third. These are not fallback positions imagined against failure; they are the mechanism by which the thesis has been designed to remain scientifically coherent under realistic variations in its execution.
+
+The ambition of this thesis is thus limited by design, not by circumstance. Each of the objectives formulated in §\ref{sec:objectives} is scoped to be achievable within the temporal and material budget available, and the alignment between claim, method and chapter documented in §\ref{sec:alignment-matrix} is the structural mechanism through which the coherence of the whole is protected. The remaining chapters are the delivery of the commitments this one has made.
