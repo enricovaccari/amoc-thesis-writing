@@ -1,8 +1,89 @@
-\chapter{Detect: Analytical Pipeline and Results}
-\label{ch:detect}
+% =========================================================================
+% CHAPTER 6 — THE ANALYTICAL PIPELINE (~2000 words body text)
+% =========================================================================
 
-\textit{[Port the current Chapters 5--6 from the Word document. This is
-the analytical results chapter: data preprocessing, PCA, autoencoder,
-EWS, anomaly detection. The full validation discussed in the live
-session lives here, with the three null results framed as foundations
-of Part II.]}
+\chapter{The Machine Learning Substrate}
+\label{ch:data_pipeline}
+
+\noindent
+{\rmfamily\itshape
+\begin{tabular}[t]{@{}l@{\hspace{0.3cm}}p{12.5cm}@{}}
+\textls[50]{\textbf{Addressed:}} &
+\textls[50]{Latent Structure · Manifold Geometry · Early Warning Signals · Anomalies · Observation vs Reanalysis}
+\end{tabular}
+}
+
+\vspace{0.5cm}
+
+This chapter represents the core of the \emph{detect} phase: the analysis that recovers, from the AMOC observational record, the latent structure the \emph{translate} phase will later make perceptible. It delivers the objectives set out in Chapter~\ref{ch:rqs} (O1.1--O1.3) and tests the analytical hypotheses H1--H3. As already stated, the aim is not a new claim about the ocean. A reader looking for an oceanographic discovery will not find one here, and that is by design. The aim is narrower and, for this thesis, more important: to establish with evidence that the AMOC's vertical structure can be reduced to a small, faithful, interpretable set of coordinates. Everything the representation does in Chapter~\ref{ch:translate} rests on that substrate being trustworthy. The analysis therefore focuses on the data itself, rather than on the physical system it describes, and the results are framed in terms of their implications for the representation rather than their oceanographic significance.
+
+The material is the RAPID-MOCHA-WBTS record at \ang{26.5}~north: the overturning streamfunction sampled at 307 depth levels, every day from April 2004 to March 2024. Three days near the end of the record are incomplete and are dropped, which leaves 14{,}596 daily profiles, each a vector of 307 numbers describing how the transport is distributed with depth.\footnote{The depth grid is close to uniform (spacing 19.33--19.87~m, median 19.59~m; a max/min ratio of 1.03), so no layer-thickness weighting is applied: with levels this evenly spaced, weighting would scale every level by an almost identical constant, which PCA absorbs without any effect on the loadings or the variance shares.} Before anything else, each profile is centred on the record mean, so the analysis describes how the vertical structure \emph{departs} from its average shape rather than simply recovering that average shape again.
+
+% -------------------------------------------------------------------------
+\section{Latent Structure \& PCA Decomposition}
+\label{sec:detect-pca}
+ 
+The first objective (O1.1) is to find the dominant modes of the AMOC's vertical variability using principal component analysis. The result is clear-cut: the variability is almost one-dimensional. A single mode accounts for \SI{89.82}{\percent} of the total variance in the vertical structure, and two modes together account for \SI{97.86}{\percent} (Table~\ref{tab:pca-variance}). From the third mode on, each mode adds less than \SI{1.6}{\percent}, and the scree curve bends sharply between the second and third modes --- the familiar elbow that marks where structure ends and noise begins. This confirms H1, and by a wide margin: the methodology chapter expected two or three modes above \SI{80}{\percent}, and the data give two modes above \SI{97}{\percent}.
+ 
+\input{figures/data_pipeline/tab_pca_variance.tex}
+\input{figures/data_pipeline/fig_pca_scree.tex}
+ 
+Both modes have a clear physical meaning and this is important because they provide a tangible interpretation of the abstract components. The first mode, PC1, has the same sign at every depth and peaks near 1150~m, exactly where the average profile peaks. When its value rises, the whole overturning cell grows stronger while keeping its shape; when it falls, the cell weakens as a whole. PC1 is the \emph{intensity} of the circulation, and it is close to ninety per cent of what the AMOC does from one day to the next. The second mode, PC2, changes sign once as it goes down through the water column: it strengthens the cell at one depth while weakening it at another. It is the \emph{vertical redistribution} of the circulation --- a smaller but genuine shift in the shape of the overturning around its mean.
+
+\input{figures/data_pipeline/mode_shapes.tex}
+ 
+This is where the analysis first touches the thesis directly. It would be easy to assign meanings to these modes after the fact, but that is not what happens here. The intensity mode is not a story imposed on the data; it is recovered from the data and then confirmed against a known event, which is a stronger position to argue from. Followed through time, PC1 drops sharply during 2009--2010 --- the most thoroughly documented weakening in the observational record --- reaching a period mean PC1 score of $-23.97$ against a whole-record mean of zero.\footnote{The same 2009--2010 event shows up independently in the raw depth--time field, in this intensity series, and later in the anomaly detector: three methods, one physical episode.} That a single line can still carry an event first seen in the full depth--time field is a small but real proof of the thesis claim --- that this system can be re-represented in fewer dimensions without losing what matters. The PC1--PC2 plane, holding \SI{97.86}{\percent} of the vertical anatomy in just two coordinates, is the latent space along which the profiles will breathe faithfully through time in the experiential condition of Chapter~\ref{ch:translate}.
+
+% -------------------------------------------------------------------------
+\section{An Essentially Flat Manifold Geometry}
+\label{sec:detect-ae}
+ 
+A latent space is only useful if it provides a faithful representation of the underlying system. Since PCA is a linear method, an important question is whether a simple linear representation is sufficient to capture the structure of the AMOC data. If the underlying geometry were strongly non-linear, a linear projection could oversimplify it and lose important information. The second objective (O1.2) therefore tests this assumption by comparing PCA with a non-linear autoencoder trained on the same 14{,}596 AMOC profiles. Both models are evaluated using the same number of latent dimensions. If the latent structure were genuinely non-linear, the autoencoder would be expected to reconstruct the data more accurately. If not, PCA should perform equally well.
+ 
+The results clearly support the latter interpretation. Across latent dimensions from one to five, the non-linear autoencoder never outperformed PCA. Instead, PCA consistently achieved slightly better reconstruction accuracy, with differences ranging from $-0.06$ to $-0.15$ percentage points in its favour (Table~\ref{tab:ae-gap}). At the two-dimensional representation used throughout this thesis, PCA reconstructed \SI{97.86}{\percent} of the variance, compared with \SI{97.77}{\percent} for the autoencoder, a difference of less than one tenth of a percentage point.\footnote{The surface and seafloor levels were excluded from the autoencoder input because the streamfunction is fixed to zero at both boundaries by mass conservation and therefore contains no learnable variance.} These findings confirm H2. Even when given the flexibility to learn complex non-linear transformations, the autoencoder found no meaningful structure beyond that already captured by the linear PCA representation.
+
+\input{figures/data_pipeline/tab_ae_gap.tex}
+\input{figures/data_pipeline/fig_manifold.tex}
+
+This result is important because it justifies the use of the latent coordinates throughout the \emph{Translate} phase of the thesis. If the underlying manifold had been strongly curved, representing the system using the first two principal components would have introduced distortions by forcing a non-linear structure into a linear space. Instead, the results show that the latent manifold is effectively linear. As a consequence, the first two principal components provide a representation that is both highly interpretable and highly faithful to the original data. The coordinates can therefore be meaningfully interpreted as distinct modes of AMOC variability without sacrificing representational accuracy. In this case, interpretability comes at virtually no cost in fidelity, making the proposed representation both scientifically defensible and suitable as the basis for the experiential visualisations developed in the following chapter.
+
+% -------------------------------------------------------------------------
+\section{Early Warning Signals \& Null Result}
+\label{sec:detect-ews}
+ 
+The third objective (O1.3) investigates whether the record contains early warning signs of an approaching tipping point. According to the theory of critical slowing down, a system approaching a bifurcation is expected to show increasing variance and increasing lag-1 autocorrelation \citep{dakos2012, scheffer2009}. Testing this hypothesis requires particular care, and this is where the analysis highlights an important methodological issue.
+
+At first glance, the results appear very strong. The rolling variance of the intensity series shows an increasing trend, with Kendall's $\tau = +0.078$ and a p-value of $2\times10^{-42}$; similarly, the rolling autocorrelation increases with $\tau = +0.088$ and a p-value of $1\times10^{-52}$. Taken directly, these values would suggest an extremely strong statistical signal. However, this interpretation would be misleading.\footnote{Kendall's test assumes that observations are independent. In this analysis, rolling statistics are calculated using heavily overlapping 730-day windows, meaning that consecutive values are highly dependent. This effect is amplified by the strong day-to-day autocorrelation of the original series ($0.943$).}
+
+The reason is that the rolling windows overlap substantially, so the thousands of calculated values do not represent independent observations. This is a common statistical pitfall: the software returns a very small p-value without accounting for the dependence between the input points, making the result appear more certain than it actually is. When the number of independent observations is considered instead --- approximately 19.5 non-overlapping 730-day windows --- and the statistical test is corrected accordingly, the apparent trends disappear. The corrected p-value for the variance trend is \textbf{0.634}, while for the autocorrelation trend it is \textbf{0.595}. Neither result is statistically significant (Table~\ref{tab:ews}). The initial strong signal was therefore caused by treating dependent observations as if they were independent.
+
+\input{figures/data_pipeline/tab_ews.tex}
+\input{figures/data_pipeline/fig_ews.tex}
+
+The final conclusion is therefore a \emph{null result}. Once the dependence structure of the data is properly considered, the classical early-warning indicators cannot be distinguished from noise. This supports H3 in its null form and represents an important methodological contribution rather than a limitation. A positive result obtained by incorrectly interpreting the statistics would have been more appealing, but it would not have been reliable. Demonstrating that an apparently strong signal disappears when statistical dependence is properly addressed reflects the methodological care at the core of this thesis.
+
+% -------------------------------------------------------------------------
+\section{Anomaly Detection}
+\label{sec:detect-anomalies}
+
+Early-warning analysis looks for slow \emph{trends}. A different question is about individual \emph{events}: which moments depart from the normal behaviour of the system. An Isolation Forest applied to the daily PC1--PC2 coordinates identifies \SI{5}{\percent} of the record, corresponding to 730 days, as anomalous. Looking at when these days occur reveals an important pattern: they are concentrated in 2009--2010 (158 days), 2012--2013 (100 days), and 2018 (66 days). However, the anomaly score does not increase over time. The unusual moments are distributed across the record rather than accumulating toward the end, providing another indication that the system is not showing a progressive movement toward a threshold.
+
+\input{figures/data_pipeline/fig_anomalies.tex}
+
+Two aspects are important for this thesis. First, this analysis supports the null result from a completely independent perspective: an algorithm that does not rely on early-warning theory also finds no gradual shift, but rather isolated events distributed across the twenty-year record. It reaches the same conclusion through a different method.\footnote{The anomaly clusters correspond to independently identified features --- the 2009--2010 weakening and the variance peaks of 2012--2013 and 2018 --- with \SI{41.4}{\percent} of anomalous days occurring in the highest quarter of local variance. Different methods reveal the same physical behaviour.} Second, these anomalies provide the basis for a specific design decision. Following the grammar introduced in Chapter~\ref{ch:literature}, departures from the normal regime can be translated into local changes in perceptual texture (principle~P3). The moments identified by the detector are therefore the same moments that the experiential representation will transform into perceptible changes --- meaning that anomaly detection is not only a result about the AMOC, but also a direct input for how the AMOC is represented.
+
+% -------------------------------------------------------------------------
+\section{Observation Against Reanalysis}
+\label{sec:detect-copernicus}
+
+The analysis so far has relied on RAPID observations. The final step compares them with the Copernicus GREP reanalysis ensemble over the 237 months they share. This comparison serves two purposes: characterising how well the reanalysis reproduces the observed signal, and identifying the uncertainty that the \emph{translate} phase needs to communicate. The two datasets show moderate agreement. Their correlation is 0.754, with a small bias of $+0.584$~Sv (RAPID being slightly stronger) and a root-mean-square difference of 2.300~Sv. Both remain close to 17~Sv and show similar variations over time. In other words, the reanalysis captures the overall behaviour of the circulation, even when it does not reproduce the exact value of each individual month.
+
+%\input{figures/data_pipeline/fig_rapid_copernicus.tex}
+
+The most informative result concerns uncertainty coverage. RAPID falls within the reanalysis ensemble's own $\pm1$ standard-deviation range in only \SI{40.1}{\percent} of months.\footnote{If the ensemble spread represented a well-calibrated estimate of its own uncertainty, the observation should fall within the one-standard-deviation range much more often. A lower coverage indicates that the spread is too narrow compared with the actual errors.} A model ensemble with a realistic uncertainty range should capture the observation more frequently. This low coverage indicates that the ensemble is \emph{overconfident}: its reported uncertainty is smaller than the real error. This point is important for the thesis because the ensemble spread is exactly what the \emph{translate} phase converts into perceptible uncertainty, following design-grammar principle~P4. Understanding that this uncertainty is underestimated is therefore part of representing it honestly: the visualisation can communicate the model's uncertainty while making clear that the real uncertainty is likely larger.
+
+% -------------------------------------------------------------------------
+\section{Analytical Summary}
+\label{sec:detect-summary}
+
+The analytical phase provides the \emph{translate} phase with a documented substrate rather than an assumed one. The vertical structure of the AMOC can be represented through two interpretable coordinates that explain \SI{97.86}{\percent} of its variability: intensity and vertical redistribution. These coordinates are not only a convenient simplification but a faithful representation of the system: a non-linear model confirms that the underlying manifold is effectively flat, meaning that the transformation does not introduce relevant distortion. The record does not show robust early-warning trends, but it does contain clear discrete anomalies that can become perceptual texture. The comparison with the reanalysis also provides an uncertainty estimate that is physically meaningful, although too narrow, and therefore ready to be translated into perception. These findings are not only descriptions of the ocean system. Each one becomes a justified input for the next phase: a compact, faithful, interpretable, event-aware, and uncertainty-carrying substrate that allows the \emph{translate} phase to make an invisible system perceptible without misrepresenting it.

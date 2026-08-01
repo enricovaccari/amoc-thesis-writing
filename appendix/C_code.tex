@@ -1,4 +1,97 @@
-\chapter{Appendix C — Code and Reproducibility}
+% =========================================================================
+% APPENDIX C — CODE AND REPRODUCIBILITY
+% =========================================================================
+
+\chapter{Code and Reproducibility}
 \label{app:code}
-\textit{[Pointer to the GitHub repository, key code listings, environment
-specification, instructions to reproduce the analytical pipeline.]}
+
+This appendix documents the code behind the thesis, so that the analytical pipeline and the representational artefact can be inspected and reproduced. It covers two repositories, the computational environment, the steps to reproduce the analysis, and a provenance ledger that traces every perceivable element of the artefact back to its source in the data, the design principle that licenses it, and its computational origin. The guiding commitment is the one that runs through the whole thesis: every value shown derives from the data, and the path from data to display is open to inspection.
+
+% -------------------------------------------------------------------------
+\section{Repositories}
+\label{app:c-repos}
+
+The work is held in two research repositories. The first contains the analytical pipeline --- the code that turns the observational and reanalysis records into the latent structure the artefact is built on. The second contains the representational artefact --- the browser-based code that renders that structure as the three conditions of the study.\footnote{A third repository holds the written thesis (\LaTeX{} sources). It is not documented here: it is not a research contribution and is not needed to reproduce the analysis or the artefact.}
+
+\subsection*{Analytical pipeline}
+\textit{Repository:} \texttt{[FILL: amoc-thesis-pipeline]} --- \url{[FILL: GitHub URL]}.
+
+This repository contains the notebooks and modules that implement the \emph{detect} phase. The analysis is organised as a sequence of numbered notebooks, each a self-contained stage whose output feeds the next:
+
+\begin{itemize}
+    \item \texttt{01\_data\_first\_look} --- loading and inspection of the RAPID record;
+    \item \texttt{02\_rapid\_vs\_copernicus} --- comparison of observation against the reanalysis ensemble;
+    \item \texttt{03\_PCA\_on\_vertical\_profiles} --- the linear decomposition of the vertical structure;
+    \item \texttt{04\_anomalies\_early\_warning\_signals} --- anomaly detection and the corrected early-warning analysis;
+    \item \texttt{05\_autoencoder\_vertical\_profiles} --- the non-linear model comparison that tests manifold flatness;
+    \item \texttt{06\_export\_for\_translate} --- assembly of the data bundle consumed by the artefact.
+\end{itemize}
+
+\noindent Shared functionality --- data loading, paths, common transforms --- is factored into supporting modules \texttt{[FILL: e.g. data\_loading.py, paths.py]} rather than duplicated across notebooks. The final notebook exports a single JSON bundle that is the one source of truth for every value the artefact displays (\S\ref{app:c-ledger}).
+
+\subsection*{Representational artefact}
+\textit{Repository:} \texttt{[FILL: repo name]} --- \url{[FILL: GitHub URL]}.
+
+This repository contains the browser-based artefact: the three representational conditions built for the study, rendered with WebGL (through Three.js) and the Web Audio API. Its structure separates the three scenes from the shared machinery they depend on:
+
+\begin{itemize}
+    \item the scene files, one static and one experiential per scene \texttt{[FILL: confirm file names]};
+    \item a shared module layer \texttt{[FILL: e.g. bundle.js, reconstruct.js, palette.js]} that loads the data bundle and reconstructs the profiles, so that informational equivalence across conditions is guaranteed by shared provenance rather than asserted --- one bundle, one reconstruction function, shared imports, not duplicated code.
+\end{itemize}
+
+\noindent This shared-module architecture is what lets the thesis claim that the static and experiential conditions carry the same information: they draw on the same bundle and the same reconstruction, and differ only in how they render it.
+
+% -------------------------------------------------------------------------
+\section{Environment and Reproduction}
+\label{app:c-environment}
+
+The analytical pipeline runs in Python \texttt{[FILL: 3.11]} in a Conda environment \texttt{[FILL: amoc-thesis]}. The principal libraries are \texttt{xarray} and \texttt{netCDF4} for the ocean data, \texttt{numpy}, \texttt{pandas} and \texttt{scipy} for numerical work, \texttt{scikit-learn} for PCA and the Isolation Forest, \texttt{statsmodels} for the time-series statistics, and \texttt{[FILL: e.g. PyTorch / TensorFlow]} for the autoencoder. Plotting uses \texttt{matplotlib} and \texttt{seaborn}. The exact versions are pinned in the repository's environment file \texttt{[FILL: environment.yml / requirements.txt]}.
+
+To reproduce the analysis, the environment is recreated from that file and the numbered notebooks are run in order; the data sources (RAPID and the Copernicus GREP ensemble) are obtained from their providers \texttt{[FILL: note access — DOIs / download instructions]} and placed as described in the repository README. Running the notebooks in sequence regenerates the data bundle, from which the artefact can then be served locally in a browser \texttt{[FILL: any serve step, e.g. a local static server]}.
+
+% -------------------------------------------------------------------------
+\section{Provenance Ledger}
+\label{app:c-ledger}
+
+The provenance ledger (Table~\ref{tab:ledger}) is the reproducibility claim made concrete. For every perceivable element of the artefact, it names the field of the data bundle it derives from, the design-grammar principle that licenses its perceptual encoding, and its computational origin --- whether empirical, classically derived, or produced by machine learning. Nothing perceivable is omitted except non-informational scaffolding (colours, fonts, tints), which carries no data. The ledger is what turns the fidelity principle from a promise into something a reader can audit line by line.
+
+% ============================================================
+% The provenance ledger.
+% Requires \usepackage{tabularx, booktabs}.
+% ============================================================
+\begin{table}[htbp]
+\centering
+\caption[Provenance ledger]{Provenance ledger for the three scenes. Every
+perceivable element, its source in the data bundle, the design principle that
+licenses it, and its computational origin. Colours, fonts and tints are
+non-informational scaffolding and are omitted.}
+\label{tab:ledger}
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{1.2cm} X p{3.4cm} p{1.1cm} X@{}}
+\toprule
+\textbf{Scene} & \textbf{Element} & \textbf{Bundle field} & \textbf{Prin.} &
+\textbf{Origin} \\
+\midrule
+I   & $\Psi(z)$ curve, static (C1) & \texttt{mean\_profile} via Eq.~\ref{eq:reconstruction}, $\mathrm{pc}=0$ & P1 & Empirical (record mean) \\
+I   & $\Psi(z)$ curve, animated (C2/C3) & \texttt{mean\_profile} + \texttt{trajectory\_monthly} & P1, P2 & ML (latent trajectory; H2) \\
+I   & Particle field & $\partial\Psi/\partial z$ of current profile & P2 & Classical (derivative) \\
+I   & Anomaly texture & \texttt{anomalies.clusters} (score) & P3 & ML (IsolationForest) \\
+I   & Sound & \texttt{trajectory\_monthly.pc1} & P5 & ML input, classical synth. \\
+I   & Depth / peak readout & \texttt{depth\_m}; max of profile & P1 & Derived \\
+\addlinespace
+II  & Monthly points & \texttt{trajectory\_monthly.pc1/pc2} & P1 & ML (latent coordinates) \\
+II  & Path motion & \texttt{trajectory\_monthly} order & P2 & ML (latent trajectory) \\
+II  & Sub-monthly cloud & \texttt{manifold\_cloud.pc} & P1 & ML (latent coordinates) \\
+II  & Anomaly agitation & \texttt{anomalies.clusters} (score) & P3 & ML (IsolationForest) \\
+II  & Equilibrium glow & centroid of \texttt{manifold\_cloud} & P1 & Derived (mean) \\
+II  & Sound & \texttt{trajectory\_monthly.pc1} & P5 & ML input, classical synth. \\
+\addlinespace
+III & Three member lines & \texttt{copernicus\_ensemble.members} & P1 & External reanalyses \\
+III & Living medium & \texttt{upper} $-$ \texttt{lower} per month & P4 & Classical (spread) \\
+III & Colour temperature & \texttt{upper} $-$ \texttt{lower} per month & P4 & Classical (spread) \\
+III & Aggregation views & \texttt{members} (rolling mean, envelope) & P1 & Derived \\
+III & Sound texture & \texttt{upper} $-$ \texttt{lower} per month & P5 & Classical, classical synth. \\
+\bottomrule
+\end{tabularx}
+\end{table}

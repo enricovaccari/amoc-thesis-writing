@@ -1,0 +1,20 @@
+% figures/data_pipeline/tab_ews.tex — early-warning trends, naive vs corrected significance
+% Numbers verified against NB04. Requires \usepackage{booktabs}.
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[Early-warning trends: naive versus corrected significance.]{Kendall's
+    $\tau$ trend tests for the two classical early-warning signals. The naive
+    p-values treat overlapping windows as independent; the corrected p-values
+    count the $\sim$19.5 independent windows the record contains. Neither trend is
+    significant.}
+    \label{tab:ews}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Signal} & \textbf{Kendall $\tau$} & \textbf{Naive p} & \textbf{Corrected p} & \textbf{Verdict} \\
+        \midrule
+        Rolling variance & $+0.078$ & $2\times10^{-42}$ & 0.634 & not significant \\
+        Rolling AR(1)     & $+0.088$ & $1\times10^{-52}$ & 0.595 & not significant \\
+        \bottomrule
+    \end{tabular}
+\end{table}

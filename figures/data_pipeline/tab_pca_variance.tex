@@ -1,0 +1,22 @@
+% figures/data_pipeline/tab_pca_variance.tex — variance explained by the PCA modes
+% Numbers verified against NB03. Requires \usepackage{booktabs}.
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[Variance explained by the vertical PCA modes.]{Variance explained
+    by each principal component of the AMOC vertical profiles. Two modes reach
+    \SI{97.86}{\percent}; the tail beyond PC2 is noise.}
+    \label{tab:pca-variance}
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        \textbf{Mode} & \textbf{Variance} & \textbf{Cumulative} \\
+        \midrule
+        PC1 & 89.82\% & 89.82\% \\
+        PC2 &  8.03\% & 97.86\% \\
+        PC3 &  1.57\% & 99.42\% \\
+        PC4 &  0.37\% & 99.80\% \\
+        PC5 &  0.12\% & 99.91\% \\
+        PC6 &  0.05\% & 99.97\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}

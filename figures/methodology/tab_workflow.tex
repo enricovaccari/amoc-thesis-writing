@@ -1,0 +1,29 @@
+% figures/methodology/tab_workflow.tex — the detect-translate-evaluate workflow
+% Requires \usepackage{booktabs}. Shows phase, method, input, output.
+\begin{table}[!ht]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \caption[The detect--translate--evaluate workflow.]{The thesis pipeline. Each
+    phase takes the output of the previous one as its input, so that the analysis
+    constrains the design and the design is what the evaluation tests.}
+    \label{tab:workflow}
+    \begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.2cm}@{}}
+        \toprule
+        \textbf{Phase} & \textbf{Method} & \textbf{Input} & \textbf{Output} \\
+        \midrule
+        \textbf{Detect}
+            & PCA, autoencoder, anomaly \& early-warning analysis
+            & RAPID observations; Copernicus reanalysis
+            & Interpretable latent structure of the system \\
+        \textbf{Translate}
+            & Design grammar applied to recovered features; browser-based build
+            & Latent structure from \emph{detect}
+            & Three representational conditions (static, dynamic, experiential) \\
+        \textbf{Evaluate}
+            & Two-group study; think-aloud; reflexive thematic analysis
+            & Representations from \emph{translate}
+            & Evidence on how non-specialists understand the system \\
+        \bottomrule
+    \end{tabular}
+\end{table}

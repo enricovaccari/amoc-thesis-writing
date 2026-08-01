@@ -14,22 +14,20 @@
 \usepackage{microtype}
 
 % ---------- typography ----------
-% Charter is a warm, readable academic serif; switch to lmodern if you prefer
-\usepackage{charter}
+% Times New Roman style font
+\usepackage{newtxtext}
+\usepackage{newtxmath}
 \linespread{1.15}
 
 % ---------- page geometry (sober, academic) ----------
 \usepackage[
     a4paper,
-    top=2.8cm,
-    bottom=3cm,
-    inner=3cm,
-    outer=2.5cm,
+    margin=2.5cm,
     headheight=14pt
 ]{geometry}
 
 % ---------- math & symbols ----------
-\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{amsmath, mathtools}
 \usepackage{siunitx}
 \DeclareSIUnit{\sverdrup}{Sv}
 \sisetup{detect-all}
@@ -38,6 +36,10 @@
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{ragged2e}
 \usepackage{caption}
 \captionsetup{font=small, labelfont=bf, format=plain}
 \usepackage{subcaption}
@@ -60,10 +62,43 @@
 
 % ---------- chapter style: sober, no decorative junk ----------
 \usepackage{titlesec}
+
+\makeatletter
+
+\renewcommand\part[1]{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \refstepcounter{part}
+  \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}
+
+  \vspace*{\fill}
+
+  \begin{center}
+    {\Huge\bfseries Part \thepart\par}
+    \vspace{1cm}
+    {\Huge\bfseries #1\par}
+    \vspace{0.6cm}
+    {\Large\itshape\partsubtitle\par}
+  \end{center}
+
+  \vspace*{\fill}
+
+  \clearpage
+}
+
+\newcommand{\partsubtitle}{}
+
+\newcommand{\setpartsubtitle}[1]{%
+  \renewcommand{\partsubtitle}{#1}
+}
+
+\makeatother
+
 \titleformat{\chapter}[display]
     {\normalfont\Huge\bfseries}
     {\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titlespacing*{\chapter}{0pt}{-30pt}{40pt}
+\titlespacing*{\chapter}{0pt}{-30pt}{5pt}
+\titlespacing*{\section}{0pt}{10pt}{5pt}
 
 % ---------- hyperlinks ----------
 \usepackage[
@@ -90,8 +125,8 @@
 % \input{frontmatter/acronyms}
 
 % ---------- custom commands ----------
-\newcommand{\amoc}{AMOC\xspace}  % example, requires \usepackage{xspace}
 \usepackage{xspace}
+\newcommand{\amoc}{AMOC\xspace}  % example, requires \usepackage{xspace}
 
 % ---------- footnote formatting: no first-line indent, proper spacing ----------
 \makeatletter
@@ -120,31 +155,37 @@
 \mainmatter
 \pagenumbering{arabic}
 
-\part{Foundations: The Context, The Problem And The System}
+\setpartsubtitle{The Context, the Problem, and the Analytical Foundation}
+\part{DETECT}
+...
+
 \input{chapters/01_introduction}
 \input{chapters/02_research_questions}
 \input{chapters/03_literature}
 \input{chapters/04_background}
 
-\part{Translation: From Data to Experience}
 \input{chapters/05_methodology}
 \input{chapters/06_data_pipeline}
+\setpartsubtitle{From Latent Structure to Experiential Representation}
+\part{TRANSLATE}
 \input{chapters/07_translation}
 
-\part{Evaluation \& Reflection}
+\setpartsubtitle{Understanding the Impact of Representation}
+\part{EVALUATE}
 \input{chapters/08_evaluation}
 \input{chapters/09_results}
 \input{chapters/10_discussion}
 \input{chapters/11_conclusion}
+\input{chapters/12_reflection}
 
-% ---------- back matter ----------
-\backmatter
-
-\printbibliography[heading=bibintoc, title={References}]
-
+% ---------- appendixes ----------
 \appendix
 \input{appendix/A_ethics}
 \input{appendix/B_protocols}
 \input{appendix/C_code}
+
+% ---------- back matter ----------
+\backmatter
+\printbibliography[heading=bibintoc, title={References}]
 
 \end{document}

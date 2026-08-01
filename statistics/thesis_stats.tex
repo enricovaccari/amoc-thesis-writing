@@ -1,0 +1,102 @@
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% Only the first (title) column flexes and wraps; the six numeric
+% columns keep their natural narrow width, right-aligned. This
+% makes the table fill \textwidth exactly and long chapter titles
+% wrap onto a second line instead of overflowing the page.
+\begin{document}
+
+
+\section*{Thesis Statistics}
+
+\begin{tabularx}{\textwidth}{Xrrrrrr}
+\toprule
+Chapter & Pages & Words & Citations & Figures & Tables & Footnotes \\
+\midrule
+\multicolumn{7}{l}{\textbf{Part I --- DETECT}} \\
+\midrule
+Introduction & 4 & 1602 & 28 & 1 & 0 & 4 \\
+Literature Review & 8 & 2184 & 77 & 3 & 1 & 6 \\
+Literature Review & 8 & 2187 & 77 & 3 & 1 & 6 \\
+Background & 4 & 637 & 4 & 1 & 0 & 2 \\
+Methodology & 6 & 1876 & 10 & 0 & 1 & 8 \\
+The Machine Learning Substrate & 10 & 1919 & 2 & 5 & 3 & 6 \\
+\midrule
+\textit{Subtotal --- Part I} & \textit{40} & \textit{10405} & \textit{198} & \textit{13} & \textit{6} & \textit{32} \\
+\midrule
+\multicolumn{7}{l}{\textbf{Part II --- TRANSLATE}} \\
+\midrule
+Designing Experiential Representations & 12 & 3328 & 20 & 3 & 1 & 20 \\
+\midrule
+\textit{Subtotal --- Part II} & \textit{12} & \textit{3328} & \textit{20} & \textit{3} & \textit{1} & \textit{20} \\
+\midrule
+\multicolumn{7}{l}{\textbf{Part III --- EVALUATE}} \\
+\midrule
+User Study & - & 3 & 0 & 0 & 0 & 0 \\
+Results & - & 0 & 0 & 0 & 0 & 0 \\
+Discussion & - & 0 & 0 & 0 & 0 & 0 \\
+Conclusion and Future Work & 2 & 141 & 1 & 0 & 0 & 0 \\
+Reflection on Leadership \& Personal Growth & - & 0 & 0 & 0 & 0 & 0 \\
+\midrule
+\textit{Subtotal --- Part III} & \textit{2} & \textit{141} & \textit{1} & \textit{0} & \textit{0} & \textit{0} \\
+\midrule
+\textbf{TOTAL (main thesis)} & \textbf{54} & \textbf{13874} & \textbf{219} & \textbf{16} & \textbf{7} & \textbf{52} \\
+\bottomrule
+\end{tabularx}
+
+
+\vspace{1cm}
+
+\noindent
+\textbf{PARTIALLY: Your thesis is within the acceptable range but not the expected target.}\\\\Word count (13,874) falls inside the acceptable range but outside the 15,000--18,000 target; the length is 54 pages. Additional content is recommended to reach the target.\\\\Target: approximately 50 pages and 15,000--18,000 words (acceptable range: 13,500--19,800 words). Appendices and bibliography are excluded from this check.
+
+
+\vspace{0.4cm}
+
+\noindent
+\textit{Placeholder chapters (fewer than 50
+words) are shown with a dash and excluded from all totals.}
+
+
+\section*{Appendix Statistics}
+
+\begin{tabularx}{\textwidth}{Xrrrrrr}
+\toprule
+Appendix & Pages & Words & Citations & Figures & Tables & Footnotes \\
+\midrule
+Ethics, Boundaries and Limitations$^{*}$ & 4 & 1126 & 0 & 0 & 0 & 0 \\
+Study Protocols$^{*}$ & 2 & 497 & 0 & 0 & 0 & 0 \\
+Code and Reproducibility$^{*}$ & 4 & 609 & 0 & 0 & 1 & 1 \\
+\midrule
+\textit{Subtotal --- Appendices} & \textit{10} & \textit{2232} & \textit{0} & \textit{0} & \textit{1} & \textit{1} \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\noindent
+\textit{$^{*}$ Appendices are reported for reference only and are
+excluded from the main thesis length calculation.}
+
+
+
+\section*{Bibliography}
+
+\noindent
+Total references in \texttt{references.bib}: \textbf{123}.
+
+\vspace{0.2cm}
+
+\noindent
+\textit{The bibliography is reported separately and does not count
+towards the thesis word or page totals.}
+
+
+\end{document}

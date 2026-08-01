@@ -1,0 +1,15 @@
+% figures/detect/fig_ews.tex — loads PDF exported from NB04
+% Requires \usepackage{graphicx}. Export the rolling variance / AR1 panels
+% as figures/detect/ews.pdf.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/data_pipeline/ews.png}
+    \caption[Early warning signals: rolling variance and autocorrelation.]{\textbf{No
+    rigorous early-warning trend.} Rolling variance and lag-1 autocorrelation of the
+    intensity series over the record. Both oscillate without a sustained climb.
+    Their naive trend p-values ($\sim$$10^{-42}$) are artefacts of heavily
+    overlapping windows; corrected for the $\sim$19.5 independent windows the
+    record actually contains, the trends are not significant (p~$=$~0.634 and
+    0.595; Table~\ref{tab:ews}).}
+    \label{fig:ews}
+\end{figure}

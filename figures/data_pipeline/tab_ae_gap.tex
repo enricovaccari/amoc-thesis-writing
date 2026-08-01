@@ -1,0 +1,22 @@
+% figures/data_pipeline/tab_ae_gap.tex — autoencoder vs PCA at matched latent dimension
+% Numbers verified against NB05. Requires \usepackage{booktabs}.
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[Autoencoder versus PCA at matched latent dimension.]{Reconstruction
+    of the vertical profiles by a non-linear autoencoder against linear PCA, at
+    matched latent dimension $k$. The gap is negative at every $k$: PCA is never
+    beaten, so the manifold is flat.}
+    \label{tab:ae-gap}
+    \begin{tabular}{@{}crrr@{}}
+        \toprule
+        \textbf{$k$} & \textbf{PCA cum.\ \%} & \textbf{AE $R^2_{\mathrm{Sv}}$ \%} & \textbf{Gap (pp)} \\
+        \midrule
+        1 & 89.82 & 89.67 & $-0.15$ \\
+        2 & 97.86 & 97.77 & $-0.08$ \\
+        3 & 99.42 & 99.36 & $-0.06$ \\
+        4 & 99.80 & 99.74 & $-0.06$ \\
+        5 & 99.91 & 99.83 & $-0.08$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
