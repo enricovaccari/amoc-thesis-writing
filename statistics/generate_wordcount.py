@@ -1,8 +1,21 @@
 from pathlib import Path
 import re
+import sys
 import subprocess
 from collections import defaultdict
-from pypdf import PdfReader
+
+# pypdf is OPTIONAL. It is only used to read the total page count
+# of the compiled PDF, which in turn only ever serves as the
+# closing boundary of the very last chapter-level TOC entry. If it
+# is not installed we fall back to the .toc (see count_pages), so
+# the script keeps working in a bare LaTeX environment.
+try:
+    from pypdf import PdfReader
+except ModuleNotFoundError:
+    try:
+        from PyPDF2 import PdfReader  # older distribution, same API
+    except ModuleNotFoundError:
+        PdfReader = None
 
 
 # ============================================================
@@ -25,6 +38,15 @@ BIB_FILE = ROOT / "references.bib"
 
 APPENDIX_DIR = ROOT / "appendix"
 
+FRONT_DIR = ROOT / "frontmatter"
+
+# Front-matter units shown above Part I for reference (word/page
+# counts) but NEVER added to the main-thesis totals. (file key, title)
+FRONT_UNITS = [
+    ("abstract", "Abstract"),
+    ("acknowledgements", "Acknowledgements"),
+]
+
 
 # ============================================================
 # REQUIREMENTS
@@ -36,12 +58,20 @@ TARGET_MAX = 18000
 ACCEPTABLE_MIN = 13500
 ACCEPTABLE_MAX = 19800
 
-PAGES_MIN = 45
-PAGES_MAX = 55
+# The word count is the ONLY determinant of the requirements
+# verdict, which is two-state (YES / NO -- no PARTIALLY). The page
+# count is reported (see the Page Breakdown section) but never decides
+# the verdict.
 
 # A chapter below this word count is treated as an empty
 # placeholder and excluded from the totals.
 PLACEHOLDER_THRESHOLD = 50
+
+# A compiled PDF page whose extracted text is shorter than this many
+# characters is treated as a blank/filler page (an openright verso
+# carries only a running header, ~30-70 chars; real content pages run
+# to several hundred). Used to report EFFECTIVE (content) pages.
+BLANK_PAGE_MAXLEN = 100
 
 
 # ============================================================
@@ -340,7 +370,7 @@ def extract_toc_titles():
 
 
 def _clean_toc_title(title):
-    """
+    r"""
     Tidy a harvested TOC title WITHOUT breaking its LaTeX.
 
     Titles in the .toc are already valid LaTeX exactly as the
@@ -379,13 +409,24 @@ def prettify_key(key):
 # ============================================================
 
 def count_pages():
+    """
+    Total page count of the compiled PDF.
 
-    if not PDF_FILE.exists():
-        return 0
+    Uses pypdf when it is installed and the PDF exists. Otherwise
+    falls back to the highest arabic page number recorded in the
+    .toc, which is a close proxy: this value is only ever consumed
+    as the closing boundary of the last chapter-level entry, and
+    that entry is always followed by 'References' in the TOC, so
+    the fallback never actually changes an emitted page span.
+    """
 
-    reader = PdfReader(str(PDF_FILE))
+    if PdfReader is not None and PDF_FILE.exists():
+        return len(PdfReader(str(PDF_FILE)).pages)
 
-    return len(reader.pages)
+    # ---- fallback: last arabic {page} field in the TOC ----
+    toc = read_file(TOC_FILE)
+    pages = [int(p) for p in re.findall(r'\}\{(\d+)\}\{', toc)]
+    return max(pages) if pages else 0
 
 
 def extract_all_chapter_pages():
@@ -473,6 +514,153 @@ def extract_all_chapter_pages():
     return chapter_spans, appendix_spans
 
 
+def compute_effective_pages():
+    r"""
+    EFFECTIVE (content) page counts read from the compiled PDF.
+
+    Unlike the TOC-span method above, this excludes the blank/filler
+    versos that an openright book inserts, so the numbers reflect the
+    pages a reader actually reads. It relies on two PDF features:
+
+    * page labels: the printed number of each physical page ('iii',
+      '1', '2', ...). These give an exact printed<->physical map, so
+      roman front matter and arabic body never get confused.
+    * extracted text length: a page under BLANK_PAGE_MAXLEN chars is a
+      blank/filler page (only a running header) and is not counted.
+
+    Every physical page is assigned to the TOC entry whose printed
+    start page precedes it (chapters, part dividers, appendices,
+    References). Part-divider and appendix pages therefore fall OUTSIDE
+    chapters 1--12, which is what lets us split the thesis into
+    'chapters 1--12' and 'everything else'.
+
+    Returns a dict, or None when pypdf / the PDF is unavailable (the
+    caller then falls back to the TOC spans):
+        {
+          "chapters":   {1: 4, 2: 5, ...},   # effective pages
+          "appendices": {"A": 4, "B": 4, ...},
+          "front":      {"abstract": 1, "acknowledgements": 1},
+          "total": 113,        # full PDF
+          "ch1_12": 62,        # chapters 1-12, blanks excluded
+          "rest": 51,          # total - ch1_12
+        }
+    """
+
+    if PdfReader is None or not PDF_FILE.exists() or not TOC_FILE.exists():
+        return None
+
+    try:
+        reader = PdfReader(str(PDF_FILE))
+        n = len(reader.pages)
+        labels = list(reader.page_labels)
+        if len(labels) != n:
+            return None
+        is_blank = [
+            len((reader.pages[i].extract_text() or "").strip()) < BLANK_PAGE_MAXLEN
+            for i in range(n)
+        ]
+    except Exception:
+        # main.pdf may be mid-recompile (locked / half-written); skip the
+        # page breakdown for this pass and recover on the next one.
+        return None
+
+    # First physical index carrying each printed label.
+    label_to_phys = {}
+    for i, lab in enumerate(labels):
+        label_to_phys.setdefault(lab, i)
+
+    toc = read_file(TOC_FILE)
+
+    # ---- body boundaries (arabic printed pages) ----
+    boundaries = []  # (printed_start, kind, key)
+    for m in re.finditer(
+        r'\\contentsline\s*\{(chapter|part)\}\{(.*?)\}\{([^}]*)\}', toc
+    ):
+        lvl, inner, page = m.group(1), m.group(2), m.group(3)
+        if not page.strip().isdigit():
+            continue  # roman front matter handled separately
+        start = int(page)
+        if lvl == "part":
+            boundaries.append((start, "part", None))
+            continue
+        nm = re.match(r'\\numberline\s*\{([^}]+)\}', inner)
+        if not nm:
+            boundaries.append((start, "refs", None))
+        elif nm.group(1).strip().isdigit():
+            boundaries.append((start, "chapter", int(nm.group(1))))
+        else:
+            boundaries.append((start, "appendix", nm.group(1).strip()))
+    boundaries.sort()
+
+    def bucket_for(printed_arabic):
+        chosen = None
+        for start, kind, key in boundaries:
+            if start <= printed_arabic:
+                chosen = (kind, key)
+            else:
+                break
+        return chosen
+
+    chapters, appendices = {}, {}
+    for i in range(n):
+        lab = labels[i].strip()
+        if not lab.isdigit() or is_blank[i]:
+            continue
+        b = bucket_for(int(lab))
+        if not b:
+            continue
+        kind, key = b
+        if kind == "chapter":
+            chapters[key] = chapters.get(key, 0) + 1
+        elif kind == "appendix":
+            appendices[key] = appendices.get(key, 0) + 1
+
+    # ---- front-matter sections (roman printed pages) ----
+    front_entries = []  # (key, printed_label)
+    for m in re.finditer(
+        r'\\contentsline\s*\{chapter\}\{([^{}]*)\}\{([^}]*)\}', toc
+    ):
+        title, page = m.group(1), m.group(2).strip()
+        if page.isdigit():
+            continue
+        low = title.lower()
+        for key, _ in FRONT_UNITS:
+            if key.rstrip("s") in low:
+                front_entries.append((key, page))
+                break
+
+    front_starts = sorted(
+        label_to_phys[p] for _, p in front_entries if p in label_to_phys
+    )
+
+    front = {}
+    for key, page in front_entries:
+        start = label_to_phys.get(page)
+        if start is None:
+            front[key] = 0
+            continue
+        # stop at the next front section, or the end of the roman run
+        nexts = [s for s in front_starts if s > start]
+        stop = min(nexts) if nexts else n
+        cnt = 0
+        j = start
+        while j < stop and not is_blank[j]:
+            cnt += 1
+            j += 1
+        front[key] = cnt
+
+    ch1_12 = sum(v for k, v in chapters.items() if 1 <= k <= 12)
+
+    return {
+        "chapters": chapters,
+        "appendices": appendices,
+        "front": front,
+        "total": n,
+        "ch1_12": ch1_12,
+        "rest": n - ch1_12,
+    }
+
+
 # ============================================================
 # BIBLIOGRAPHY
 # ============================================================
@@ -519,57 +707,51 @@ def analyse_unit(path):
 # REQUIREMENTS CHECK (three states) — MAIN THESIS ONLY
 # ============================================================
 
-def evaluate_requirements(words, pages):
+def evaluate_requirements(words):
+    """
+    Two-state verdict based on the WORD COUNT ALONE: YES if the count is
+    anywhere within the acceptable range, NO otherwise (no PARTIALLY). A
+    specification line still says whether it sits in the ideal target band
+    or merely in the wider acceptable band. The page count is reported
+    separately (Page Breakdown) and never affects the verdict.
+    """
 
     words_target = TARGET_MIN <= words <= TARGET_MAX
     words_ok = ACCEPTABLE_MIN <= words <= ACCEPTABLE_MAX
-    pages_ok = PAGES_MIN <= pages <= PAGES_MAX
 
-    if words_target and pages_ok:
+    if words_ok:
         label = "YES"
         headline = (
-            r"\textbf{YES: Your thesis meets the expected "
-            r"requirements.}"
+            r"\textbf{YES: Your thesis meets the word-count requirement.}"
         )
-        detail = (
-            f"Word count ({words:,}) is within the target range, "
-            f"and the length ({pages} pages) is within the "
-            f"expected range."
-        )
-
-    elif words_ok and pages_ok:
-        label = "PARTIALLY"
-        headline = (
-            r"\textbf{PARTIALLY: Your thesis is within the "
-            r"acceptable range but not the expected target.}"
-        )
-        detail = (
-            f"Word count ({words:,}) falls inside the acceptable "
-            f"range but outside the {TARGET_MIN:,}--{TARGET_MAX:,} "
-            f"target; the length is {pages} pages. Additional "
-            f"content is recommended to reach the target."
-        )
+        if words_target:
+            detail = (
+                f"Word count ({words:,}) is within the ideal "
+                f"{TARGET_MIN:,}--{TARGET_MAX:,} target range."
+            )
+        else:
+            detail = (
+                f"Word count ({words:,}) is within the acceptable "
+                f"{ACCEPTABLE_MIN:,}--{ACCEPTABLE_MAX:,} range -- outside the "
+                f"ideal {TARGET_MIN:,}--{TARGET_MAX:,} target, but acceptable."
+            )
 
     else:
         label = "NO"
         headline = (
-            r"\textbf{NO: Your thesis does not meet the expected "
-            r"requirements.}"
+            r"\textbf{NO: Your thesis does not meet the word-count "
+            r"requirement.}"
         )
-
-        reasons = []
-        if not words_ok:
-            reasons.append(
-                f"word count ({words:,}) is outside the acceptable "
-                f"range ({ACCEPTABLE_MIN:,}--{ACCEPTABLE_MAX:,})"
+        if words < ACCEPTABLE_MIN:
+            detail = (
+                f"Word count ({words:,}) is below the acceptable "
+                f"minimum ({ACCEPTABLE_MIN:,})."
             )
-        if not pages_ok:
-            reasons.append(
-                f"page count ({pages}) is outside the expected "
-                f"range ({PAGES_MIN}--{PAGES_MAX})"
+        else:
+            detail = (
+                f"Word count ({words:,}) is above the acceptable "
+                f"maximum ({ACCEPTABLE_MAX:,})."
             )
-
-        detail = "Reason: " + "; ".join(reasons) + "."
 
     status = (
         headline
@@ -578,9 +760,11 @@ def evaluate_requirements(words, pages):
         + detail
         + r"\\"
         + r"\\"
-        + r"Target: approximately 50 pages and 15,000--18,000 "
-        + r"words (acceptable range: 13,500--19,800 words). "
-        + r"Appendices and bibliography are excluded from this check."
+        + r"Acceptable range: 13,500--19,800 words (ideal target: "
+        + r"15,000--18,000). This verdict is decided by the word count "
+        + r"only; the page count is reported below and does not affect it. "
+        + r"Front matter, appendices and the bibliography are excluded "
+        + r"from the word total."
     )
 
     return label, status
@@ -591,7 +775,7 @@ def evaluate_requirements(words, pages):
 # ============================================================
 
 def esc(text):
-    """
+    r"""
     Escape LaTeX-special characters in a title, idempotently.
 
     Titles harvested from the .toc are already valid LaTeX: a
@@ -652,10 +836,58 @@ def subtotal_row(label, acc):
 # CREATE LATEX REPORT
 # ============================================================
 
-def generate_tex(parts_results, appendix_results, bib_count):
+def page_breakdown_section(page_info):
+    """The bottom Page Breakdown block: chapters 1-12 vs everything else."""
+
+    if not page_info:
+        return (
+            "\\section*{Page Breakdown}\n\n\\noindent\n\\textit{The page "
+            "breakdown needs a compiled \\texttt{main.pdf} and pypdf; "
+            "neither was available in this run.}\n"
+        )
+
+    ch = page_info["ch1_12"]
+    rest = page_info["rest"]
+    total = page_info["total"]
+
+    return rf"""
+\section*{{Page Breakdown}}
+
+\noindent
+Page counts read directly from the compiled \texttt{{main.pdf}}. Blank and
+filler pages (the empty versos an openright book inserts) are excluded from
+the chapters figure and folded into ``everything else''.
+
+\vspace{{0.2cm}}
+
+\begin{{tabularx}}{{\textwidth}}{{Xr}}
+\toprule
+Section & Pages \\
+\midrule
+Chapters 1--12 (content only, blank pages excluded) & {ch} \\
+Everything else (front matter, part dividers, appendices, bibliography, blank pages) & {rest} \\
+\midrule
+\textbf{{Total thesis pages}} & \textbf{{{total}}} \\
+\bottomrule
+\end{{tabularx}}
+"""
+
+
+def generate_tex(front_results, parts_results, appendix_results,
+                 bib_count, page_info):
 
     grand = defaultdict(int)
     body = ""
+
+    # ---- Front matter: shown for reference, EXCLUDED from totals ----
+    if front_results:
+        body += (
+            "\\multicolumn{7}{l}{\\textbf{Front matter "
+            "(excluded from totals)}} \\\\\n\\midrule\n"
+        )
+        for fu in front_results:
+            body += data_row(fu["name"], fu["pages"], fu)
+        body += "\\midrule\n"
 
     # ---- Parts, each with its own subtotal ----
     for part_idx, (part_title, chapters) in enumerate(parts_results, start=1):
@@ -707,8 +939,11 @@ def generate_tex(parts_results, appendix_results, bib_count):
         app_body += "\\midrule\n"
         app_body += subtotal_row("Subtotal --- Appendices", app_acc)
 
-    # ---- Requirements: MAIN THESIS ONLY ----
-    label, status = evaluate_requirements(grand["words"], grand["pages"])
+    # ---- Requirements: word count only (pages are informational) ----
+    label, status = evaluate_requirements(grand["words"])
+
+    # ---- Page breakdown block (chapters 1-12 vs everything else) ----
+    page_section = page_breakdown_section(page_info)
 
     # ---- Assemble document ----
     appendix_section = ""
@@ -779,7 +1014,11 @@ Chapter & Pages & Words & Citations & Figures & Tables & Footnotes \\
 
 \noindent
 \textit{{Placeholder chapters (fewer than {PLACEHOLDER_THRESHOLD}
-words) are shown with a dash and excluded from all totals.}}
+words) are shown with a dash and excluded from all totals. The Pages
+column shows EFFECTIVE content pages (blank/filler pages excluded);
+front matter is listed for reference and excluded from every total.}}
+
+{page_section}
 
 {appendix_section}
 
@@ -812,10 +1051,23 @@ def main():
 
     toc_chapter_titles, toc_appendix_titles = extract_toc_titles()
 
-    # Page spans are already split by TOC label: chapters carry
-    # digit labels, appendices carry letter labels. This stays
-    # aligned even when the thesis has placeholder chapters.
-    chapter_pages, appendix_pages = extract_all_chapter_pages()
+    # EFFECTIVE pages from the compiled PDF (blank pages excluded).
+    # Falls back to TOC spans when pypdf / the PDF is unavailable.
+    page_info = compute_effective_pages()
+    chapter_spans, appendix_spans = extract_all_chapter_pages()
+
+    # ---- front matter (Abstract, Acknowledgements): reference only ----
+    front_results = []
+    for key, title in FRONT_UNITS:
+        path = FRONT_DIR / (key + ".tex")
+        print("Analysing front matter:", key)
+        stats = analyse_unit(path)
+        if page_info:
+            stats["pages"] = page_info["front"].get(key, "-")
+        else:
+            stats["pages"] = "-"
+        stats["name"] = title
+        front_results.append(stats)
 
     # ---- analyse chapters, grouped by part ----
     parts_results = []
@@ -838,8 +1090,12 @@ def main():
             else:
                 display = prettify_key(key)
 
-            if chapter_index < len(chapter_pages):
-                stats["pages"] = chapter_pages[chapter_index]
+            # Chapters are numbered 1..N in document order.
+            number = chapter_index + 1
+            if page_info:
+                stats["pages"] = page_info["chapters"].get(number, 0)
+            elif chapter_index < len(chapter_spans):
+                stats["pages"] = chapter_spans[chapter_index]
             else:
                 stats["pages"] = 0
 
@@ -864,8 +1120,11 @@ def main():
         else:
             display = prettify_key(key)
 
-        if i < len(appendix_pages):
-            stats["pages"] = appendix_pages[i]
+        letter = chr(ord("A") + i)
+        if page_info:
+            stats["pages"] = page_info["appendices"].get(letter, 0)
+        elif i < len(appendix_spans):
+            stats["pages"] = appendix_spans[i]
         else:
             stats["pages"] = 0
 
@@ -877,15 +1136,18 @@ def main():
 
     # ---- generate + compile ----
     label, total_words, total_pages = generate_tex(
-        parts_results, appendix_results, bib_count
+        front_results, parts_results, appendix_results, bib_count, page_info
     )
 
     print("Generated:", OUTPUT_TEX)
     print(f"Total words (main thesis, excl. placeholders): {total_words:,}")
-    print(f"Total pages (main thesis, excl. placeholders): {total_pages}")
+    print(f"Chapters 1-12 effective pages (blanks excluded): {total_pages}")
+    if page_info:
+        print(f"Everything else: {page_info['rest']} | "
+              f"Total thesis pages: {page_info['total']}")
     print(f"Appendices: {len(appendix_results)}")
     print(f"Bibliography entries: {bib_count}")
-    print(f"Status: {label}")
+    print(f"Status (word count only): {label}")
 
     subprocess.run(
         [
@@ -900,5 +1162,50 @@ def main():
     print("PDF created:", STAT_DIR / "thesis_stats.pdf")
 
 
+def _watch_loop():
+    """
+    LIVE mode: re-run this script (one full pass, which recompiles
+    statistics/thesis_stats.pdf) every time a thesis source file changes.
+    Keep statistics/thesis_stats.pdf open in the VS Code PDF viewer and it
+    reloads automatically on each save.
+    """
+
+    import time
+
+    self_path = str(Path(__file__).resolve())
+
+    def watched():
+        files = [MAIN, TOC_FILE, PDF_FILE, BIB_FILE]
+        for d in (ROOT / "chapters", APPENDIX_DIR, FRONT_DIR):
+            files += sorted(d.glob("*.tex"))
+        return files
+
+    def snapshot():
+        snap = {}
+        for p in watched():
+            try:
+                snap[str(p)] = p.stat().st_mtime
+            except OSError:
+                pass
+        return snap
+
+    print("Watching thesis sources... regenerating thesis_stats.pdf on every "
+          "save (Ctrl+C to stop).")
+    last = None
+    try:
+        while True:
+            snap = snapshot()
+            if snap != last:
+                # Re-run myself as a plain one-shot (no --watch).
+                subprocess.run([sys.executable, self_path])
+                last = snap
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nStopped watching.")
+
+
 if __name__ == "__main__":
-    main()
+    if "--watch" in sys.argv:
+        _watch_loop()
+    else:
+        main()

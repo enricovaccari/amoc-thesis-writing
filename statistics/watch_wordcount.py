@@ -1,5 +1,18 @@
 from pathlib import Path
 import re
+import sys
+
+# Reuse the authoritative page logic from generate_wordcount so the two
+# scripts always agree. Adding this file's own folder to sys.path lets
+# the import work regardless of the current working directory. Importing
+# the module has no side effects (its main() runs only under __main__).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from generate_wordcount import (          # noqa: E402
+    compute_effective_pages,
+    expand_inputs,
+    FRONT_UNITS,
+    FRONT_DIR,
+)
 
 
 # =========================
@@ -72,7 +85,9 @@ def read_file(path):
 
 
 def count_words(text):
-    words = re.findall(r"\b[a-zA-Z]+\b", text)
+    # Match generate_wordcount.py: allow accented letters so the two
+    # scripts count the same words.
+    words = re.findall(r"\b[A-Za-zÀ-ÿ]+\b", text)
     return len(words)
 
 
@@ -80,26 +95,48 @@ def count_occurrences(text, pattern):
     return len(re.findall(pattern, text))
 
 
-def clean_latex(text):
-
-    # Remove comments
-    text = re.sub(r"%.*", "", text)
-
-    # Remove commands
-    text = re.sub(
-        r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^}]*\})?",
-        "",
+def count_citations(text):
+    # Same rule as generate_wordcount.py: count every key inside a
+    # citation command, including \parencite and \textcite (which the
+    # old \\cite[a-zA-Z]* pattern silently missed), and split on commas
+    # so \citep{a,b} counts as two.
+    matches = re.findall(
+        r"\\(?:cite|citep|citet|parencite|textcite)\{([^}]*)\}",
         text
     )
+    total = 0
+    for m in matches:
+        total += len([x for x in m.split(",") if x.strip()])
+    return total
 
-    # Remove math
-    text = re.sub(r"\$.*?\$", "", text)
+
+def clean_latex(text):
+    # Mirror generate_wordcount.py's clean_text so both scripts exclude
+    # the same material (figures, tables, captions, footnotes) and thus
+    # report the same word counts for figure/table-heavy chapters such
+    # as 09_results.
+
+    # remove comments (but keep an escaped \%)
+    text = re.sub(r"(?<!\\)%.*", "", text)
+
+    # remove whole figure and table environments
+    text = re.sub(r"\\begin\{figure\}.*?\\end\{figure\}", "", text, flags=re.DOTALL)
+    text = re.sub(r"\\begin\{table\}.*?\\end\{table\}", "", text, flags=re.DOTALL)
+
+    # drop captions and footnotes from the word count
+    text = re.sub(r"\\caption\{.*?\}", "", text, flags=re.DOTALL)
+    text = re.sub(r"\\footnote\{.*?\}", "", text, flags=re.DOTALL)
+
+    # remove remaining latex commands
+    text = re.sub(r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^}]*\})?", " ", text)
+
+    text = text.replace("{", " ").replace("}", " ")
 
     return text
 
 
 def esc(text):
-    """
+    r"""
     Escape LaTeX-special characters in a title, idempotently.
 
     Titles harvested from the .toc are already valid LaTeX: a
@@ -257,9 +294,13 @@ def count_bib_entries():
 def analyse_unit(key, folder):
 
     path = folder / (key + ".tex")
-    raw = read_file(path)
-    cleaned = clean_latex(raw)
-    words = count_words(cleaned)
+
+    # Expand \input/\include first (shared with generate_wordcount) so
+    # figures and tables kept in separate files (e.g. \input{figures/...})
+    # are counted, exactly like the authoritative script.
+    expanded = expand_inputs(read_file(path), folder)
+
+    words = count_words(clean_latex(expanded))
 
     placeholder = words < PLACEHOLDER_THRESHOLD
 
@@ -271,12 +312,59 @@ def analyse_unit(key, folder):
     return {
         "words": words,
         "pages": pages,
-        "citations": count_occurrences(raw, r"\\cite[a-zA-Z]*\{"),
-        "figures": count_occurrences(raw, r"\\begin\{figure\}"),
-        "tables": count_occurrences(raw, r"\\begin\{table\}"),
-        "footnotes": count_occurrences(raw, r"\\footnote\{"),
+        "citations": count_citations(expanded),
+        "figures": count_occurrences(expanded, r"\\begin\{figure\}"),
+        "tables": count_occurrences(expanded, r"\\begin\{table\}"),
+        "footnotes": count_occurrences(expanded, r"\\footnote\{"),
         "placeholder": placeholder,
     }
+
+
+# =========================
+# Optional LIVE watch mode
+# =========================
+# `python watch_wordcount.py --watch` turns this one-shot script into a
+# real watcher: it re-runs itself (a normal one-shot pass) every time a
+# source file changes, so the stats refresh on every save. Without the
+# flag the script behaves exactly as before -- a single pass -- so any
+# task/editor that already calls it is unaffected.
+
+if "--watch" in sys.argv:
+    import subprocess
+    import time
+
+    SELF = str(Path(__file__).resolve())
+
+    def _watched_files():
+        files = [ROOT / "main.tex", ROOT / "main.toc",
+                 ROOT / "main.pdf", BIB_FILE]
+        for d in (CHAPTERS, APPENDIX_DIR, FRONT_DIR):
+            files += sorted(d.glob("*.tex"))
+        return files
+
+    def _snapshot():
+        snap = {}
+        for p in _watched_files():
+            try:
+                snap[str(p)] = p.stat().st_mtime
+            except OSError:
+                pass
+        return snap
+
+    print("Watching thesis sources... (save a file to refresh, Ctrl+C to stop)")
+    last = None
+    try:
+        while True:
+            snap = _snapshot()
+            if snap != last:
+                # Re-run myself as a plain one-shot (no --watch), which
+                # regenerates thesis_statistics.tex from the saved files.
+                subprocess.run([sys.executable, SELF])
+                last = snap
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nStopped watching.")
+    sys.exit(0)
 
 
 # =========================
@@ -286,6 +374,11 @@ def analyse_unit(key, folder):
 main_text = read_file(MAIN)
 parts, appendices = extract_structure(main_text)
 toc_chapters, toc_appendices = extract_toc_titles()
+
+# EFFECTIVE pages from the compiled PDF (blank pages excluded), shared
+# with generate_wordcount. None when there is no PDF/pypdf yet, in which
+# case we keep the fast words-per-page estimate.
+page_info = compute_effective_pages()
 
 parts_results = []
 grand = {k: 0 for k in
@@ -306,6 +399,12 @@ for part_title, chapter_keys in parts:
             display = toc_chapters[chapter_index]
         else:
             display = CHAPTER_NAMES.get(key, prettify_key(key))
+
+        # Prefer real effective pages (blanks excluded) when we have the
+        # PDF; otherwise keep the words-per-page estimate.
+        if page_info and not stats["placeholder"]:
+            stats["pages"] = page_info["chapters"].get(
+                chapter_index + 1, stats["pages"])
 
         stats["name"] = display
         chapter_dicts.append(stats)
@@ -333,12 +432,27 @@ for i, key in enumerate(appendices):
     else:
         display = prettify_key(key)
 
+    if page_info and not stats["placeholder"]:
+        stats["pages"] = page_info["appendices"].get(
+            chr(ord("A") + i), stats["pages"])
+
     stats["name"] = display
     appendix_results.append(stats)
 
     if not stats["placeholder"]:
         for k in app_acc:
             app_acc[k] += stats[k]
+
+
+# front matter (Abstract, Acknowledgements): reference only, never
+# added to the totals.
+front_results = []
+for fkey, ftitle in FRONT_UNITS:
+    stats = analyse_unit(fkey, FRONT_DIR)
+    if page_info:
+        stats["pages"] = page_info["front"].get(fkey, "-")
+    stats["name"] = ftitle
+    front_results.append(stats)
 
 
 bib_count = count_bib_entries()
@@ -348,25 +462,36 @@ total_pages = grand["pages"]
 
 
 # =========================
-# Requirements check (main thesis only)
+# Requirements check (word count only; pages are informational)
 # =========================
 
-if TARGET_MIN <= total_words <= TARGET_MAX:
+if ACCEPTABLE_MIN <= total_words <= ACCEPTABLE_MAX:
     status = "MET"
-    message = "The thesis meets the expected word count target."
+    if TARGET_MIN <= total_words <= TARGET_MAX:
+        message = (
+            f"Word count ({total_words:,}) is within the ideal "
+            f"15,000--18,000 target range."
+        )
+    else:
+        message = (
+            f"Word count ({total_words:,}) is within the acceptable "
+            f"13,500--19,800 range -- outside the ideal 15,000--18,000 "
+            f"target, but acceptable."
+        )
 
-elif ACCEPTABLE_MIN <= total_words <= ACCEPTABLE_MAX:
-    status = "PARTIALLY MET"
+elif total_words < ACCEPTABLE_MIN:
+    status = "NOT MET"
     message = (
-        f"The thesis satisfies the minimum acceptable word count "
-        f"range ({total_words:,} words), but additional written "
-        "content is recommended to reach the expected target "
-        "length of approximately 15,000--18,000 words."
+        f"Word count ({total_words:,}) is below the acceptable "
+        f"minimum ({ACCEPTABLE_MIN:,})."
     )
 
 else:
     status = "NOT MET"
-    message = "The thesis does not meet the acceptable word count range."
+    message = (
+        f"Word count ({total_words:,}) is above the acceptable "
+        f"maximum ({ACCEPTABLE_MAX:,})."
+    )
 
 
 # =========================
@@ -391,6 +516,16 @@ def subtotal_row(label, acc):
 
 
 body = ""
+
+# Front matter: shown for reference, EXCLUDED from every total.
+if front_results:
+    body += (
+        "\\multicolumn{7}{l}{\\textbf{Front matter "
+        "(excluded from totals)}} \\\\\n\\midrule\n"
+    )
+    for fu in front_results:
+        body += data_row(fu["name"], fu)
+    body += "\\midrule\n"
 
 for idx, (part_title, chapter_dicts, sub) in enumerate(parts_results, start=1):
 
@@ -448,6 +583,34 @@ bibliography_section = (
 )
 
 
+# page breakdown section (real from the PDF, or an estimate note)
+if page_info:
+    page_section = (
+        "\\section*{Page Breakdown}\n\n\\noindent\n"
+        "Page counts read directly from the compiled \\texttt{main.pdf}; "
+        "blank/filler pages are excluded from the chapters figure.\n\n"
+        "\\vspace{0.2cm}\n\n"
+        "\\begin{tabularx}{\\textwidth}{Xr}\n\\toprule\n"
+        "Section & Pages \\\\\n\\midrule\n"
+        "Chapters 1--12 (content only, blank pages excluded) & "
+        f"{page_info['ch1_12']} \\\\\n"
+        "Everything else (front matter, part dividers, appendices, "
+        f"bibliography, blank pages) & {page_info['rest']} \\\\\n"
+        "\\midrule\n"
+        f"\\textbf{{Total thesis pages}} & \\textbf{{{page_info['total']}}} \\\\\n"
+        "\\bottomrule\n\\end{tabularx}\n\n\\vspace{0.5cm}\n\n"
+    )
+else:
+    page_section = (
+        "\\section*{Page Breakdown}\n\n\\noindent\n"
+        f"\\textit{{Chapters 1--12, estimated at about {WORDS_PER_PAGE} "
+        f"words per page: {total_pages} pages. The full breakdown "
+        "(blank pages excluded, plus the true total) needs a compiled "
+        "\\texttt{main.pdf}; run \\texttt{generate\\_wordcount.py}.}\n\n"
+        "\\vspace{0.5cm}\n\n"
+    )
+
+
 # =========================
 # Write LaTeX
 # =========================
@@ -475,17 +638,28 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
 
     f.write("\\bottomrule\n\\end{tabularx}\n\n\\vspace{1cm}\n\n")
 
+    f.write(page_section)
     f.write(appendix_section)
     f.write(bibliography_section)
+
+    pages_note = (
+        "The Pages column shows effective content pages from the compiled "
+        "\\texttt{main.pdf} (blank pages excluded)."
+        if page_info else
+        f"The Pages column is an estimate of about {WORDS_PER_PAGE} words "
+        "per page; compile and run \\texttt{generate\\_wordcount.py} for "
+        "the real page counts."
+    )
 
     f.write(
         "\\section*{Requirements Check}\n\n"
         "\\begin{itemize}\n"
-        "\\item Expected length: approximately 50 pages\n"
         "\\item Expected word count: 15,000--18,000 words\n"
         "\\item Acceptable word range: 13,500--19,800 words\n"
-        "\\item Status is computed on the main thesis only "
-        "(appendices and bibliography excluded)\n"
+        "\\item The verdict is decided by the WORD COUNT only; the page "
+        "count is reported above and does not affect it\n"
+        "\\item Status is computed on the main thesis only (front matter, "
+        "appendices and bibliography excluded)\n"
         "\\end{itemize}\n\n"
         "\\vspace{0.5cm}\n\n\\noindent\n"
         f"\\textbf{{STATUS: {status}}}\n\n"
@@ -493,14 +667,19 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
         f"{message}\n\n"
         "\\vspace{0.3cm}\n\n\\noindent\n"
         "Placeholder chapters containing fewer than 50 words are excluded "
-        "from the totals. Page counts here are an estimate of about "
-        f"{WORDS_PER_PAGE} words per page, for live monitoring; the compiled "
-        "figures in \\texttt{thesis\\_stats.pdf} are authoritative.\n\n"
+        f"from the totals. {pages_note}\n\n"
         "\\end{document}\n"
     )
 
 
 print(f"Statistics generated: {OUTPUT}")
 print(f"Total words (main thesis): {total_words:,}")
+if page_info:
+    print(f"Pages -> chapters 1-12: {page_info['ch1_12']} | "
+          f"everything else: {page_info['rest']} | "
+          f"total thesis: {page_info['total']}")
+else:
+    print(f"Pages (estimated, chapters 1-12): {total_pages} "
+          f"(no main.pdf; run generate_wordcount.py for real pages)")
 print(f"Appendices: {len(appendix_results)} | Bibliography entries: {bib_count}")
-print(f"Status: {status}")
+print(f"Status (word count only): {status}")

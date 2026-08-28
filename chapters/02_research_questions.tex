@@ -1,132 +1,167 @@
 % =========================================================================
-% CHAPTER 3 — LITERATURE REVIEW
+% CHAPTER 2 — RESEARCH QUESTIONS & OBJECTIVES
 % =========================================================================
 
-\chapter{Literature Review}
-\label{ch:literature}
+\chapter{Research Questions \& Objectives}
+\label{ch:rqs}
 
 \noindent
 {\rmfamily\itshape
 \begin{tabular}[t]{@{}l@{\hspace{0.3cm}}p{12.5cm}@{}}
 \textls[50]{\textbf{Addressed:}} &
-\textls[50]{Theoretical Foundations · Current benchmarks · Design Principles · Gaps in the Literature}
+\textls[50]{Key Research Questions · Issues to Address · Assumptions Requiring Validation · Project Objectives · Hypotheses}
 \end{tabular}
 }
 
-\vspace{0.5cm}
+% -------------------------------------------------------------------------
+\section{Research Framework}
+\label{sec:rq-framework}
 
-This chapter reviews the literature on which the thesis is built. Three strands define the problem: the psychology of climate risk perception, the cognitive science of dynamic systems, and the empirical evaluation of climate visualisation. Two supply the response: embodied and immersive representation, and machine learning used representationally rather than predictively. A sixth strand translates the theory into a design grammar for building an experiential representation, and a closing section names the gap the thesis occupies.
+Chapter~\ref{ch:introduction} identified a representational problem: complex climate tipping systems stay cognitively out of reach for non-specialists even when the data are open and legible. This chapter formalises the programme that addresses it. The programme follows the three-phase arc of \emph{detect, translate and evaluate}, adapted from design-based research in the learning sciences, where designing a solution is itself treated as research \citep{andersonshattuck2012, barab2004}. The phases are linked: what is detected sets what can be translated, and what is translated becomes what is evaluated. A single central research question connects them, and three sub-questions --- one per phase --- investigate it through different kinds of evidence.
+
+The three phases do not weigh equally.\footnote{The \emph{detect} phase is analytical and largely complete; the \emph{evaluate} phase is exploratory, offering an initial assessment rather than definitive validation.} The centre of gravity is the bridge between the first two: translating machine-learning-derived structure into representations built to improve understanding. That bridge is the original methodological contribution; the evaluation asks whether it shows promise, within the limits of a small exploratory study.
 
 % -------------------------------------------------------------------------
-\section{Psychological Barriers to Climate Risk Perception}
-\label{sec:psych-barriers}
+\section{Research Questions}
+\label{sec:rqs}
 
-For much of the past three decades, climate communication rested on what is called the \emph{information-deficit hypothesis}: the belief that inaction reflected missing information, and that closing the knowledge gap would close the action gap. The evidence has clearly challenged this assumption. \citet{kellstedt2008} found that people with higher climate knowledge reported \emph{lower} concern and \emph{lower} sense of responsibility.\footnote{The inverse relationship survived controls for political affiliation and demographics, indicating a genuine cognitive-cultural effect rather than a confound.} \citet{kahan2015} showed that scientific literacy \emph{polarised} climate attitudes rather than converging them, so the most literate members of opposing groups disagreed most. The lesson is not that information does not matter, but that its effect is mediated by cognitive and cultural machinery the standard formats never addressed.
+The central question guides the thesis as a whole, and is deliberately evaluative rather than merely design-oriented:
 
-The most influential account of this failure is \citet{stoknes2015}, whose five barriers --- distance, doom, dissonance, denial and identity --- have organised much later work.\footnote{Briefly: \emph{distance} (climate change feels spatially, temporally and socially remote), \emph{doom} (catastrophist framing triggers avoidance), \emph{dissonance} (the belief--behaviour gap is resolved by adjusting the belief), \emph{denial} (self-protective disengagement) and \emph{identity} (climate positions mark group belonging).} The barriers interlock rather than act singly \citep{vanderlinden2015}, and audiences stratify into psychologically distinct groups whose barriers activate differently, so no single strategy serves all \citep{leiserowitz2021}. Conventional visualisation has not dissolved them, and the reason is structural. The imagery most used to communicate climate change either reinforces the very distance communicators hope to close or triggers the doom response that suppresses engagement \citep{cornerclimate2015, nicholsoncole2005}. Formats that give the reader no active role consistently underperform those that do \citep{ojala2023}. Adding precision to a line graph opens no such role: its implicit rhetoric of \emph{here is the fact} leaves the reader nowhere to stand. The recent literature therefore points toward representations that treat the reader as an active participant in making meaning \citep{marlon2019, morris2019} --- the direction this thesis pursues, with machine learning as its substrate.
+\begin{quote}
+\textbf{RQ.} \emph{To what extent do machine-learning-driven experiential visualisations improve the cognitive understanding of complex climate tipping systems among non-specialist audiences, compared with conventional static visualisations?}
+\end{quote}
 
-% -------------------------------------------------------------------------
-\section{The Cognitive Science of Dynamic and Complex Systems}
-\label{sec:cognitive-science}
+Every element is a choice. The construction \emph{to what extent\ldots compared with} sets a comparative frame: the aim is not to build a visualisation but to test whether it supports understanding better than a conventional one. Therefore, design is the means; evaluation is the end. \emph{Non-specialist audiences} names participants characterised by background, not an undefined public; \emph{complex climate tipping systems} names the class of processes for which the AMOC is the case study. The thesis does not ask whether machine learning can predict or detect an AMOC tipping point --- a question still debated in climate science \citep{benyami2024, ditlevsen2023} --- but whether the latent structure it recovers can be translated into representations that help non-specialists understand an otherwise invisible system.
 
-Beneath these cultural filters lies a barrier independent of them: the mind's structural limits in reasoning about systems of accumulation, feedback and delay. These are stable features of cognitive architecture, not gaps better teaching could close, and any representation that ignores them will fail however well it is tuned psychologically.
+Three sub-questions follow the three phases:
 
-The strongest evidence is \citet{sterman2008}, whose experiments show that even mathematically literate adults make systematic errors on elementary stock-and-flow problems. Shown a scenario in which atmospheric CO\textsubscript{2} stabilises, and asked to sketch the emissions path consistent with it, most violate mass balance --- matching the shape of the output to the shape of the input rather than reasoning about the difference between inflow and outflow (Figures~\ref{fig:sterman-scenario}--\ref{fig:sterman-response}).\footnote{In Sterman's studies 84\% of highly educated participants --- MIT graduate students, engineers, participants trained in calculus --- made this error, indicating a limit of representation rather than of arithmetic.} \citet{cronin2009} found the same in starker form: asked to sketch a stock from its inflow and outflow, participants confused rates with levels and treated the dynamic system as static, even when they had the mathematical apparatus to solve it. Given only a graph, the mind does not spontaneously build the dynamic scenario the graph depicts.
+\begin{quote}
+\textbf{RQ1} (analytical). \emph{What latent structural patterns and dynamical signatures of AMOC variability can machine learning recover from the RAPID record and the Copernicus reanalysis ensemble, and how faithfully do they preserve the underlying dynamics relative to classical statistical approaches?}
+\end{quote}
 
-\input{figures/sterman_figures.tex}
+RQ1 is descriptive and exploratory. It commits the thesis not to a new oceanographic result but to an honest account of what the data hold. The load-bearing word is \emph{faithfully}: the contribution is not that a method was applied, but that the low-dimensional representation is shown to preserve the system's structure, and so earns the right to serve as the substrate for what follows.
 
-Cognitive-load theory explains why \citep{sweller1988, swellervanmerrienboer2019}. Working memory has strictly limited capacity, and a static image of a dynamic system asks the reader to mentally animate what the image does not animate --- a load imposed on top of the domain itself. \citet{ware2021} argues that a communicative visualisation must lower this internal-simulation demand by making dynamic structure perceptually available in the representation itself. A third strand points ahead: \citet{tversky2019}, synthesising four decades of work, shows that human reasoning about complex processes is fundamentally spatial, understood through bodily and kinaesthetic schemas the mind already inhabits. If the AMOC is structurally dynamic and human reasoning about dynamics is spatially embodied, the strategies most likely to succeed are those that enrol the reader's spatial and kinaesthetic cognition. That proposition organises the rest of the chapter.
+\begin{quote}
+\textbf{RQ2} (design-based). \emph{How can the latent structures from RQ1 be translated into interactive and experiential representations that communicate the AMOC's dynamics, invisibility and tipping-point risk, grounded in embodied cognition and information visualisation?}
+\end{quote}
 
-% -------------------------------------------------------------------------
-\section{Empirical Evaluation of Climate Visualisation}
-\label{sec:empirical-viz}
+RQ2 is generative: it has no single correct answer, but a class of well-justified ones to construct and defend. It produces the representations that RQ3 evaluates --- not the endpoint, but the object of study.
 
-What has actually been measured about how climate visualisations are received reveals a methodological asymmetry: the field is rich in studies of what audiences \emph{prefer} and sparse in studies of what they \emph{understand}. That asymmetry defines the gap this thesis addresses. The most systematic review found that standard formats --- line graphs, choropleth maps, ensemble spaghetti plots --- are mismatched to their audiences' cognitive resources, and that the mismatch appears even among trained policy readers \citep{harold2016}. Those readers underestimate uncertainty ranges shown as shaded envelopes and misread ensemble spread as disagreement rather than as a structural feature of a projection \citep{mcmahon2015}. Most tellingly, the visualisations people \emph{prefer} are not those that produce the highest \emph{comprehension}: people prefer what feels familiar and understand what is structurally aligned with the phenomenon \citep{kause2020}.\footnote{A later study found the same split for uncertainty specifically: intuitive icon arrays produced overconfident readings, while less intuitive but structurally faithful frequency formats produced calibrated ones \citep{kause2021}.} Optimising for preference therefore risks producing what \citet{sheppard2015} calls \emph{consoling visualisations} --- images received warmly and understood poorly.
+\begin{quote}
+\textbf{RQ3} (empirical). \emph{To what extent do dynamic and experiential representations of AMOC dynamics, compared with a conventional static one, support how non-specialist audiences develop and express their understanding of complex system behaviour?}
+\end{quote}
 
-This is not accidental; it rests on a mature science of visual encoding that Chapter~\ref{ch:translate} draws on directly. Bertin identified the finite set of \emph{visual variables} through which any mark encodes data --- position, size, value, colour, orientation, texture \citep{bertin1983}. \citet{clevelandmcgill1984} ranked them by decoding accuracy: position along a common scale is judged far more accurately than length, angle, area or colour saturation. \citet{munzner2014} turned this into a design rule, \emph{effectiveness}: match the most important information to the most accurately decoded channel. \citet{ware2021} grounds the same rule in perception, distinguishing channels processed pre-attentively --- in parallel, before focused attention --- from those needing serial inspection. Encoding, in short, is measured perceptual performance, not taste.
-
-\input{figures/literature/cleveland_hierarchy.tex}
-
-Uncertainty is where conventional encoding fails most, and where this thesis departs most from convention. Error bars and shaded bands are read poorly by non-specialists, who treat a band as a hard edge \citep{spiegelhalter2017}; \citet{padilla2018} explain why, showing that static uncertainty encodings overload working memory, so viewers fall back on heuristics that discard the uncertainty. The best-evidenced alternative is to \emph{animate} it: Hypothetical Outcome Plots show a sequence of possible outcomes over time, letting the viewer feel the spread instead of decoding a band, and untrained observers judge them more accurately than error bars \citep{hullman2015hops, kale2019hops}. This licenses the thesis's central move --- rendering uncertainty as a felt perceptual quality rather than a bracketed number.
-
-These limits are visible in how the AMOC itself is communicated, which fixes the study's control condition. In the scientific and public record the AMOC appears almost entirely as line graphs of transport in Sverdrup, model-ensemble projections of decline shown as a shaded spread, and reconstructed ``fingerprint'' indices, with the IPCC adding verbal confidence qualifiers such as ``very likely to weaken'' \citep{caesar2018, ipcc2021}. Each form is limited exactly as the sections above predict: the static curve depicts a dynamic system in its final state; the shaded band encodes uncertainty in the way shown to be misread; the verbal qualifiers ask a non-specialist to hold a probabilistic threshold judgement in working memory with no perceptual support; and none conveys the non-linearity that defines a tipping element. The conventional baseline communicates the AMOC's magnitude and trend while failing to communicate its dynamics, non-linearity and uncertainty --- precisely what the experiential condition is designed to improve upon, and reconstructing it faithfully is what makes the comparison in Chapter~\ref{ch:userstudy} fair.
+RQ3 is comparative but exploratory. It does not measure effectiveness at population scale; it observes how participants describe and organise their understanding under one representation or the other. Its wording mirrors the central question by design --- \emph{to what extent}, \emph{compared with} --- because it is a focused instance of the same enquiry, resting on qualitative depth rather than statistical generalisation. No sub-question answers the central one alone: RQ1 finds the structure, RQ2 builds the representation, RQ3 tests it against the baseline.
 
 % -------------------------------------------------------------------------
-\section{Embodied Cognition and Immersive Representation}
-\label{sec:embodied-viz}
+\section{Objectives}
+\label{sec:objectives}
 
-If the response is to enrol spatial and bodily cognition, three related traditions show how. The philosophical grounding is \citet{lakoff1999}: the abstract concepts through which we reason about systems --- acceleration, feedback, stability, tipping --- are extensions of bodily and spatial experience, not disembodied logic. \citet{kirsh2013} supplied experimental support, finding that people allowed to gesture and move while reasoning about complex processes outperformed those restricted to static inspection. The most concrete design tradition to grow from this is \emph{data physicalisation} \citep{jansen2015}, whose artefacts encode information for exploration through touch and sight; participants working with them recall represented information more accurately than from equivalent charts \citep{moere2010}. Parallel to it, \emph{data humanism} argues that data communication has been dominated by an aesthetic of dispassionate abstraction, and that narrative, authored representation engages readers more deeply \citep{lupi2017, segel2010}. The third tradition, \emph{immersive analytics}, holds that immersive and spatially-aware interfaces offer representational affordances the flat screen cannot, suited to data whose structure is spatial or dynamic \citep{marriott2018}.\footnote{Formal evaluations of immersive analytics remain limited, and the strongest current evidence concerns three-dimensional spatial and temporal tasks rather than abstract complex systems. The theoretical alignment with the cognitive science of \S\ref{sec:cognitive-science} is nonetheless direct.} Browser-based rendering and real-time audio now bring these affordances within reach of a single research project, which is the opening this thesis takes up. Together these traditions support one claim: the difficulty of communicating complex climate systems is not addressable by refinement within the conventional paradigm, and the literatures point jointly toward treating the reader as an active, embodied participant.
+Each sub-question becomes a set of objectives with defined outputs, tied in the alignment matrix (Table~\ref{tab:alignment}) to the chapter that delivers them and the claim they advance.
 
-% -------------------------------------------------------------------------
-\section{Machine Learning as a Representational Substrate}
-\label{sec:ml-climate}
+The analytical objectives structure Chapter~\ref{ch:data_pipeline}. They recover the latent vertical structure of the AMOC through principal component analysis (\textbf{O1.1}), test whether that structure is genuinely low-dimensional by comparing it against a non-linear autoencoder at matched dimensionality (\textbf{O1.2}), characterise the record's anomalies and test for early-warning signals under a corrected significance test (\textbf{O1.3}), and specify --- but defer to future work --- a probabilistic forecasting layer (\textbf{O1.4}).
 
-Machine learning for climate science is now vast, but its dominant agenda is \emph{predictive}: forecasting variables, detecting anomalies, parameterising physical processes, downscaling model output \citep{reichstein2019, sonnewald2021}. The AMOC literature mirrors this, applying machine learning mostly to detect early-warning signals or forecast variability \citep{boers2021, ditlevsen2023}. This work is valuable, but it is oriented almost entirely toward new results for expert audiences, leaving an adjacent question unexplored: what machine learning contributes when the goal is not a new result but to make an existing scientific object \emph{intelligible to non-specialists}.
+The design objectives structure Chapter~\ref{ch:translate}. They define the three representational conditions on shared information (\textbf{O2.1}), develop the transferable design grammar that maps machine-learning features onto perceptual channels (\textbf{O2.2}), and encode the boundary between observation and projection as a felt perceptual quality rather than a numerical annotation (\textbf{O2.3}).
 
-The distinction is worth stating precisely. A network forecasting AMOC transport produces a new capability, judged in shared units --- correlation, error, calibration. A dimensionality-reduction analysis of the same record produces a latent representation whose value lies elsewhere: in what few coordinates account for most of the variability, and what they mean physically. The thesis uses machine learning in this second, \emph{representational} role. The claim is not that the AMOC's vertical structure is novel --- it is consistent with decades of oceanography \citep{buckley2016, hannachi2007} --- but that this structure, once recovered, can become the coordinate system through which the AMOC is made available to perception. The literature treating machine learning this way is thin but real: latent representations have been argued to be legitimate epistemological objects in physics \citep{iten2020}, and visual-analytics research treats a model's latent space as the substrate through which an analyst builds understanding \citep{sacha2018}. Extending this from expert analytics to public communication of a climate system has been proposed occasionally \citep{cabrera2023} but scarcely implemented. That is the gap.
+The empirical objectives structure Chapters~\ref{ch:userstudy} and~\ref{ch:results}. They build the mixed-methods instrument (\textbf{O3.1}), run the two-group study (\textbf{O3.2}), and assess whether the machine-learning-derived perceptual encodings are read by participants as intended (\textbf{O3.3}).
 
 % -------------------------------------------------------------------------
-\section{Design Grammar}
-\label{sec:design-grammar}
+\section{Hypotheses and Design Propositions}
+\label{sec:hypotheses}
 
-The previous sections show why conventional visualisation often fails and why an embodied approach offers an alternative. They do not yet explain \emph{how} such an approach should be designed. This section closes that gap by deriving design principles from the literature above: each links a system property to a perceptual channel, supported by evidence from cognitive science and visualisation research, so that the choices in Chapter~\ref{ch:translate} are informed design decisions rather than aesthetic ones --- each traceable to a foundation and defensible on its own.
+The sub-questions differ in kind, so the claims are framed accordingly: RQ1 admits directional \emph{hypotheses}; RQ2 advances \emph{design propositions} assessed against design criteria; RQ3 states exploratory \emph{expectations}. Treating these as equivalent would misrepresent the evidence each can bear \citep{cronbach1975, mckenney2018}. Two umbrella hypotheses frame the whole: that conventional static representations are insufficient for non-specialists, presenting complexity as information to read rather than a process to grasp (\textbf{H-A}); and that machine-learning-derived representations, made dynamic and experiential, can change how non-specialists understand system behaviour by rendering its structure perceptible, not by replacing analysis (\textbf{H-B}).
 
-The parent principle is the effectiveness rule established in \S\ref{sec:empirical-viz}: the most important information should be assigned to the most accurately decoded visual channel \citep{bertin1983, clevelandmcgill1984, munzner2014}. The remaining principles follow by applying it to the characteristics of complex systems: magnitude through spatial position, change over time through motion, anomalies through density or texture, uncertainty through controlled variation rather than static intervals, and secondary ordered information through sound. These mappings rest on the evidence discussed above and are stated as general principles applicable to invisible systems beyond the AMOC. Table~\ref{tab:design-grammar} summarises the grammar; Chapter~\ref{ch:translate} applies it to the system properties recovered in Chapter~\ref{ch:data_pipeline}.
+The analytical hypotheses are directional and reported in Chapter~\ref{ch:data_pipeline}. \textbf{H1}: a few linear modes explain most of the variance in the AMOC vertical profiles \citep{buckley2016, hannachi2007}. \textbf{H2}: a non-linear autoencoder does not materially outperform PCA at equal dimensionality, so interpretable linear coordinates lose little \citep{baldi1989}. \textbf{H3}: once the effective sample size is corrected for autocorrelation in overlapping windows, classical Early Warning Signals show no significant trend across the RAPID record.\footnote{H3 is deliberately framed around a null result. Showing that an apparent signal disappears once statistical dependence is handled correctly is not a failure but a demonstration of methodological robustness \citep{dakos2012, scheffer2009}.}
 
-The grammar also positions the thesis within the broader field of experiential data representation. Data-art practice already explores how hidden structures from computational models can become perceptual experiences: the studio fuse*, for example, treats the latent spaces of generative models as environments of continuous transformation.\footnote{fuse*, \emph{Artificial Botany} and related works, \url{https://fuseworks.it}. The studio describes its interest as the ``intermediate dimension'' of latent space, explored as a space of expressive exploration rather than as a direct representation of a measured system.} These approaches share an assumption with this thesis --- that computational structure can become something to experience, not only to analyse --- but they do not test whether an audience \emph{understands} anything as a result. The contribution here is the step that practice omits: to ground each perceptual choice in the principles of Table~\ref{tab:design-grammar}, and to test comparatively whether the result supports both meaningful experience and measurable understanding.
+The design propositions are realised in Chapter~\ref{ch:translate}. \textbf{DP2.1}: machine-learning features --- latent position, anomaly score, ensemble uncertainty --- can be mapped onto perceptual dimensions such as colour, motion, density and sound, consistent with pre-attentive processing and embodied cognition \citep{lakoff1999, ware2021}. \textbf{DP2.2}: the boundary between observation and projection can be encoded as a felt perceptual transition rather than a numerical annotation.
 
-\input{figures/fuse_artificial_botany.tex}
+The empirical expectations guide the qualitative analysis. \textbf{E3.1}: the experimental group will describe AMOC behaviour --- its dynamics, non-linearity, invisibility --- in qualitatively different ways from the control group, whether or not this matches measurable gains in the comprehension probe. \textbf{E3.2}: the perceptual encoding of uncertainty will produce interpretations the final survey and analysis can surface, whether or not they match the intended reading. Neither presumes a direction or magnitude of effect.
+
+\input{figures/research_questions/rq_tree.tex}
+
+% -------------------------------------------------------------------------
+\section{Alignment Matrix}
+\label{sec:alignment-matrix}
+
+The alignment matrix (Table~\ref{tab:alignment}) sets the three sub-questions against the operational structure of the thesis. Read down each column, it shows three coherent programmes --- analytical, design, empirical; read across each row, it shows how each phase feeds the next. It works as a promissory contract: for every commitment made here, a locatable delivery in a later chapter.
+
+% -------------------------------------------------------------------------
+\section{Feasibility and Scope Discipline}
+\label{sec:rq-feasibility}
+
+Feasibility rests on infrastructure, time and scope control. Most infrastructure is in place: the analytical phase is substantially complete, with the RAPID record and Copernicus ensemble processed and reported in Chapter~\ref{ch:data_pipeline}, so O1.1--O1.3 are implemented and O1.4 is specification only. The empirical phase requires a modest setup---a 20-minute survey administered to a target sample of approximately 20--30 participants, randomly divided into two groups: a static, conventional condition serving as the control group, and an experiential condition featuring interactive and machine-learning-powered visualisations. This sample size is appropriate for an exploratory first-stage study, aimed at identifying initial patterns in participants' cognitive understanding, rather than supporting statistically powered population-level inference \citep{braunclarke2006, smithmcgannon2018}. The design phase is the main remaining technical work, developed across Chapters~\ref{ch:methodology} and~\ref{ch:translate}.
+
+Time is the binding constraint, with completion planned for late August 2026. The theoretical and analytical writing is front-loaded so that the riskiest part --- implementing the experiential condition --- is undertaken with the surrounding text stable. Scope control is treated as a methodological decision: forecasting is deferred so the thesis stays on representation rather than prediction \citep{sonnewald2021}; the prototype is a research artefact, not a product; and the study is an exploratory comparison, qualitative-primary and not statistically powered. Two flexibility mechanisms protect coherence: if the study slips, the analytical and design chapters proceed independently; and if the experiential build hits a technical limit, the design grammar remains a contribution in itself (O2.2), defensible through the simpler conditions. The thesis is ambitious but focused --- each objective matched to the available time, each claim to the evidence it can bear.
 
 \begin{table}[!ht]
     \centering
     \small
-    \caption[A design grammar for experiential representation of complex systems.]{\textbf{A design grammar for experiential representation of complex systems.}
-             Each row maps a \emph{system property} to a \emph{perceptual channel} through a
-             documented \emph{cognitive principle}, anchored to a \emph{source}. P0 is the parent
-             principle --- decoding accuracy is ranked, not uniform --- from which P1--P5 follow
-             by application to the properties of a complex system. The grammar is stated in
-             general, transferable form here; its application to the specific AMOC features
-             recovered in Chapter~\ref{ch:data_pipeline} (latent intensity, transitions, anomalies,
-             ensemble uncertainty) is developed in Chapter~\ref{ch:translate}. Motion (P2),
-             animated uncertainty (P4) and sound (P5) are the channels through which this
-             grammar goes beyond conventional static visualisation.}
-    \label{tab:design-grammar}
-    \begin{tabular}{@{}p{0.5cm}p{2.5cm}p{2.9cm}p{3.3cm}p{2.3cm}@{}}
+    \setlength{\tabcolsep}{5pt}
+    \renewcommand{\arraystretch}{1.25}
+    \caption{Alignment between the three sub-questions and the operational structure of the thesis, including how each is validated and against what criterion.}
+    \label{tab:alignment}
+    \begin{tabular}{
+        @{}
+        >{\RaggedRight\arraybackslash}p{2.7cm}
+        >{\RaggedRight\arraybackslash}p{3.7cm}
+        >{\RaggedRight\arraybackslash}p{3.7cm}
+        >{\RaggedRight\arraybackslash}p{3.7cm}
+        @{}
+    }
         \toprule
-        & \textbf{System property} & \textbf{Perceptual channel} & \textbf{Cognitive principle} & \textbf{Source} \\
+        & \textbf{RQ1 --- Detect}
+        & \textbf{RQ2 --- Translate}
+        & \textbf{RQ3 --- Evaluate} \\
         \midrule
-        P0 & Relative importance of variables
-           & Most accurate channel for the most important variable
-           & Effectiveness: decoding accuracy is ranked, not uniform
-           & \citet{bertin1983, clevelandmcgill1984, munzner2014} \\[0.4em]
-        P1 & Magnitude / intensity (ordered, continuous)
-           & Spatial position on a common axis
-           & Position is the most accurately decoded channel for ordered data
-           & \citet{clevelandmcgill1984, tversky2019} \\[0.4em]
-        P2 & Dynamics / change over time
-           & Actual motion
-           & The mind cannot mentally animate a static frame; motion is tracked pre-attentively
-           & \citet{cronin2009, sterman2008, ware2021} \\[0.4em]
-        P3 & Anomaly / departure from regime
-           & Local density or texture change
-           & Irregularity draws bottom-up attention without a legend
-           & \citet{bertin1983, ware2021} \\[0.4em]
-        P4 & Uncertainty
-           & Animated variability (motion, density, sound), not a static band
-           & Static bands overload working memory; animated outcomes are judged more accurately
-           & \citet{hullman2015hops, kale2019hops, padilla2018} \\[0.4em]
-        P5 & Secondary ordered variable
-           & Sound (pitch, rhythm, timbre)
-           & Auditory channels carry ordered data in parallel, without visual clutter
-           & \citet{hermann2011} \\
+        \makecell[l]{\textbf{Epistemic}\\\textbf{character}}
+            & Analytical, comparative, exploratory
+            & Design-based, generative
+            & Empirical, qualitative, comparative \\[0.5em]
+
+        \textbf{Chapters}
+            & Ch.~\ref{ch:background}, Ch.~\ref{ch:data_pipeline}
+            & Ch.~\ref{ch:methodology}, Ch.~\ref{ch:translate}
+            & Ch.~\ref{ch:methodology}, Ch.~\ref{ch:userstudy}, Ch.~\ref{ch:results} \\[0.5em]
+
+        \textbf{Objectives}
+            & O1.1--O1.4
+            & O2.1--O2.3
+            & O3.1--O3.3 \\[0.5em]
+
+        \textbf{Claims}
+            & H1, H2, H3
+            & DP2.1, DP2.2
+            & E3.1, E3.2 \\[0.5em]
+
+        \textbf{Material}
+            & RAPID observations, Copernicus reanalysis ensemble
+            & Latent structures recovered in RQ1
+            & Conditions produced in RQ2; non-specialist participants \\[0.5em]
+
+        \textbf{Validation method}
+            & Comparative model analysis: PCA vs.\ autoencoder at matched dimensionality; EWS with pseudo-replication correction; IsolationForest
+            & Design-science construction against the grammar (Table~\ref{tab:design-grammar}); shared-provenance audit of informational equivalence
+            & Between-subjects study, approximately 20--30 non-specialist participants, randomly assigned to static control and interactive, ML-powered experiential conditions; survey-based evaluation and exploratory analysis \\[0.5em]
+
+        \textbf{Success criterion}
+            & Latent gap $\leq$ reconstruction error; null trend correctly identified, not forced
+            & Every on-screen value traceable to the bundle; conditions equivalent by construction of provenance
+            & Experimental group articulates structure the control group does not, in spontaneous description \\[0.5em]
+
+        \textbf{Output}
+            & Latent-structure analysis; EWS null result; anomaly characterisation
+            & Three representational conditions; documented design grammar
+            & Anonymised responses; deductive codebook analysis against a pre-specified grid; descriptive two-group comparison \\[0.5em]
+
+        \textbf{SDG anchoring}
+            & 13 (Climate Action), 14 (Life Below Water)
+            & 4 (Quality Education), 13
+            & 4, 13 \\[0.5em]
+
+        \textbf{Scope discipline}
+            & LSTM forecasting deferred to future work
+            & Research prototype, not production artefact
+            & Exploratory two-group comparison; qualitative-primary, not statistically powered \\
         \bottomrule
     \end{tabular}
 \end{table}
-
-% -------------------------------------------------------------------------
-\section{Synthesis: The Intersection This Thesis Occupies}
-\label{sec:literature-synthesis}
-
-Read as one argument, the strands converge on a proposition none states alone. Climate information is filtered through psychological barriers that conventional formats fail to address (\S\ref{sec:psych-barriers}); those barriers are compounded by structural limits on reasoning about dynamics from static images (\S\ref{sec:cognitive-science}); climate visualisation has been evaluated mostly for preference rather than comprehension, though a mature science of encoding exists to ground better choices (\S\ref{sec:empirical-viz}); embodied and immersive traditions show the direction of a response but have rarely been applied to climate communication (\S\ref{sec:embodied-viz}); and machine learning has advanced predictively, leaving the representational role of latent structure almost unexplored (\S\ref{sec:ml-climate}). The design grammar (\S\ref{sec:design-grammar}) shows these strands can be combined into operational principles --- but no existing work has done so and tested the result.
-
-The intersection is narrow and empirically unpopulated, defined by five commitments: a climate system whose invisibility and non-linearity make it a stress test \citep{armstrongmckay2022, lenton2008}; a machine-learning treatment that recovers latent structure rather than forecasts \citep{iten2020, sonnewald2019}; a design tradition that treats the reader as embodied and active \citep{jansen2015, lakoff1999, marriott2018}; a comparison of conventional and experiential formats \citep{harold2016, kause2020}; and a qualitative, exploratory evaluation appropriate to a phenomenon not yet ripe for population-level inference \citep{braunclarke2006}. No study reviewed satisfies all five jointly. The gap is not the absence of any one commitment but the absence of their integration --- and integrating them, on the AMOC as a case, is what the chapters that follow undertake.

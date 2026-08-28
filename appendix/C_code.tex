@@ -95,3 +95,48 @@ III & Sound texture & \texttt{upper} $-$ \texttt{lower} per month & P5 & Classic
 \bottomrule
 \end{tabularx}
 \end{table}
+
+
+
+
+
+
+The commitment underlying this openness is simple: a scientific claim that cannot be independently verified is, in a meaningful sense, not a scientific claim. The three repositories below, together with the environment specification and the workflow described here, are what make the results of this thesis open to inspection.
+
+% -------------------------------------------------------------------------
+\section{Repositories and Project Structure}
+\label{sec:app-repos}
+
+The project is split across three public repositories rather than one. The separation is deliberate: the analytical pipeline, the representational artefact and the written thesis have different development lifecycles, different languages and toolchains, and cleaner histories when kept apart. All three are hosted publicly under \url{https://github.com/enricovaccari}.
+
+\begin{itemize}
+    \item \textbf{Analytical pipeline} --- \url{https://github.com/enricovaccari/amoc-thesis-pipeline}. The Python notebooks and modules of the \emph{detect} phase, described in \S\ref{app:c-repos}.
+    \item \textbf{Representational artefact} --- \url{https://github.com/enricovaccari/amoc-thesis-translate}. The browser-based visualisations of the \emph{translate} phase, deployed through GitHub Pages.
+    \item \textbf{Written thesis} --- \url{https://github.com/enricovaccari/amoc-thesis-writing}. The \LaTeX{} sources and the bibliographic database.
+\end{itemize}
+
+% -------------------------------------------------------------------------
+\section{Computational Environment}
+\label{sec:app-env}
+
+The analytical pipeline runs in Python~3.11 inside a Conda environment named \texttt{amoc-thesis}, registered as a dedicated Jupyter kernel so that the notebooks run reproducibly from within Visual Studio Code. The principal libraries are \texttt{xarray} and \texttt{netCDF4} for the ocean data, \texttt{numpy}, \texttt{pandas}, \texttt{scipy} and \texttt{statsmodels} for numerical and time-series work, \texttt{scikit-learn} for PCA and the Isolation Forest, \texttt{PyTorch} for the autoencoder, and \texttt{matplotlib} for plotting. Exact versions are pinned in the repository's environment file, from which the environment can be recreated in full.
+
+The representational artefact needs no build environment: it is written in vanilla JavaScript with Three.js (WebGL) and the native Web Audio API, with no external rendering dependencies, and is served either as static files locally or through GitHub Pages.
+
+% -------------------------------------------------------------------------
+\section{Data Access}
+\label{sec:app-data}
+
+The two data sources are obtained from their providers rather than bundled with the code, both because of file size and because their licences govern redistribution. The RAPID observational record is publicly distributed by the British Oceanographic Data Centre \citep{moat2026}; the Copernicus Marine Service GREP reanalysis ensemble is accessible under the Copernicus data licence. The pipeline README documents where each file is placed so that the notebooks resolve their paths; the raw data sits outside version control by design.
+
+% -------------------------------------------------------------------------
+\section{Tools and Workflow}
+\label{sec:app-tools}
+
+Beyond the code itself, the thesis was produced with a small set of tools, recorded here for completeness and reproducibility.
+
+Writing was done in Visual Studio Code with the LaTeX Workshop extension, compiling with \TeX{}~Live~2026 through \texttt{latexmk}, with \texttt{biblatex} and \texttt{biber} for the bibliography. References were managed in Zotero with the Better BibTeX extension, which exports a single \texttt{references.bib} from the thesis collection using a consistent citation-key convention; the extension is connected directly to the editor so that citations flow into the \LaTeX{} sources without manual copying. Source control throughout used Git with GitHub, one repository per component as described above.
+
+The empirical study relied on Google Forms for the four questionnaire variants and Microsoft Excel for the coded response dataset. Analysis ran in Jupyter notebooks within the Conda environment. Project organisation and note-keeping were held in Notion, and communication with the supervisor took place over Slack. Where literature searches needed a starting point, Perplexity was used to locate candidate sources, which were then verified and read at first hand before citation.
+
+The role of AI assistants in this process, and the boundaries placed on it, is discussed separately as a matter of research ethics in Appendix~\ref{app:ethics}.

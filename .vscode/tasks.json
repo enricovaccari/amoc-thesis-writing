@@ -1,0 +1,50 @@
+{
+    // The "live" task starts automatically when you open this folder
+    // (you must allow it once: Command Palette -> "Tasks: Manage Automatic
+    //  Tasks" -> "Allow Automatic Tasks in Folder", then reload the window).
+    // It regenerates statistics/thesis_stats.pdf on every .tex save -- keep
+    // that PDF open in the VS Code viewer and it reloads by itself.
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Thesis: Stats Live (auto on save)",
+            "type": "shell",
+            "command": "C:/Users/Vaccari/anaconda3/envs/amoc-thesis/python.exe",
+            "args": [
+                "statistics/generate_wordcount.py",
+                "--watch"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "focus": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Thesis: Stats Once",
+            "type": "shell",
+            "command": "C:/Users/Vaccari/anaconda3/envs/amoc-thesis/python.exe",
+            "args": [
+                "statistics/generate_wordcount.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
