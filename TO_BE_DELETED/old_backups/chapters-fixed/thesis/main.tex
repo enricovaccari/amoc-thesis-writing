@@ -1,0 +1,200 @@
+% =========================================================================
+% Making the Invisible Intelligible
+% MSc Thesis — Enrico Vaccari
+% Sustainability, Innovation & Technology — Tomorrow University
+% =========================================================================
+
+\documentclass[11pt, a4paper, twoside, openright]{book}
+
+% ---------- core packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+
+% ---------- typography ----------
+% Times New Roman style font
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\linespread{1.15}
+
+% ---------- page geometry (sober, academic) ----------
+\usepackage[
+    a4paper,
+    margin=2.5cm,
+    headheight=14pt
+]{geometry}
+
+% ---------- math & symbols ----------
+\usepackage{amsmath, mathtools}
+\usepackage{siunitx}
+\DeclareSIUnit{\sverdrup}{Sv}
+\sisetup{detect-all}
+
+% ---------- figures, tables ----------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, format=plain}
+\usepackage{subcaption}
+\usepackage{float}
+
+% ---------- float placement: top-aligned, never vertically centred ----------
+\makeatletter
+\setlength{\@fptop}{0pt}                 % no elastic space above a float page
+\setlength{\@fpsep}{12pt plus 1fil}      % separation between stacked floats
+\setlength{\@fpbot}{0pt plus 1fil}       % all elastic space goes to the bottom
+\makeatother
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
+% ---------- lists, layout ----------
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt}
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{0pt plus 1pt}   % indent OR skip, not both (book convention)
+
+% ---------- headers & footers ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\textit{\nouppercase{\leftmark}}}
+\fancyhead[LO]{\textit{\nouppercase{\rightmark}}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- chapter style: sober, no decorative junk ----------
+\usepackage{titlesec}
+
+\makeatletter
+
+\renewcommand\part[1]{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \refstepcounter{part}
+  \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}
+
+  \vspace*{\fill}
+
+  \begin{center}
+    {\Huge\bfseries Part \thepart\par}
+    \vspace{1cm}
+    {\Huge\bfseries #1\par}
+    \vspace{0.6cm}
+    {\Large\itshape\partsubtitle\par}
+  \end{center}
+
+  \vspace*{\fill}
+
+  \clearpage
+  \setpartsubtitle{}          % reset, so a later \part cannot inherit silently
+}
+
+\newcommand{\partsubtitle}{}
+
+\newcommand{\setpartsubtitle}[1]{%
+  \renewcommand{\partsubtitle}{#1}
+}
+
+\makeatother
+
+\titleformat{\chapter}[display]
+    {\normalfont\Huge\bfseries}
+    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-30pt}{5pt}
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+% ---------- hyperlinks ----------
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black,
+    bookmarksnumbered=true
+]{hyperref}
+
+% ---------- bibliography: APA 7th, via biblatex/biber ----------
+\usepackage[
+    backend=biber,
+    style=apa,
+    sortlocale=en_GB,
+    natbib=true
+]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- footnote formatting: no first-line indent, proper spacing ----------
+\makeatletter
+\renewcommand\@makefntext[1]{%
+  \parindent 0em%
+  \noindent\@thefnmark\enspace #1}
+\makeatother
+
+% =========================================================================
+\begin{document}
+
+% ---------- front matter ----------
+\frontmatter
+
+\input{frontmatter/titlepage}
+\input{frontmatter/declaration}
+\input{frontmatter/abstract}
+\input{frontmatter/acknowledgements}
+
+\tableofcontents
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+\input{frontmatter/abbreviations}
+
+% ---------- main matter ----------
+\mainmatter
+
+\setpartsubtitle{The Context, the Problem, the Method \& the Analytical Foundation}
+\part{DETECT}
+
+\input{chapters/01_introduction}
+\input{chapters/02_research_questions}
+\input{chapters/03_literature}
+\input{chapters/04_background}
+
+\input{chapters/05_methodology}
+\input{chapters/06_data_pipeline}
+\setpartsubtitle{From Latent Structure to Experiential Representation}
+\part{TRANSLATE}
+\input{chapters/07_translation}
+
+\setpartsubtitle{Understanding the Impact of Representation}
+\part{EVALUATE}
+\input{chapters/08_evaluation}
+\input{chapters/09_results}
+\input{chapters/10_discussion}
+\input{chapters/11_conclusion}
+\input{chapters/12_reflection}
+
+% ---------- appendixes ----------
+\appendix
+\input{appendix/A_ethics}
+\input{appendix/B_protocols}
+\input{appendix/C_code}
+
+% ---------- back matter ----------
+\backmatter
+\printbibliography[heading=bibintoc, title={References}]
+
+\end{document}

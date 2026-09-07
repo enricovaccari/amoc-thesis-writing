@@ -45,11 +45,24 @@
 \usepackage{subcaption}
 \usepackage{float}
 
+% ---------- float placement: top-aligned, never vertically centred ----------
+\makeatletter
+\setlength{\@fptop}{0pt}                 % no elastic space above a float page
+\setlength{\@fpsep}{12pt plus 1fil}      % separation between stacked floats
+\setlength{\@fpbot}{0pt plus 1fil}       % all elastic space goes to the bottom
+\makeatother
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
 % ---------- lists, layout ----------
 \usepackage{enumitem}
 \setlist[itemize]{itemsep=2pt, topsep=4pt}
 \setlength{\parindent}{15pt}
-\setlength{\parskip}{6pt}
+\setlength{\parskip}{0pt plus 1pt}   % indent OR skip, not both (book convention)
 
 % ---------- headers & footers ----------
 \usepackage{fancyhdr}
@@ -84,6 +97,7 @@
   \vspace*{\fill}
 
   \clearpage
+  \setpartsubtitle{}          % reset, so a later \part cannot inherit silently
 }
 
 \newcommand{\partsubtitle}{}
@@ -109,6 +123,7 @@
     bookmarksnumbered=true
 ]{hyperref}
 
+
 % ---------- bibliography: APA 7th, via biblatex/biber ----------
 \usepackage[
     backend=biber,
@@ -117,16 +132,6 @@
     natbib=true
 ]{biblatex}
 \addbibresource{references.bib}
-
-% ---------- abbreviations / glossary ----------
-% Uncomment if you decide to use a glossary (recommended for AMOC/RAPID/PCA etc.)
-% \usepackage[acronym, nonumberlist]{glossaries}
-% \makeglossaries
-% \input{frontmatter/acronyms}
-
-% ---------- custom commands ----------
-\usepackage{xspace}
-\newcommand{\amoc}{AMOC\xspace}  % example, requires \usepackage{xspace}
 
 % ---------- footnote formatting: no first-line indent, proper spacing ----------
 \makeatletter
@@ -140,24 +145,29 @@
 
 % ---------- front matter ----------
 \frontmatter
-\pagenumbering{roman}
 
 \input{frontmatter/titlepage}
+\input{frontmatter/declaration}
 \input{frontmatter/abstract}
 \input{frontmatter/acknowledgements}
 
 \tableofcontents
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
+
 \input{frontmatter/abbreviations}
 
 % ---------- main matter ----------
 \mainmatter
-\pagenumbering{arabic}
 
-\setpartsubtitle{The Context, the Problem \& the Analytical Foundation}
+\setpartsubtitle{The Context, the Problem, the Method \& the Analytical Foundation}
 \part{DETECT}
-...
 
 \input{chapters/01_introduction}
 \input{chapters/02_research_questions}

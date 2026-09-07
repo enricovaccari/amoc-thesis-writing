@@ -123,6 +123,14 @@ def clean_latex(text):
     text = re.sub(r"\\begin\{figure\}.*?\\end\{figure\}", "", text, flags=re.DOTALL)
     text = re.sub(r"\\begin\{table\}.*?\\end\{table\}", "", text, flags=re.DOTALL)
 
+    # remove the per-chapter "Addressed: ..." keyword boxes (a bare tabular,
+    # a navigation aid rather than prose) so they do not count as words.
+    text = re.sub(
+        r"\\begin\{tabular\}.*?\\end\{tabular\}",
+        lambda m: "" if "Addressed" in m.group(0) else m.group(0),
+        text, flags=re.DOTALL,
+    )
+
     # drop captions and footnotes from the word count
     text = re.sub(r"\\caption\{.*?\}", "", text, flags=re.DOTALL)
     text = re.sub(r"\\footnote\{.*?\}", "", text, flags=re.DOTALL)

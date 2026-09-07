@@ -164,6 +164,15 @@ def clean_text(text):
         '', text, flags=re.DOTALL
     )
 
+    # remove the per-chapter "Addressed: keyword - keyword ..." boxes.
+    # They are a bare tabular (outside any table float) used as a chapter
+    # navigation aid, not prose, so they must not count towards words.
+    text = re.sub(
+        r'\\begin\{tabular\}.*?\\end\{tabular\}',
+        lambda m: '' if 'Addressed' in m.group(0) else m.group(0),
+        text, flags=re.DOTALL
+    )
+
     # remove captions
     text = re.sub(
         r'\\caption\{.*?\}',

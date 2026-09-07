@@ -1509,65 +1509,6 @@
       \endverb
       \keyw{Projection and prediction,Statistics}
     \endentry
-    \entry{ericsson1993}{book}{}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=5c76c30e3322723234ede94dec1b1269}{%
-           family={Ericsson},
-           familyi={E\bibinitperiod},
-           given={K.\bibnamedelimi Anders},
-           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=09c462602325128c408aa39c70c6ae62}{%
-           family={Simon},
-           familyi={S\bibinitperiod},
-           given={Herbert\bibnamedelima A.},
-           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {The MIT Press}%
-      }
-      \strng{namehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{fullhash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{fullhashraw}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{bibnamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorbibnamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authornamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorfullhash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorfullhashraw}{bb1132863903bd403e7bd0a7c92a0694}
-      \field{sortinit}{E}
-      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{abstract}{Since the publication of Ericsson and Simon's ground-breaking work in the early 1980s, verbal data has been used increasingly to study cognitive processes}
-      \field{day}{13}
-      \field{isbn}{978-0-262-27239-1}
-      \field{langid}{english}
-      \field{month}{4}
-      \field{shorttitle}{Protocol {{Analysis}}}
-      \field{title}{Protocol {{Analysis}}: {{Verbal Reports}} as {{Data}}}
-      \field{urlday}{14}
-      \field{urlmonth}{7}
-      \field{urlyear}{2026}
-      \field{year}{1993}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{doi}
-      \verb 10.7551/mitpress/5657.001.0001
-      \endverb
-      \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\DXLB5MXV\Ericsson and Simon - 1993 - Protocol Analysis Verbal Reports as Data.pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://direct.mit.edu/books/monograph/4763/Protocol-AnalysisVerbal-Reports-as-Data
-      \endverb
-      \verb{url}
-      \verb https://direct.mit.edu/books/monograph/4763/Protocol-AnalysisVerbal-Reports-as-Data
-      \endverb
-    \endentry
     \entry{copernicus_grep}{dataset}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=cda0023a36e786bd4a3d07833d26df4c}{%
@@ -2049,6 +1990,53 @@
       \endverb
       \keyw{Normal distribution,Probability density,Probability distribution,Random variables,Sea water,Statistical distributions,Statistical inference,Vision}
     \endentry
+    \entry{ipcc2021}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=92d1665cda47bf290eb90274132690ef}{%
+           family={{Intergovernmental Panel On Climate Change (Ipcc)}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{fullhash}{92d1665cda47bf290eb90274132690ef}
+      \strng{fullhashraw}{92d1665cda47bf290eb90274132690ef}
+      \strng{bibnamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorbibnamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authornamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorfullhash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorfullhashraw}{92d1665cda47bf290eb90274132690ef}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The Working Group I contribution to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC) provides a comprehensive assessment of the physical science basis of climate change. It considers in situ and remote observations; paleoclimate information; understanding of climate drivers and physical, chemical, and biological processes and feedbacks; global and regional climate modelling; advances in methods of analyses; and insights from climate services. It assesses the current state of the climate; human influence on climate in all regions; future climate change including sea level rise; global warming effects including extremes; climate information for risk assessment and regional adaptation; limiting climate change by reaching net zero carbon dioxide emissions and reducing other greenhouse gas emissions; and benefits for air quality. The report serves policymakers, decision makers, stakeholders, and all interested parties with the latest policy-relevant information on climate change. Available as Open Access on Cambridge Core.}
+      \field{day}{6}
+      \field{edition}{1}
+      \field{isbn}{978-1-009-15789-6}
+      \field{month}{7}
+      \field{shorttitle}{Climate {{Change}} 2021 – {{The Physical Science Basis}}}
+      \field{title}{Climate {{Change}} 2021 – {{The Physical Science Basis}}: {{Working Group I Contribution}} to the {{Sixth Assessment Report}} of the {{Intergovernmental Panel}} on {{Climate Change}}}
+      \field{urlday}{27}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1017/9781009157896
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/product/identifier/9781009157896/type/book
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/product/identifier/9781009157896/type/book
+      \endverb
+    \endentry
     \entry{iten2020}{article}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=c97188d4f224bb412ed1dbd68546b773}{%
@@ -2345,82 +2333,6 @@
       \verb https://ieeexplore.ieee.org/document/8440816/
       \endverb
     \endentry
-    \entry{kause2021}{article}{}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=4d7af41f518500a7c260bb961420aac0}{%
-           family={Kause},
-           familyi={K\bibinitperiod},
-           given={Astrid},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=cfc7a16e6a63c2a58feac874a6eb453b}{%
-           family={Bruine\bibnamedelimb de\bibnamedelima Bruin},
-           familyi={B\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim B\bibinitperiod},
-           given={Wändi},
-           giveni={W\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=704ddb051a32be9670a0164f95c947b3}{%
-           family={Millward-Hopkins},
-           familyi={M\bibinithyphendelim H\bibinitperiod},
-           given={Joel},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c5aa8728802e118c65bfca50ebfe24a6}{%
-           family={Olsson},
-           familyi={O\bibinitperiod},
-           given={Henrik},
-           giveni={H\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {IOP Publishing}%
-      }
-      \strng{namehash}{6652341c09aeda1c2279a8a3d14ec928}
-      \strng{fullhash}{c2078476866ddbba2955930e6bf63316}
-      \strng{fullhashraw}{c2078476866ddbba2955930e6bf63316}
-      \strng{bibnamehash}{c2078476866ddbba2955930e6bf63316}
-      \strng{authorbibnamehash}{c2078476866ddbba2955930e6bf63316}
-      \strng{authornamehash}{6652341c09aeda1c2279a8a3d14ec928}
-      \strng{authorfullhash}{c2078476866ddbba2955930e6bf63316}
-      \strng{authorfullhashraw}{c2078476866ddbba2955930e6bf63316}
-      \field{extraname}{1}
-      \field{sortinit}{K}
-      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Carbon footprints—the greenhouse gas (GHG) emissions associated with consumer food choices—substantially contribute to climate change. Life cycle analyses from climate and environmental sciences have identified effective rules for reducing these food-related GHG emissions, including eating seasonal produce and replacing dairy and red meat with plant-based products. In a national UK survey, we studied how many and which rules our participants generated for reducing GHG emissions of produce, dairy, and protein-rich products. We also asked participants to estimate GHG emission reductions associated with pre-selected rules, expressed in either grams or percentages. We found that participants generated few and relatively less effective rules, including ambiguous ones like ‘Buy local’. Furthermore, participants’ numerical estimates of pre-selected rules were less accurate when they assessed GHG emission reductions in grams rather than in percentages. Findings suggest a need for communicating fewer rules in percentages, for informing consumers about reducing food-related GHG emissions.}
-      \field{issn}{1748-9326}
-      \field{journaltitle}{Environmental Research Letters}
-      \field{langid}{english}
-      \field{month}{10}
-      \field{number}{11}
-      \field{shortjournal}{Environ. Res. Lett.}
-      \field{title}{Public Perceptions of How to Reduce Carbon Footprints of Consumer Food Choices}
-      \field{urlday}{6}
-      \field{urlmonth}{7}
-      \field{urlyear}{2026}
-      \field{volume}{14}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{114005}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1088/1748-9326/ab465d
-      \endverb
-      \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\56CYWS5Y\Kause et al. - 2019 - Public perceptions of how to reduce carbon footprints of consumer food choices.pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1088/1748-9326/ab465d
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1088/1748-9326/ab465d
-      \endverb
-    \endentry
     \entry{kause2020}{article}{}{}
       \name{author}{6}{}{%
         {{un=0,uniquepart=base,hash=4d7af41f518500a7c260bb961420aac0}{%
@@ -2471,7 +2383,7 @@
       \strng{authornamehash}{6652341c09aeda1c2279a8a3d14ec928}
       \strng{authorfullhash}{0a4ff340a7671d0c97c237c37f8ba521}
       \strng{authorfullhashraw}{0a4ff340a7671d0c97c237c37f8ba521}
-      \field{extraname}{2}
+      \field{extraname}{1}
       \field{sortinit}{K}
       \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
       \field{extradatescope}{labelyear}
@@ -2483,7 +2395,6 @@
       \field{issn}{1748-9326}
       \field{journaltitle}{Environmental Research Letters}
       \field{langid}{english}
-      \field{month}{4}
       \field{number}{5}
       \field{shortjournal}{Environ. Res. Lett.}
       \field{shorttitle}{Communications about Uncertainty in Scientific Climate-Related Findings}
@@ -2492,7 +2403,7 @@
       \field{urlmonth}{7}
       \field{urlyear}{2026}
       \field{volume}{16}
-      \field{year}{2021}
+      \field{year}{2020}
       \field{dateera}{ce}
       \field{urldateera}{ce}
       \field{pages}{053005}
@@ -2501,13 +2412,88 @@
       \verb 10.1088/1748-9326/abb265
       \endverb
       \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\QCJGXL8D\Kause et al. - 2021 - Communications about uncertainty in scientific climate-related findings a qualitative systematic re.pdf
+      \verb C:\Users\Vaccari\Zotero\storage\QCJGXL8D\Kause et al. - 2020 - Communications about uncertainty in scientific climate-related findings a qualitative systematic re.pdf
       \endverb
       \verb{urlraw}
       \verb https://doi.org/10.1088/1748-9326/abb265
       \endverb
       \verb{url}
       \verb https://doi.org/10.1088/1748-9326/abb265
+      \endverb
+    \endentry
+    \entry{kause2021}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=4d7af41f518500a7c260bb961420aac0}{%
+           family={Kause},
+           familyi={K\bibinitperiod},
+           given={Astrid},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cfc7a16e6a63c2a58feac874a6eb453b}{%
+           family={Bruine\bibnamedelimb de\bibnamedelima Bruin},
+           familyi={B\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Wändi},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=704ddb051a32be9670a0164f95c947b3}{%
+           family={Millward-Hopkins},
+           familyi={M\bibinithyphendelim H\bibinitperiod},
+           given={Joel},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5aa8728802e118c65bfca50ebfe24a6}{%
+           family={Olsson},
+           familyi={O\bibinitperiod},
+           given={Henrik},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {IOP Publishing}%
+      }
+      \strng{namehash}{6652341c09aeda1c2279a8a3d14ec928}
+      \strng{fullhash}{c2078476866ddbba2955930e6bf63316}
+      \strng{fullhashraw}{c2078476866ddbba2955930e6bf63316}
+      \strng{bibnamehash}{c2078476866ddbba2955930e6bf63316}
+      \strng{authorbibnamehash}{c2078476866ddbba2955930e6bf63316}
+      \strng{authornamehash}{6652341c09aeda1c2279a8a3d14ec928}
+      \strng{authorfullhash}{c2078476866ddbba2955930e6bf63316}
+      \strng{authorfullhashraw}{c2078476866ddbba2955930e6bf63316}
+      \field{extraname}{2}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Carbon footprints—the greenhouse gas (GHG) emissions associated with consumer food choices—substantially contribute to climate change. Life cycle analyses from climate and environmental sciences have identified effective rules for reducing these food-related GHG emissions, including eating seasonal produce and replacing dairy and red meat with plant-based products. In a national UK survey, we studied how many and which rules our participants generated for reducing GHG emissions of produce, dairy, and protein-rich products. We also asked participants to estimate GHG emission reductions associated with pre-selected rules, expressed in either grams or percentages. We found that participants generated few and relatively less effective rules, including ambiguous ones like ‘Buy local’. Furthermore, participants’ numerical estimates of pre-selected rules were less accurate when they assessed GHG emission reductions in grams rather than in percentages. Findings suggest a need for communicating fewer rules in percentages, for informing consumers about reducing food-related GHG emissions.}
+      \field{issn}{1748-9326}
+      \field{journaltitle}{Environmental Research Letters}
+      \field{langid}{english}
+      \field{number}{11}
+      \field{shortjournal}{Environ. Res. Lett.}
+      \field{title}{Public Perceptions of How to Reduce Carbon Footprints of Consumer Food Choices}
+      \field{urlday}{6}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{volume}{14}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{114005}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1748-9326/ab465d
+      \endverb
+      \verb{file}
+      \verb C:\Users\Vaccari\Zotero\storage\56CYWS5Y\Kause et al. - 2021 - Public perceptions of how to reduce carbon footprints of consumer food choices.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1748-9326/ab465d
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1748-9326/ab465d
       \endverb
     \endentry
     \entry{kellstedt2008}{article}{}{}
@@ -6339,65 +6325,6 @@
       \endverb
       \keyw{Projection and prediction,Statistics}
     \endentry
-    \entry{ericsson1993}{book}{}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=5c76c30e3322723234ede94dec1b1269}{%
-           family={Ericsson},
-           familyi={E\bibinitperiod},
-           given={K.\bibnamedelimi Anders},
-           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=09c462602325128c408aa39c70c6ae62}{%
-           family={Simon},
-           familyi={S\bibinitperiod},
-           given={Herbert\bibnamedelima A.},
-           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {The MIT Press}%
-      }
-      \strng{namehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{fullhash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{fullhashraw}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{bibnamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorbibnamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authornamehash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorfullhash}{bb1132863903bd403e7bd0a7c92a0694}
-      \strng{authorfullhashraw}{bb1132863903bd403e7bd0a7c92a0694}
-      \field{sortinit}{E}
-      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{abstract}{Since the publication of Ericsson and Simon's ground-breaking work in the early 1980s, verbal data has been used increasingly to study cognitive processes}
-      \field{day}{13}
-      \field{isbn}{978-0-262-27239-1}
-      \field{langid}{english}
-      \field{month}{4}
-      \field{shorttitle}{Protocol {{Analysis}}}
-      \field{title}{Protocol {{Analysis}}: {{Verbal Reports}} as {{Data}}}
-      \field{urlday}{14}
-      \field{urlmonth}{7}
-      \field{urlyear}{2026}
-      \field{year}{1993}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{doi}
-      \verb 10.7551/mitpress/5657.001.0001
-      \endverb
-      \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\DXLB5MXV\Ericsson and Simon - 1993 - Protocol Analysis Verbal Reports as Data.pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://direct.mit.edu/books/monograph/4763/Protocol-AnalysisVerbal-Reports-as-Data
-      \endverb
-      \verb{url}
-      \verb https://direct.mit.edu/books/monograph/4763/Protocol-AnalysisVerbal-Reports-as-Data
-      \endverb
-    \endentry
     \entry{copernicus_grep}{dataset}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=cda0023a36e786bd4a3d07833d26df4c}{%
@@ -6879,6 +6806,53 @@
       \endverb
       \keyw{Normal distribution,Probability density,Probability distribution,Random variables,Sea water,Statistical distributions,Statistical inference,Vision}
     \endentry
+    \entry{ipcc2021}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=92d1665cda47bf290eb90274132690ef}{%
+           family={{Intergovernmental Panel On Climate Change (Ipcc)}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{fullhash}{92d1665cda47bf290eb90274132690ef}
+      \strng{fullhashraw}{92d1665cda47bf290eb90274132690ef}
+      \strng{bibnamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorbibnamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authornamehash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorfullhash}{92d1665cda47bf290eb90274132690ef}
+      \strng{authorfullhashraw}{92d1665cda47bf290eb90274132690ef}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The Working Group I contribution to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change (IPCC) provides a comprehensive assessment of the physical science basis of climate change. It considers in situ and remote observations; paleoclimate information; understanding of climate drivers and physical, chemical, and biological processes and feedbacks; global and regional climate modelling; advances in methods of analyses; and insights from climate services. It assesses the current state of the climate; human influence on climate in all regions; future climate change including sea level rise; global warming effects including extremes; climate information for risk assessment and regional adaptation; limiting climate change by reaching net zero carbon dioxide emissions and reducing other greenhouse gas emissions; and benefits for air quality. The report serves policymakers, decision makers, stakeholders, and all interested parties with the latest policy-relevant information on climate change. Available as Open Access on Cambridge Core.}
+      \field{day}{6}
+      \field{edition}{1}
+      \field{isbn}{978-1-009-15789-6}
+      \field{month}{7}
+      \field{shorttitle}{Climate {{Change}} 2021 – {{The Physical Science Basis}}}
+      \field{title}{Climate {{Change}} 2021 – {{The Physical Science Basis}}: {{Working Group I Contribution}} to the {{Sixth Assessment Report}} of the {{Intergovernmental Panel}} on {{Climate Change}}}
+      \field{urlday}{27}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1017/9781009157896
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cambridge.org/core/product/identifier/9781009157896/type/book
+      \endverb
+      \verb{url}
+      \verb https://www.cambridge.org/core/product/identifier/9781009157896/type/book
+      \endverb
+    \endentry
     \entry{iten2020}{article}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=c97188d4f224bb412ed1dbd68546b773}{%
@@ -7237,7 +7211,6 @@
       \field{issn}{1748-9326}
       \field{journaltitle}{Environmental Research Letters}
       \field{langid}{english}
-      \field{month}{4}
       \field{number}{5}
       \field{shortjournal}{Environ. Res. Lett.}
       \field{shorttitle}{Communications about Uncertainty in Scientific Climate-Related Findings}
@@ -7246,7 +7219,7 @@
       \field{urlmonth}{7}
       \field{urlyear}{2026}
       \field{volume}{16}
-      \field{year}{2021}
+      \field{year}{2020}
       \field{dateera}{ce}
       \field{urldateera}{ce}
       \field{pages}{053005}
@@ -7255,7 +7228,7 @@
       \verb 10.1088/1748-9326/abb265
       \endverb
       \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\QCJGXL8D\Kause et al. - 2021 - Communications about uncertainty in scientific climate-related findings a qualitative systematic re.pdf
+      \verb C:\Users\Vaccari\Zotero\storage\QCJGXL8D\Kause et al. - 2020 - Communications about uncertainty in scientific climate-related findings a qualitative systematic re.pdf
       \endverb
       \verb{urlraw}
       \verb https://doi.org/10.1088/1748-9326/abb265
@@ -7314,7 +7287,6 @@
       \field{issn}{1748-9326}
       \field{journaltitle}{Environmental Research Letters}
       \field{langid}{english}
-      \field{month}{10}
       \field{number}{11}
       \field{shortjournal}{Environ. Res. Lett.}
       \field{title}{Public Perceptions of How to Reduce Carbon Footprints of Consumer Food Choices}
@@ -7322,7 +7294,7 @@
       \field{urlmonth}{7}
       \field{urlyear}{2026}
       \field{volume}{14}
-      \field{year}{2019}
+      \field{year}{2021}
       \field{dateera}{ce}
       \field{urldateera}{ce}
       \field{pages}{114005}
@@ -7331,7 +7303,7 @@
       \verb 10.1088/1748-9326/ab465d
       \endverb
       \verb{file}
-      \verb C:\Users\Vaccari\Zotero\storage\56CYWS5Y\Kause et al. - 2019 - Public perceptions of how to reduce carbon footprints of consumer food choices.pdf
+      \verb C:\Users\Vaccari\Zotero\storage\56CYWS5Y\Kause et al. - 2021 - Public perceptions of how to reduce carbon footprints of consumer food choices.pdf
       \endverb
       \verb{urlraw}
       \verb https://doi.org/10.1088/1748-9326/ab465d
@@ -9678,7 +9650,8 @@
       \keyw{Information visualization,Visual perception,Visualization}
     \endentry
   \enddatalist
-  \missing{ipcc2021}
+  \missing{braunclarke2021}
+  \missing{malterud2016}
 \endrefsection
 \endinput
 

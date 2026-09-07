@@ -1,0 +1,71 @@
+% =========================================================================
+% APPENDIX A — ETHICS, BOUNDARIES AND LIMITATIONS
+% =========================================================================
+
+\chapter{Ethics, Boundaries and Limitations}
+\label{app:ethics}
+
+This appendix consolidates, in one place, the methodological boundaries within which the conclusions of this thesis should be read. It is organised around the three phases of the detect--translate--evaluate arc. Each entry states a boundary, the reason it was chosen, and --- where relevant --- the direction in which future work could extend beyond it. The intent is transparency: to make the limits of the work legible rather than to disperse them across the main text.
+
+% -------------------------------------------------------------------------
+\section{Detect --- Analytical Phase}
+\label{app:limits-detect}
+
+\subsection*{Pattern detection versus prediction}
+The analytical phase recovers latent structure and characterises anomalies; it does not forecast. The Early Warning Signals analysis returns a null result once the effective sample size is corrected for the autocorrelation of overlapping windows: an apparently strong monotonic trend is shown to be an artefact of pseudo-replication. This is reported as a contribution to methodological honesty, not as evidence for or against an impending transition. No claim about the future state of the AMOC is made or implied by the analytical phase; the deferred forecasting layer (O1.4) is specification only.
+
+\subsection*{Observation versus reconstruction}
+The analysis draws on two sources of different epistemic status. The RAPID array is direct observation; the Copernicus GREP ensemble is a reanalysis --- model output constrained by data assimilation. Claims resting on the reanalysis carry the additional dependence of a model, and are framed accordingly throughout. The two are never conflated: treating a reconstructed value as if it were observed would misrepresent the evidential basis of the analysis, and is avoided by design.
+
+\subsection*{Depth sampling}
+The RAPID vertical grid is near-uniform (spacing 19.33--19.87~m, a max/min ratio of 1.03), not denser in the upper ocean. No layer-thickness weighting is therefore applied in the decomposition: with levels this evenly spaced, weighting would scale every level by an almost identical constant, without effect on the loadings or variance shares. This is a deliberate, documented choice rather than an oversight.
+
+% -------------------------------------------------------------------------
+\section{Translate --- Design Phase}
+\label{app:limits-translate}
+
+\subsection*{The fidelity constraint on design}
+Every value in the artefact derives from the analytical bundle, never from an invented scaling. This keeps the representation faithful rather than illustrative, at a deliberate cost: aesthetics are constrained to what the data support, and where an artistic choice would conflict with the data, the data prevail.
+
+\subsection*{Transferability of the design grammar}
+The design grammar maps system properties to perceptual channels through documented cognitive principles. Its transferability is a claim, not a proof: the principles are general, but their faithful application depends on the specific structure a system exposes. A mapping that is faithful for the AMOC's ordered, low-dimensional structure may not transfer unchanged to a system with different structure. The grammar is offered as a reusable starting point subject to domain adaptation, not as a fixed template.
+
+% -------------------------------------------------------------------------
+\section{Evaluate --- Empirical Phase}
+\label{app:limits-evaluate}
+
+\subsection*{Design of the comparison}
+The evaluation compares two groups of non-specialist participants: a control group exposed to the conventional static condition (C1) and an experimental group exposed to the dynamic and experiential conditions (C2 and C3). The comparison is therefore between two whole representational experiences rather than a within-subject progression through all three conditions. This choice removes the order and repeated-exposure confound that a sequential C1$\rightarrow$C2$\rightarrow$C3 design would introduce between groups, and it aligns the study directly with the central research question, which contrasts conventional static formats with dynamic and experiential ones.
+
+\subsection*{Form versus amount of exposure}
+Because the experimental group experiences C2 and C3 while the control group experiences only C1, the groups differ in the extent of exposure as well as its kind, and the design does not isolate the effect of experiential form from the effect of richer exposure. It compares two representational experiences as wholes, which is exactly what the research question asks. Relatedly, the experimental block does not isolate the contribution of interactivity (C2) from that of machine-learning-driven experientiality (C3); a minor within-block order effect (C2 precedes C3) is acknowledged and does not bear on the between-group comparison. Separating these contributions is left to future work. These are properties of the design, acknowledged rather than corrected.
+
+\subsection*{Asynchronous, self-guided delivery}
+The study is delivered as a self-guided online questionnaire, without the researcher present. This choice suits an evaluation of non-specialists in their own setting, but it shapes what the evidence can be: it captures the mental model a participant expresses in writing, not the reasoning process as it unfolds moment to moment. The evidence is therefore the articulated outcome rather than the live process, and is interpreted as such.
+
+\subsection*{Bilingual instrument}
+The questionnaire is administered in Italian and in English, so participants respond in their first language. Open responses are analysed in the language in which they are written, rather than translated before coding, so that translation does not distort meaning. The analysis therefore spans two languages, and themes are reconciled across them at the reporting stage.
+
+\subsection*{Evidential weight and sample size}
+The study is exploratory. Its evidential weight rests on the qualitative analysis of how participants articulate their understanding in open written responses; any closed comprehension items are reported descriptively, not as inferential tests, consistent with the sample size (approximately 24--30 participants, evenly split) and the exploratory framing. The study does not claim statistical inference to a wider population.
+
+\subsection*{Interpretation of the two-group comparison}
+The expectations guiding the empirical phase (E3.1, E3.2) are framed around the between-group contrast and do not presuppose the direction or magnitude of any effect. Qualitative differences in how the two groups articulate their understanding may appear with or without accompanying differences in the descriptive comprehension items; both outcomes are reported. The study is not designed to adjudicate whether such differences would persist at population scale.
+
+\subsection*{The unassessed closing sequence}
+After the assessed part of the questionnaire, every participant is shown the fuller experiential sequence once, for interest. Responses to it are not assessed and do not enter the comparison. It functions as a debrief and a return to the participant --- so that those who saw only the static version are not left without the experience --- and is placed outside the assessed journey by design, so that it cannot act as a confound.
+
+% -------------------------------------------------------------------------
+\section{Ethical Conduct of the Study}
+\label{app:ethics-conduct}
+
+Participation is informed and voluntary. Each participant receives a plain-language information sheet explaining what the study involves, what data are collected and how they are used, and gives consent before taking part; they may stop at any point without giving a reason and without consequence. No deception is used. The topic is not sensitive --- participants reason about an ocean current, not about anything personal or distressing --- so the principal ethical duties are the standard ones of consent, anonymity and data protection. Responses are anonymised, with identifying details removed or replaced by codes, so that no participant is identifiable in the thesis or any output. Data are stored securely and in line with the General Data Protection Regulation, kept only as long as the research requires, and accessible only to the researcher and, where necessary, the supervisor. The study proceeds only once the supervisor has confirmed that the appropriate ethical approval or exemption for a study of this scale is in place. The full information sheet, consent text and data-management detail are reproduced in Appendix~\ref{app:protocols}.
+% -------------------------------------------------------------------------
+\section{Use of AI Assistants}
+\label{app:ai-use}
+
+In the interest of transparency, I want to be clear about the role artificial-intelligence assistants played in producing this thesis, and about the boundaries I kept around it.
+
+AI tools were used as an aid throughout the work. Anthropic's Claude, including the Claude Code environment, supported me in drafting and refining text, in structuring arguments, in writing and debugging analytical code, and as a thinking partner when I needed to reason through a methodological choice. Perplexity was used to locate candidate literature, which I then verified and read at first hand before citing. In every case the tools assisted a decision; they did not make it. The research design, the interpretation of the results, the methodological judgements, and the final wording were mine, and I reviewed and adjudicated everything the tools proposed rather than accepting it wholesale. Where the analysis depended on judgement --- the coding of participant responses in particular --- I treated any automated suggestion as a first pass to be checked, not as an answer.
+
+I will admit a small ambivalence, and I would rather state it than hide it. Part of me prefers the splendidly imperfect flow of human writing, the roughness that carries a person in it, and I am aware that a tool which smooths language can also flatten it. But using these tools well was itself a challenge and an experiment, one fitting for a thesis about how technology can extend human understanding rather than replace it. I approached it in that spirit: as an attempt to let the tool enhance the work while keeping the thinking, the responsibility and the voice my own. I am content with how that balance turned out, and I have tried to be honest about it here rather than quiet.
