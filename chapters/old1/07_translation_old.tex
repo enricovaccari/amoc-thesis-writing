@@ -1,0 +1,257 @@
+% =========================================================================
+% CHAPTER 7 — TRANSLATE: DESIGNING EXPERIENTIAL REPRESENTATIONS
+% =========================================================================
+
+\chapter{Translate: Designing Experiential Representations}
+\label{ch:translate}
+
+In Chapter~\ref{ch:data_pipeline} we established analytically what there is to represent. In this chapter we establish how it is represented. The three representational artefacts of the \emph{Living Atlantic} project are described in detail, with the design decisions that produced them justified against the analytical results of Chapter~\ref{ch:data_pipeline} and against the cognitive-science literature reviewed in §\ref{sec:cognitive-science}. The chapter concludes with a synthesis of the design grammar that underlies all three artefacts, and which is offered as a transferable contribution to the design of experiential representations of complex systems.
+
+The chapter is organised so that what is common to the three representations is stated once and what is specific to each is stated where it belongs. §\ref{sec:translate-premise} recovers, from the analytical results, the licence on which the representational work rests. §\ref{sec:translate-framework} specifies the framework: the narrative arc that binds the three scenes, the logic by which each scene instantiates the three representational conditions, the design grammar that maps machine-learning-derived features onto perceptual dimensions, the provenance ledger that separates what carries information from what does not and the technical implementation. §\ref{sec:scene-column}, §\ref{sec:scene-engine} and §\ref{sec:scene-threshold} then treat each scene in turn. §\ref{sec:translate-synthesis} returns the design grammar as the transferable contribution the thesis claims under objective~O2.2.
+
+% -------------------------------------------------------------------------
+\section{From Latent Structure to Perceptual Form}
+\label{sec:translate-premise}
+
+Objective~O1.2 compared a non-linear autoencoder against linear principal component analysis at matched latent dimensionality and found, as hypothesis~H1 anticipated and hypothesis~H2 confirmed, that the additional expressive capacity of the non-linear model recovers essentially nothing that the linear decomposition does not already hold. Two linear modes account for $97.86\%$ of the variance in the AMOC vertical profiles, and the first mode alone accounts for $89.82\%$. The manifold on which the observational record lives is, in the sense relevant here, flat.
+
+This is not a negative result to be discarded. Instead, it represents the foundation for the analyses that follow. If the manifold had contained substantial non-linear structures, the two-dimensional space obtained through PCA would have been a simplified and potentially misleading representation of a more complex system. In that case, using these coordinates for visualization could have distorted the interpretation of the underlying dynamics.
+
+However, because the manifold is approximately flat, the coordinates $\mathrm{PC1}$ and $\mathrm{PC2}$ provide a reliable representation of the system. The vertical profile associated with each month can be reconstructed from these coordinates within the reconstruction error reported in Chapter~\ref{ch:data_pipeline}. Therefore, the representational phase can use the latent space as a meaningful navigable space, where movement through the coordinates corresponds to meaningful changes in the original data.
+
+This distinction between a representation that merely simplifies the data and one that preserves the relevant structure of the system is essential for the scientific validity of the visualization. In this case, the reliability of the representation is not assumed, but demonstrated through the previous analytical evaluation.
+
+This is also the specific sense in which machine learning functions here in the representational rather than the predictive role identified in §\ref{sec:ml-climate}. The models of Chapter~\ref{ch:data_pipeline} do not forecast; they propose a coordinate system. Following the epistemological position articulated by \citet{iten2020} and extended to interactive exploration by \citet{camps2019}, the latent representation is treated as an object that a human interpreter may examine, name and inhabit. What this chapter adds to that position is the step it has not previously been asked to take: the extension from expert analytics, where the latent space is a tool for the analyst \citep{sacha2018}, to public communication, where the latent space must itself be made perceptible to a viewer who does not know it exists.
+
+% -------------------------------------------------------------------------
+\section{The Translate Framework}
+\label{sec:translate-framework}
+
+\subsection{Three Scenes, One Descent}
+\label{subsec:three-scenes}
+
+The three representations have been created in sequential order, and the narrative is intended to be experienced in that exact order.
+
+Scene~I, \emph{The Column}, is the concrete anchor and presents the AMOC as a physical structure with depth: warm water transported north in the upper limb, colder water returning south beneath it, the whole column strengthening and weakening month by month.
+
+Scene~II, \emph{The Engine Room}, abstracts that column into the latent plane recovered in Chapter~\ref{ch:data_pipeline}, where twenty years of system states become a trajectory that wanders through a cloud of every state the system has visited. 
+
+Scene~III, \emph{The Threshold}, focuses on data uncertainity and carries the viewer backwards past April 2004, the month the RAPID array entered the water, and shows the single observed trajectory dissolving into three disagreeing reanalysis reconstructions.
+
+The sequence has a clear purpose as it follows the trajectory that Chapter~\ref{ch:introduction} anticipated in §\ref{sec:case-study-amoc}: from the visible to the inferred, from the object to its structure, from what is measured to what preceded measurement. It exploits, in doing so, the vertical image schema that \citet{lakoff1999} identify as a pre-conceptual cognitive resource --- downward as deeper, more hidden, more fundamental --- and that \citet{baur2026} has operationalised for interface design. 
+
+A viewer who encounters the latent space of Scene~II without first exploring the physical column in Scene~I lacks the reference needed to interpret its coordinates. Likewise, a viewer who reaches the ensemble spread of Scene~III without first observing the trajectory in Scene~II has no baseline against which model disagreement can be understood. Each scene therefore provides the foundation for interpreting the next, and this dependency determines their order.
+
+The three scenes are nevertheless implemented as separate artefacts rather than as a single continuous experience. This choice is methodological rather than aesthetic. As described in Chapter~\ref{ch:evaluate}, each think-aloud session presents only one scene in one visualization condition, without transitions or accumulated interaction state. Although a continuous experience could be more immersive, it would also introduce carry-over effects that would be difficult to separate in a small qualitative study. For this reason, continuity is provided by the written introduction preceding each scene and by the order in which the scenes are presented, rather than through animated transitions.
+
+\subsection{Equivalence Principle and Shared Provenance}
+\label{sec:equivalence}
+
+Objective O2.1 requires that the two representational conditions --- the conventional static representation (C1) and the machine-learning-driven experiential representation (C2+C3) --- display exactly the same underlying data. Any differences observed during the evaluation should therefore result from the way the information is presented, rather than from differences in the information itself. Although straightforward in principle, previous visualization research has shown that this requirement is often overlooked.
+
+In this thesis, this requirement is referred to as the \emph{equivalence principle}. It follows the concern raised by \textcite{tversky2002}: a fair comparison therefore requires informational equivalence --- both conditions must present the same information while differing only in their mode of representation. This principle guided the design of the present study.
+
+An earlier version of the visualization satisfied this requirement by construction. All three conditions were implemented within a single document and displayed the same data through a common interface. Because every condition shared the same file and data source, informational equivalence was guaranteed automatically. However, this design also imposed a within-subject procedure in which participants always encountered the static condition before the experiential one. As a result, any differences between conditions could be influenced by prior exposure, making it impossible to isolate the contribution of each representation.
+
+The final design instead adopts a \emph{between-subjects approach}. Participants are randomly assigned to a single condition: the control group receives the conventional static visualization, while the experimental group receives the animated and sonified version.\footnote{%
+The administered files are:
+\texttt{column-static.html}, \texttt{engine-static.html}, and 
+\texttt{threshold-static.html} (C1), and 
+\texttt{column-experiential.html}, \texttt{engine-experiential.html}, and 
+\texttt{threshold-experiential.html} (C2+C3). 
+A third file for each visualization,
+\texttt{column\_tot.html}, \texttt{engine\_tot.html}, and 
+\texttt{threshold\_tot.html}, exposes all three conditions through a toggle for demonstration purposes and is not used during the evaluation.
+} This removes carry-over effects, although it also means that individual participants cannot be directly compared across conditions. Given the qualitative nature of the study, involving eight to twelve participants analysed through think-aloud protocols and reflexive thematic analysis \parencite{braunclarke2006}, this trade-off is appropriate.
+
+Because the two conditions are now separate documents, informational equivalence is no longer guaranteed by the architecture alone. Instead, it is ensured through \emph{shared provenance}. Both visualizations are generated from the same JSON bundle,\footnote{\texttt{amoc\_translate\_bundle.json}, schema v1.0.0, 136\,kB, generated deterministically by notebook NB06 from the outputs of NB03, NB04 and NB05.} reconstruct every profile using the same reconstruction function,\footnote{\texttt{shared/reconstruct.js}; see Equation~\ref{eq:reconstruction}.} derive all visual anchors from the same shared routines,\footnote{\texttt{shared/bundle.js}, where \texttt{deriveAnchors} computes all displayed reference points directly from the data.} and define every visible element in the provenance ledger (Table~\ref{tab:ledger}). Consequently, both conditions compute and display the same information using the same data and the same code.
+
+Unlike the previous architecture, this approach does not make inconsistencies impossible. Separate documents could, in principle, diverge through future modifications. However, the complete implementation is transparent and auditable: the claim of informational equivalence can be verified directly by inspecting the source code provided in Appendix~C.
+
+This equivalence can also be demonstrated numerically. The static condition displays the empirical mean profile by evaluating the shared reconstruction function with both latent coefficients set to zero. Under these conditions, the reconstructed profile matches the stored \texttt{mean\_profile} exactly, with a maximum absolute difference of zero. Consequently, C1 follows the same computational pipeline as the experiential condition while displaying only observed data. The machine-learning model contributes only when the profile evolves through time in the experimental condition.
+
+The equivalence principle proposed by \textcite{tversky2002} is therefore preserved in the final design. The difference is simply how it is achieved: instead of relying on a single shared document, equivalence is demonstrated through a shared data source, shared computational pipeline and fully auditable implementation.
+
+\subsection{The Design Grammar, Applied}
+\label{sec:grammar}
+
+Objective O2.2 aims to develop a design grammar that maps machine-learning-derived features onto perceptual dimensions, grounded in the principles of pre-attentive processing and embodied cognition discussed in \S\ref{sec:cognitive-science}, while remaining reusable beyond this case study. The grammar itself is presented in Table~\ref{tab:design-grammar} and is therefore not repeated here. Instead, this chapter shows how each principle is applied to the AMOC visualisation and explains the role it plays in the final design. By documenting every mapping explicitly, any limitation observed during the evaluation can be traced back to the specific design choice, rather than to the visualisation as a whole.
+
+Five of the six principles are implemented in Scene~I. P4, which concerns the representation of uncertainty, is reserved for Scene~III, where uncertainty becomes the main focus. Since Scene~I shows only a single reconstructed trajectory, there is no uncertainty to represent.
+
+\subsubsection*{P0 --- Most important information to the most accurate channel}
+
+The meta-principle proposed here\footnote{The meta-principle proposed here is not a term used explicitly by either author, but a synthesis of two established ideas in visualization theory. Munzner's task-driven framework emphasizes that visualization design should begin by identifying the user's analytical goal and the most relevant data attributes before selecting an appropriate visual encoding. Bertin's theory of visual variables describes how different graphical channels (e.g., position, size, value, texture, and colour) have different perceptual capabilities and should therefore be matched to the type of information being represented. Together, these principles motivate the allocation of the most accurate perceptual channel to the most important information in a visualization \parencite{munzner2014,bertin1983}.}, drawing on the design frameworks of \textcite{munzner2014} and \textcite{bertin1983}, asks a simple question before any visual encoding is chosen: 
+
+\begin{quote}
+\emph{what is the most important information in this scene? }
+\end{quote}
+
+The answer is not the overall intensity of the circulation, which could simply be written as a number. Instead, the key information is the \emph{vertical structure of transport}: at this latitude the Atlantic circulation is distributed across depth, with northward transport in the upper ocean and southward transport below, rather than behaving as a single current located at one position. This is an ordered quantitative variable distributed along an ordered spatial dimension, making spatial position the most appropriate encoding under P1. All other visual variables are assigned only after this primary mapping has been established.
+
+\subsubsection*{P1 --- Ordered magnitude to spatial position}
+
+The profile curve carries the main quantitative information and is shown in both experimental conditions. The overturning streamfunction $\Psi$ is plotted against depth, with depth increasing downward according to standard oceanographic convention, across all 307 depth levels of the RAPID dataset (0--5995.1\,m). Position along a common scale is the most accurate perceptual channel for comparing quantitative values \parencite{clevelandmcgill1984}, making the profile curve the natural place for the scene's numerical information, including the transport values, depth selection and axis references.
+
+One clarification is necessary: the 307 depth levels are almost uniformly spaced, with an average interval of approximately 19.59\,m and a maximum-to-minimum spacing ratio of only 1.03. The sampling is therefore essentially uniform rather than denser near the surface, and the visualisation introduces no correction for a non-uniformity that is not present in the data.
+
+\subsubsection*{P2 --- Dynamics and change to real motion}
+
+Static graphics cannot directly convey movement \parencite{sterman2008,cronin2009}, yet the central phenomenon represented in Scene~I is an overturning circulation composed of two branches moving in opposite directions. While the profile curve describes this structure quantitatively, it cannot show the motion itself. This role is assigned to the particle field, whose particles are advected by the local meridional velocity $v \propto \partial\Psi/\partial z$ (Equation~\ref{eq:velocity}) computed from the current reconstructed profile.
+
+This mapping is dictated by the physics rather than by aesthetic preference. Since velocity is the vertical derivative of the overturning streamfunction, it becomes zero wherever $\Psi$ reaches a maximum or minimum. In the mean profile, the maximum transport of 16.808\,Sv occurs at 1030.70\,m, while the first depth level where the mean velocity becomes southward is immediately below, at 1050.4\,m.\footnote{The velocity anchors are reported at grid resolution: \texttt{deriveAnchors} returns the first depth level where $v$ changes sign rather than estimating the exact zero-crossing through interpolation. Because the RAPID product samples the water column at approximately 19.59\,m intervals, this difference is smaller than the vertical resolution of the dataset and has no physical consequence. The $\Psi$ zero-crossing is reported in both forms: at grid resolution (4346.1\,m) and after linear interpolation between adjacent levels (4340.85\,m).}
+
+Driving the particles directly from $\Psi$ would therefore produce physically incorrect motion. Particles would move fastest exactly where the real velocity is zero, and every particle above the $\Psi$ zero-crossing would travel in the same direction. Such a representation could not depict overturning, because overturning is defined by the simultaneous counter-flow of two branches. For this reason, particle motion is driven everywhere by $\partial\Psi/\partial z$, and the three colour regions correspond to the velocity sign reversals at 1050.4\,m and 5065.4\,m rather than to the sign of $\Psi$.
+
+The difference between these two boundaries is physically meaningful. The condition $\Psi=0$ identifies the depth where the cumulative transport becomes zero, whereas $v=0$ identifies the depth where the local current reverses direction. In this dataset the two depths differ by approximately 719\,m, confirming that the distinction is substantial rather than merely mathematical.
+
+Motion also communicates something that a static figure cannot: \emph{time}. The reconstructed profile evolves month by month along the latent trajectory learned by the model, allowing the strengthening and weakening of the circulation to become directly perceptible. Hypothesis H2 justifies this representation. Because the non-linear autoencoder never outperformed linear PCA at the same latent dimensionality—remaining within 0.06--0.15 percentage points for every latent space from one to five dimensions—the latent manifold can be considered effectively linear. Animating the trajectory in the PC1--PC2 space therefore represents a faithful translation of the underlying data rather than a simplification. This is particularly important because the goal is not to show a simplified version of the data, but to make the latent structure itself perceptible to a non-expert viewer, maintaining the integrity of the information while enhancing its accessibility.
+
+\subsubsection*{P3 --- Anomaly to density and texture}
+
+Anomalous months are represented through changes in the density and texture of the particle field rather than through explicit annotations. The rationale follows the principle that texture irregularities are detected rapidly and pre-attentively, without requiring the viewer to consult a legend \parencite{bertin1983,ware2021}. The anomaly scores are produced by the IsolationForest model developed in NB04 using the latent coordinates.
+
+A brief validation supports this choice. The weakest reconstructed month, March 2013 (5.71\,Sv), coincides with an anomaly cluster spanning 1--20 March 2013, which ranks second out of eighteen clusters by average anomaly score. The correspondence occurs at the monthly timescale rather than simply within the same year, as another anomaly cluster in late 2013 has no counterpart in the reconstruction. A linear latent representation and a tree-based anomaly detector therefore identify the same event independently.
+
+\subsubsection*{P5 --- Secondary ordered variable to sound}
+
+The first principal component, PC1(t), controls a synthesised heartbeat whose rate and intensity are min--max normalised across the full record \parencite{hermann2011}. Sound plays a supporting role rather than introducing new information. PC1 is already visible through the changing amplitude of the reconstructed profile, while the heartbeat provides a second perceptual channel for the same variable. The auditory mapping therefore reinforces an existing representation instead of adding new data. Audio is disabled by default and can be enabled voluntarily by the participant, reflecting the practical constraints of the evaluation rather than a design preference. As documented in Table~\ref{tab:ledger}, the ambient ocean sound carries no informational content.
+
+\subsection{Provenance and Non-Informational Scaffolding}
+\label{subsec:provenance}
+
+A representation that claims fidelity must be able to say, for every element the
+viewer can perceive, where that element comes from. Each scene therefore carries
+a provenance ledger: a table listing every perceivable element, the bundle field
+it derives from, the design principle that licenses it and whether it originates
+from a classical computation or from a machine-learning model. The ledger for
+Scene~I is Table~\ref{tab:ledger-column}; the ledgers for Scenes~II and~III
+follow in \S\ref{sec:scene-engine} and \S\ref{sec:scene-threshold}.
+
+The ledger does three things. It operationalises the fidelity principle of
+\S\ref{sec:fidelity}: every on-screen value derives from the bundle, and no
+quantity is rescaled for visual effect. It separates informational elements from
+scaffolding, because colours, fonts and background tints are design choices that
+carry no data, and saying so prevents a reader from reading meaning into a
+decision that has none. And it makes the classical/ML distinction checkable
+element by element, which matters because this thesis claims a machine-learning
+contribution and must therefore be precise about where that contribution lies.
+
+The last point is the one that costs something to state. Machine learning does
+not touch every element of every scene, and some of the most visually striking
+elements are classical computations that any analyst could reproduce with a
+difference operator. The ledger records this rather than leaving it to be
+assumed. An artefact that declares which of its parts are novel is easier to
+trust than one that lets the reader guess.
+
+\subsection{Symmetry of Framing}
+\label{subsec:symmetry}
+
+Both conditions of each scene open with the same framing material: an
+introduction screen carrying the anchor question, and a context panel giving the
+data source, a plain-language description of the measurement and the Sverdrup
+analogy. These are shared modules, imported byte-identically by both
+documents.\footnote{\texttt{shared/intro.js} and \texttt{shared/context.js}.
+Identity is by import rather than by duplication, so the two documents cannot
+drift apart through an edit to one of them.}
+
+The rule governing this material is simple: we may teach both groups to read the
+speedometer, but we may never tell either group how fast the car is going.
+Participants are told what $\Psi$ measures and what a Sverdrup is, because a
+viewer who cannot read the units cannot articulate anything about the display.
+They are never told what the structure means --- not that the limbs oppose each
+other, not where the boundaries lie, not what the peak implies. If the viewer
+must be told, the translation has failed, and the evaluation would be measuring
+the framing text rather than the representation.
+
+The anchor question --- \emph{does deep water move with or against the surface?}
+--- is the instrument that makes this measurable. It is posed identically to both
+groups and answered by neither document. It is what expectation~E3.1 tests: the
+question is put to every participant under the same words, and only the
+representational form differs in what it affords by way of an answer. The
+symmetry is therefore not a courtesy to the control group. It is what makes the
+comparison mean anything at all.
+
+\subsection{Implementation}
+\label{subsec:implementation}
+
+The artefacts are browser documents. Each scene is an HTML file that loads the data bundle, renders to a canvas through Three.js and synthesises sound through the Web Audio API. There is no server, no build step and no installation: the files run from a local directory on an ordinary laptop, which is what the evaluation setting requires. The choice is methodological rather than technical. A think-aloud session should fail because the representation failed, not because a dependency did not resolve. It also serves the audit claim of \S\ref{sec:equivalence}: a reader who wants to check that the two conditions share one data payload and one code path can open the files and read them, without reconstructing an environment first.
+
+Each scene is implemented as two administered documents, one per condition: the conventional static representation and the experiential one. Alongside these, the repository holds secondary files that are not administered --- demonstration documents exposing several conditions behind a toggle, and informational pages that document a scene rather than present it. These exist for development and for the reader, and they are recorded where each scene is described so that the distinction between what a participant sees and what the repository contains stays explicit.\footnote{For Scene~I: \texttt{column-static.html} (C1) and \texttt{column-experiential.html} (C2+C3) are administered; \texttt{column\_tot.html} and \texttt{column\_tot\_info.html} are not.}
+
+What the administered documents of a scene share is not a convention but an import. The reconstruction function, the anchor derivation, the introduction screen and the context panel are separate modules, imported by both.\footnote{\texttt{shared/reconstruct.js}, \texttt{shared/bundle.js}, \texttt{shared/intro.js} and \texttt{shared/context.js}.} Nothing is copied between the documents, so nothing can drift apart when one of them is edited. Where the documents differ --- and they must differ, since one animates and the other does not --- the difference is visible as the presence or absence of a module, not as a divergence buried inside duplicated code. The same modules are shared across scenes, not only within them: all three scenes reconstruct profiles through one function and derive their anchors through one routine, which is what makes the fidelity claim a property of the project rather than of any single document.
+
+The bundle is a single JSON file of 136\,kB, generated deterministically by the last notebook of the analytical pipeline from the artefacts the earlier notebooks persisted.\footnote{\texttt{amoc\_translate\_bundle.json}, schema v1.0.0, generated by NB06 from the outputs of NB03, NB04 and NB05.} It carries the depth grid, the mean profile, the reconstruction basis, the latent trajectory, the anomaly clusters and the variance statistics. All three scenes read it. Regenerating it from the pipeline reproduces it byte for byte, and every number that reaches the screen in any condition of any scene comes from it.
+
+\section{Scene I: The Column}
+\label{sec:scene-column}
+
+\subsection{Goal}
+\label{subsec:column-objective}
+
+Let's introduce Scene~I, the entry point of the experience, named \emph{The Column}. It is the most physical of the three scenes and the only one whose subject a viewer could, in principle, point at: a column of water in the Atlantic at 26.5°N, where warmer water moves northward near the surface and colder water returns southward at depth.
+
+The scene communicates one central idea: at this latitude, the Atlantic circulation is not a current occupying a single location, but a quantity distributed across depth, with different layers moving in opposite directions at the same time. A viewer who leaves the scene understanding only that the circulation becomes stronger or weaker has missed the main point. The essential insight is that water above approximately one kilometre depth moves in one direction, while deeper water moves in the opposite direction.
+
+This concept is difficult to communicate because the conventional representation does not show it directly. The profile of $\Psi$ against depth contains the counter-flow: the curve increases until reaching a maximum near one kilometre depth, then decreases and crosses zero. However, containing information is not the same as making it visible. To understand the opposing motion, the viewer must know that the direction of the flow is not represented by the height of the curve itself, but by its \emph{slope}: where the curve rises, the transport is northward; where it falls, the transport is southward.
+
+For trained oceanographers, this interpretation is immediate and often unconscious. For non-experts, the same curve may simply appear as a line that increases and then decreases. This difference between expert and non-expert interpretation is well documented. Reviewing the cognitive science of climate graphics, \textcite{harold2016} show that figures designed for specialists can fail to communicate effectively to wider audiences, while \textcite{mcmahon2015} demonstrate that non-experts may misinterpret IPCC figures designed for public communication. The issue is not limited to general audiences: testing 110 decision-makers from 54 countries, \textcite{fischer2020} found that participants systematically misread a counter-intuitive IPCC visualization and often expressed high confidence in an incorrect interpretation.
+
+\subsection{Visualization Conditions}
+\label{subsec:column-conditions}
+
+The control condition, C1, represents the conventional scientific visualization (Figure~\ref{fig:column-static}). It shows $\Psi$ as a function of depth, with depth increasing downward, using a publication-style grid, a marked maximum and axes labelled in Sverdrups. The visualization contains only the profile itself: no decomposition, no variance information and no model output. It represents the standard static view of the mean circulation.
+
+ The marked maximum corresponds to 16.808\,Sv at 1030.70\,m, obtained from the record mean, and is consistent with the 16.9\,Sv at approximately 1030\,m reported by \textcite{smeed2018}. Therefore, C1 represents the established scientific form of the visualization while preserving complete data equivalence.
+
+
+\subsection{Reconstruction and Fidelity}
+\label{subsec:column-reconstruction}
+
+Every profile in either condition is rebuilt from the bundle through one equation:
+
+\begin{equation}
+\label{eq:reconstruction}
+\Psi(z, t) = \overline{\Psi}(z) + \mathrm{pc}_1(t) \cdot B_1(z) + \mathrm{pc}_2(t) \cdot B_2(z)
+\end{equation}
+
+where $\overline{\Psi}(z)$ is the mean profile over the record, $B_1$ and $B_2$ are the first two basis vectors of the decomposition and $\mathrm{pc}_1(t)$, $\mathrm{pc}_2(t)$ are the latent coordinates of month~$t$. Two modes suffice because they hold $97.86\%$ of the variance, and the manifold is flat enough that they hold it faithfully rather than approximately --- which is the licence H2 supplies and \S\ref{sec:translate-premise} states.
+
+The basis vectors must be the unit vectors of the bundle's reconstruction basis, and this is worth recording because the bundle also carries a second, superficially similar pair. The EOF loadings are the same modes scaled into Sverdrups for display of the mode shape; their norm is not one. Passing them to Equation~\ref{eq:reconstruction} in place of the unit basis would produce a profile inflated far beyond anything the ocean does, because the coefficients are already scaled to pair with unit vectors.\footnote{$|B_1| = |B_2| = 1.0000$ against $|\text{eof}_1| \approx 56.65$. The bundle documents the distinction in \texttt{pca.notes.eof\_vs\_basis}, and the reconstruction module refuses the substitution in its own documentation. The two are kept in one file because both are needed --- the basis to rebuild profiles, the loadings to draw the mode shape --- and the risk of confusing them is the price of not duplicating the decomposition.}
+
+The fidelity principle of \S\ref{sec:fidelity} governs what happens next. Every value on screen derives from Equation~\ref{eq:reconstruction} or from the bundle directly. Nothing is rescaled to look better. Where an aesthetic preference conflicted with the data, the data won, and the places where this cost something are recorded in Appendix~A.
+
+Three anchors follow from the reconstruction and appear on screen in the experimental condition. The strongest month of the record is January 2018, reaching 24.26\,Sv. The weakest is March 2013, at 5.71\,Sv --- some $3.5\sigma$ below the mean of the monthly maxima, an extreme but physically real low, consistent with the winter minima the RAPID record documents. Between them the column swells and collapses, and that range is the amplitude a viewer of C2 sees. A viewer of C1 sees none of it, because the mean has no time.
+
+The peak does not merely rise and fall; it also moves. In the strongest month of the record it sits at 1070.2\,m, in the weakest at 991.1\,m --- an excursion of roughly 79\,m. This is the second mode at work: PC1 sets how much water the column carries, while PC2 redistributes it vertically, and the two together are what the animated curve traces. An earlier draft of this thesis asserted that the depth of maximum transport is stable while its magnitude varies. Evaluated across the record, that is not the case, and the experiential condition displays the movement whether or not the text acknowledges it.
+
+\subsection{Machine Learning in Scene~I}
+\label{subsec:column-ml}
+
+Scene~I is the most physical of the three scenes and the one where the machine-learning contribution is least visible but still strucural and amounts to two things. 
+
+First, the model supplies the coordinates along which the profile can move through time. The static figure has no time in it: the mean is an average over twenty years, and averages do not move. The model gives the time back, because PC1 and PC2 are a coordinate system in which each month of the record is a point, and walking from one point to the next reconstructs the profile of each month in turn. The motion in C2 is not an animation added to a figure. It is the model walking its learned trajectory, and every frame is a real month.
+
+H2 is what makes that faithful rather than convenient. If the manifold were curved, moving in a straight line through the latent plane would pass through states the ocean never occupied, and the animation would be showing months that did not happen. Because the autoencoder never beats the linear decomposition at equal dimensionality, the plane is flat, and the path between two months lies in the space the data actually inhabits. Without H2 the experiential layer would have no epistemic ground, and the motion would be a graphic effect rather than a translation.
+
+Second, the model identifies which months are anomalous. The IsolationForest scores each month against the rest of the record, and those scores drive the texture of the particle field, so that irregularity is perceived rather than read.
+
+What the machine learning does \emph{not} do is worth being equally clear about. The particle field --- the most visually striking element of the scene --- is not a model output. It is the vertical derivative of the current profile, computed by finite differences, and any analyst with the profile could produce it. The colours are a palette. The axes come from the depth grid. The peak readout is the maximum of an array.
+
+This subtlety is specific to Scene~I, and it is a property of the scene rather than a limitation of the approach. Scene~II makes the latent space the inhabited space, and Scene~III makes uncertainty the protagonist; in both, the model is the subject rather than the substrate. Scene~I is the entry door, and its job is to make the physical column real enough that the abstractions of the later scenes have something to abstract from. Appendix~A records this asymmetry among the limitations of the artefact.
+
+\subsection{Why the Experiential Condition Should Do Better}
+\label{subsec:column-rationale}
+
+The design rationale can now be stated in full. It is a rationale and not a result: whether it holds is what Chapter~\ref{ch:evaluate} tests.
+
+C1 shows where the Atlantic is strong on average. A viewer who reads it correctly learns that transport peaks near a kilometre down at roughly seventeen Sverdrups, and that it falls away below. That is a real fact, honestly displayed, and it is what the field's own idiom conveys.
+
+C2 shows something C1 contains but cannot display: that water above roughly a kilometre and water below it travel in opposite directions, at the same moment, in the same column. The particle field makes this a perceptual fact rather than an inference. A viewer does not compute the reversal from the shape of a line; they watch it.
+
+C3 adds the time the model learned. The column swells toward 24.26\,Sv in January 2018 and collapses toward 5.71\,Sv in March 2013, and the months in between are neither smooth nor regular. Anomalous months disturb the texture of the field, so that a viewer registers irregularity without consulting a legend or a label.
+
+The claim is not that the experiential condition is more attractive. It is narrower and more testable than that. The static idiom is systematically misread by non-specialists, as \S\ref{subsec:column-objective} sets out, and the specific things it fails to convey --- structure that must be inferred, and change that must be imagined --- are precisely what motion and latent time deliver directly. If the experiential condition does better, it should do better on those things and not on the intensity readout, which C1 states outright and states well.
+
+That is a falsifiable expectation, and it is the one E3.1 and E3.2 put to the test.
+

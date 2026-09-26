@@ -1,0 +1,134 @@
+% =========================================================================
+% CHAPTER 3 — LITERATURE REVIEW
+% =========================================================================
+
+\chapter{Literature Review}
+\label{ch:literature}
+
+\noindent
+{\rmfamily\itshape
+\begin{tabular}[t]{@{}l@{\hspace{0.3cm}}p{12.5cm}@{}}
+\textls[50]{\textbf{Addressed:}} &
+\textls[50]{Theoretical Foundations · Risk Perception \& Cognitive Limits · Current Benchmarks ·
+Embodied \& Immersive Representation · Design Principles · Gaps in the Literature}
+\end{tabular}
+}
+
+\vspace{0.5cm}
+
+This chapter reviews the literature on which the thesis is built. Three strands define the problem: the psychology of climate risk perception, the cognitive science of dynamic systems, and the empirical evaluation of climate visualisation. Two supply the response: embodied and immersive representation, and machine learning used representationally rather than predictively. A sixth strand translates the theory into a design grammar for building an experiential representation, and a closing section names the gap the thesis occupies.
+
+% -------------------------------------------------------------------------
+\section{Psychological Barriers to Climate Risk Perception}
+\label{sec:psych-barriers}
+
+Chapter~\ref{ch:introduction} introduced the \emph{information-deficit hypothesis} and the evidence against it \citep{kellstedt2008, kahan2015}.\footnote{In \citet{kellstedt2008} the inverse relationship between knowledge and concern survived controls for political affiliation and demographics, indicating a genuine cognitive-cultural effect rather than a confound.} What matters here is the account of \emph{why} it fails, because that account is what the design must answer to. The lesson is not that information does not matter, but that its effect is mediated by cognitive and cultural machinery the standard formats never addressed.
+
+The most influential account of this failure is \citet{stoknes2015}, who names five barriers --- \emph{distance}, \emph{doom}, \emph{dissonance}, \emph{denial} and \emph{identity} --- that have organised much later work.\footnote{Briefly: \emph{distance} (climate change feels spatially, temporally and socially remote), \emph{doom} (catastrophist framing triggers avoidance), \emph{dissonance} (the belief--behaviour gap is resolved by adjusting the belief), \emph{denial} (self-protective disengagement) and \emph{identity} (climate positions mark group belonging).} The barriers interlock rather than act singly \citep{vanderlinden2015}, and audiences stratify into groups whose barriers activate differently, so no single strategy serves all \citep{leiserowitz2021}. Conventional visualisation has not dissolved them, and the reason is structural: the imagery most used to communicate climate change either reinforces the distance communicators hope to close or triggers the doom response that suppresses engagement \citep{cornerclimate2015, nicholsoncole2005}, and formats that give the reader no active role consistently underperform those that do \citep{ojala2023}. Adding precision to a line graph opens no such role --- its implicit rhetoric of \emph{here is the fact} leaves the reader nowhere to stand. The literature therefore points toward representations that treat the reader as an active participant in making meaning \citep{marlon2019, morris2019}, which is the direction this thesis pursues, with machine learning as its substrate.
+
+% -------------------------------------------------------------------------
+\section{The Cognitive Science of Dynamic and Complex Systems}
+\label{sec:cognitive-science}
+
+Beneath these cultural filters lies a barrier independent of them: the mind's structural limits in reasoning about systems of accumulation, feedback and delay. These are stable features of cognitive architecture, not gaps better teaching could close, and any representation that ignores them will fail however well it is tuned psychologically.
+
+The strongest evidence is \citet{sterman2008}, whose experiments show that even mathematically literate adults make systematic errors on elementary stock-and-flow problems. Shown a scenario in which atmospheric CO\textsubscript{2} stabilises, and asked to sketch the emissions path consistent with it, most violate mass balance --- matching the shape of the output to the shape of the input rather than reasoning about the difference between inflow and outflow.% RESTORE WITH THE REAL LABELS FROM figures/literature/sterman_figures.tex: (Figures~\ref{fig:sterman-scenario}--\ref{fig:sterman-response})
+\footnote{In Sterman's studies 84\% of highly educated participants --- MIT graduate students, engineers, participants trained in calculus --- made this error, indicating a limit of representation rather than of arithmetic.} \citet{cronin2009} found the same in starker form: asked to sketch a stock from its inflow and outflow, participants confused rates with levels and treated the dynamic system as static, even when they had the mathematical apparatus to solve it. Given only a graph, the mind does not spontaneously build the dynamic scenario the graph depicts.
+
+\input{figures/literature/sterman_figures.tex}
+
+Cognitive-load theory explains why \citep{sweller1988, swellervanmerrienboer2019}. Working memory has strictly limited capacity, and a static image of a dynamic system asks the reader to mentally animate what the image does not animate --- a load imposed on top of the domain itself. \citet{ware2021} argues that a communicative visualisation must lower this internal-simulation demand by making dynamic structure perceptually available in the representation itself. A third strand points ahead: \citet{tversky2019}, synthesising four decades of work, shows that human reasoning about complex processes is fundamentally spatial, understood through bodily and kinaesthetic schemas the mind already inhabits. If the AMOC is structurally dynamic and human reasoning about dynamics is spatially embodied, the strategies most likely to succeed are those that enrol the reader's spatial and kinaesthetic cognition. That proposition organises the rest of the chapter.
+
+% -------------------------------------------------------------------------
+\section{Empirical Evaluation of Climate Visualisation}
+\label{sec:empirical-viz}
+
+What has actually been measured about how climate visualisations are received reveals a methodological asymmetry: the field is rich in studies of what audiences \emph{prefer} and sparse in studies of what they \emph{understand}. That asymmetry defines the gap this thesis addresses. The most systematic review found that standard formats --- line graphs, choropleth maps, ensemble spaghetti plots --- are mismatched to their audiences' cognitive resources, and that the mismatch appears even among trained policy readers \citep{harold2016}. Those readers underestimate uncertainty ranges shown as shaded envelopes and misread ensemble spread as disagreement rather than as a structural feature of a projection \citep{mcmahon2015}. Most tellingly, the visualisations people \emph{prefer} are not those that produce the highest \emph{comprehension}: people prefer what feels familiar and understand what is structurally aligned with the phenomenon \citep{kause2020}.\footnote{A later study found the same split for uncertainty specifically: intuitive icon arrays produced overconfident readings, while less intuitive but structurally faithful frequency formats produced calibrated ones \citep{kause2021}.} Optimising for preference therefore risks producing what \citet{sheppard2015} calls \emph{consoling visualisations} --- images received warmly and understood poorly.
+
+This is not accidental; it rests on a mature science of visual encoding that Chapter~\ref{ch:translate} draws on directly. Bertin identified the finite set of \emph{visual variables} through which any mark encodes data --- position, size, value, colour, orientation, texture \citep{bertin1983}. \citet{clevelandmcgill1984} ranked them by decoding accuracy: position along a common scale is judged far more accurately than length, angle, area or colour saturation. \citet{munzner2014} turned this into a design rule, \emph{effectiveness}: match the most important information to the most accurately decoded channel. \citet{ware2021} grounds the same rule in perception, distinguishing channels processed pre-attentively --- in parallel, before focused attention --- from those needing serial inspection. Encoding, in short, is measured perceptual performance, not taste.
+
+\input{figures/literature/cleveland_hierarchy.tex}
+
+Uncertainty is where conventional encoding fails most, and where this thesis departs most from convention. Error bars and shaded bands are read poorly by non-specialists, who treat a band as a hard edge \citep{spiegelhalter2017}; \citet{padilla2018} explain why, showing that static uncertainty encodings overload working memory, so viewers fall back on heuristics that discard the uncertainty. The best-evidenced alternative is to \emph{animate} it: Hypothetical Outcome Plots show a sequence of possible outcomes over time, letting the viewer feel the spread instead of decoding a band, and untrained observers judge them more accurately than error bars \citep{hullman2015hops, kale2019hops}. This licenses the thesis's central move --- rendering uncertainty as a felt perceptual quality rather than a bracketed number.
+
+These limits are visible in how the AMOC itself is communicated, which fixes the study's control condition. In the scientific and public record it appears almost entirely as line graphs of transport in sverdrups, ensemble projections shown as a shaded spread, and reconstructed ``fingerprint'' indices, with the Intergovernmental Panel on Climate Change (IPCC) adding verbal qualifiers such as ``very likely to weaken'' \citep{caesar2018, ipcc2021}. Each is limited exactly as the sections above predict: the static curve depicts a dynamic system in its final state; the shaded band encodes uncertainty in the way shown to be misread; the verbal qualifiers ask a non-specialist to hold a probabilistic threshold judgement in working memory with no perceptual support; and none conveys the non-linearity that defines a tipping element. The conventional baseline communicates magnitude and trend while failing to communicate dynamics, non-linearity and uncertainty --- precisely what the experiential condition is designed to improve upon, and reconstructing it faithfully is what makes the comparison in Chapter~\ref{ch:userstudy} fair.
+
+% -------------------------------------------------------------------------
+\section{Embodied Cognition and Immersive Representation}
+\label{sec:embodied-viz}
+
+If the response is to enrol spatial and bodily cognition, three related traditions show how. The philosophical grounding is \citet{lakoff1999}: the abstract concepts through which we reason about systems --- acceleration, feedback, stability, tipping --- are extensions of bodily and spatial experience, not disembodied logic, and \citet{kirsh2013} found experimentally that people allowed to gesture and move while reasoning about complex processes outperformed those restricted to static inspection. \emph{Data physicalisation} \citep{jansen2015} grew from this, encoding information for exploration through touch and sight; participants recall represented information more accurately from such artefacts than from equivalent charts \citep{moere2010}. Parallel to it, \emph{data humanism} argues that narrative, authored representation engages readers more deeply than an aesthetic of dispassionate abstraction \citep{lupi2017, segel2010}. The third, \emph{immersive analytics}, holds that spatially-aware interfaces offer affordances the flat screen cannot, suited to data whose structure is spatial or dynamic \citep{marriott2018}.\footnote{Formal evaluations of immersive analytics remain limited, and the strongest current evidence concerns three-dimensional spatial and temporal tasks rather than abstract complex systems. The theoretical alignment with the cognitive science of \S\ref{sec:cognitive-science} is nonetheless direct.} Browser-based rendering and real-time audio bring a useful subset of these affordances within reach of a single research project without specialised hardware, which is the opening this thesis takes up. Together these traditions support one claim: the difficulty of communicating complex climate systems is not addressable by refinement within the conventional paradigm, and the literatures point jointly toward treating the reader as an active, embodied participant.
+
+% -------------------------------------------------------------------------
+\section{Machine Learning as a Representational Substrate}
+\label{sec:ml-climate}
+
+Machine learning for climate science is now vast, but its dominant agenda is \emph{predictive}: forecasting variables, detecting anomalies, parameterising physical processes, downscaling model output \citep{reichstein2019, sonnewald2021}. The AMOC literature mirrors this, applying machine learning mostly to detect early-warning signals or forecast variability \citep{boers2021, ditlevsen2023}. This work is valuable, but it is oriented almost entirely toward new results for expert audiences, leaving an adjacent question unexplored: what machine learning contributes when the goal is not a new result but to make an existing scientific object \emph{intelligible to non-specialists}.
+
+The distinction is worth stating precisely. A network forecasting AMOC transport produces a new capability, judged in shared units --- correlation, error, calibration. A dimensionality-reduction analysis of the same record produces a latent representation whose value lies elsewhere: in which few coordinates account for most of the variability, and what they mean physically. The thesis uses machine learning in this second, \emph{representational} role. The claim is not that the AMOC's vertical structure is novel --- it is consistent with decades of oceanography \citep{hannachi2007, buckley2016} --- but that once recovered it can become the coordinate system through which the AMOC is made available to perception. The literature treating machine learning this way is thin but real: latent representations have been argued to be legitimate epistemological objects in physics \citep{iten2020}, and visual-analytics research treats a model's latent space as the substrate through which an analyst builds understanding \citep{sacha2018}. Extending this from expert analytics to public communication of a climate system has been proposed occasionally \citep{cabrera2023} but scarcely implemented. That is the gap.
+
+% -------------------------------------------------------------------------
+\section{Design Grammar}
+\label{sec:design-grammar}
+
+The previous sections show why conventional visualisation often fails and why an embodied approach offers an alternative. They do not yet explain \emph{how} such an approach should be designed. This section closes that gap by deriving design principles from the literature above: each links a system property to a perceptual channel, supported by evidence from cognitive science and visualisation research, so that the choices in Chapter~\ref{ch:translate} are informed design decisions rather than aesthetic ones --- each traceable to a foundation and defensible on its own.
+
+The parent principle is the effectiveness rule established in \S\ref{sec:empirical-viz}: the most important information should be assigned to the most accurately decoded visual channel \citep{bertin1983, clevelandmcgill1984, munzner2014}. The remaining principles follow by applying it to the characteristics of complex systems: magnitude through spatial position, change over time through motion, anomalies through density or texture, uncertainty through controlled variation rather than static intervals, and secondary ordered information through sound. These mappings rest on the evidence discussed above and are stated as general principles applicable to invisible systems beyond the AMOC. Table~\ref{tab:design-grammar} summarises the grammar; Chapter~\ref{ch:translate} applies it to the system properties recovered in Chapter~\ref{ch:data_pipeline}.
+
+The grammar also positions the thesis within the broader field of experiential data representation. Data-art practice already explores how hidden structures from computational models can become perceptual experiences: the studio fuse*, for example, treats the latent spaces of generative models as environments of continuous transformation.\footnote{fuse*, \emph{Artificial Botany} and related works, \url{https://fuseworks.it}. The studio describes its interest as the ``intermediate dimension'' of latent space, explored as a space of expressive exploration rather than as a direct representation of a measured system.} These approaches share an assumption with this thesis --- that computational structure can become something to experience, not only to analyse --- but they do not test whether an audience \emph{understands} anything as a result. The contribution here is the step that practice omits: to ground each perceptual choice in the principles of Table~\ref{tab:design-grammar}, and to test comparatively whether the result supports both meaningful experience and measurable understanding.
+
+\input{figures/literature/fuse_artificial_botany.tex}
+
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[A design grammar for experiential representation of complex systems.]{\textbf{A design grammar for experiential representation of complex systems.}
+             Each row maps a \emph{system property} to a \emph{perceptual channel} through a
+             documented \emph{cognitive principle}, anchored to a \emph{source}. P0 is the parent
+             principle --- decoding accuracy is ranked, not uniform --- from which P1--P5 follow
+             by application to the properties of a complex system. The grammar is stated in
+             general, transferable form here; its application to the specific AMOC features
+             recovered in Chapter~\ref{ch:data_pipeline} (latent intensity, transitions, anomalies,
+             ensemble uncertainty) is developed in Chapter~\ref{ch:translate}. Motion (P2),
+             animated uncertainty (P4) and sound (P5) are the channels through which this
+             grammar goes beyond conventional static visualisation.}
+    \label{tab:design-grammar}
+    \begin{tabular}{@{}p{0.5cm}p{2.5cm}p{2.9cm}p{3.3cm}p{2.3cm}@{}}
+        \toprule
+        & \textbf{System property} & \textbf{Perceptual channel} & \textbf{Cognitive principle} & \textbf{Source} \\
+        \midrule
+        P0 & Relative importance of variables
+           & Most accurate channel for the most important variable
+           & Effectiveness: decoding accuracy is ranked, not uniform
+           & \citet{bertin1983, clevelandmcgill1984, munzner2014} \\[0.4em]
+        P1 & Magnitude / intensity (ordered, continuous)
+           & Spatial position on a common axis
+           & Position is the most accurately decoded channel for ordered data
+           & \citet{clevelandmcgill1984, munzner2014} \\[0.4em]
+        P2 & Dynamics / change over time
+           & Actual motion
+           & The mind cannot mentally animate a static frame; reasoning about process is spatial, and motion is tracked pre-attentively
+           & \citet{sterman2008, cronin2009, tversky2019, ware2021} \\[0.4em]
+        P3 & Anomaly / departure from regime
+           & Local density or texture change
+           & Irregularity draws bottom-up attention without a legend
+           & \citet{bertin1983, ware2021} \\[0.4em]
+        P4 & Uncertainty
+           & Animated variability (motion, density, sound), not a static band
+           & Static bands overload working memory; animated outcomes are judged more accurately
+           & \citet{padilla2018, hullman2015hops, kale2019hops} \\[0.4em]
+        P5 & Secondary ordered variable
+           & Sound (pitch, rhythm, timbre)
+           & Auditory channels carry ordered data in parallel, without visual clutter
+           & \citet{hermann2011} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------------
+\section{Synthesis: The Intersection This Thesis Occupies}
+\label{sec:literature-synthesis}
+
+Read as one argument, the strands converge on a proposition none states alone. Climate information is filtered through psychological barriers conventional formats fail to address (\S\ref{sec:psych-barriers}), compounded by structural limits on reasoning about dynamics from static images (\S\ref{sec:cognitive-science}). Climate visualisation has been evaluated mostly for preference rather than comprehension, though a mature science of encoding exists to ground better choices (\S\ref{sec:empirical-viz}). Embodied and immersive traditions show the direction of a response but have rarely reached climate communication (\S\ref{sec:embodied-viz}), and machine learning has advanced predictively, leaving the representational role of latent structure almost unexplored (\S\ref{sec:ml-climate}). The design grammar (\S\ref{sec:design-grammar}) shows these strands can be combined into operational principles --- but no existing work has done so and tested the result.
+
+The intersection is narrow and empirically unpopulated, defined by five commitments: a climate system whose invisibility and non-linearity make it a stress test \citep{lenton2008, armstrongmckay2022}; a machine-learning treatment that recovers latent structure rather than forecasts \citep{sonnewald2019, iten2020}; a design tradition that treats the reader as embodied and active \citep{lakoff1999, jansen2015, marriott2018}; a comparison of conventional and experiential formats \citep{harold2016, kause2020}; and a qualitative, exploratory evaluation appropriate to a phenomenon not yet ripe for population-level inference \citep{braunclarke2006}. No study reviewed satisfies all five jointly. The gap is not the absence of any one commitment but the absence of their integration --- and integrating them, on the AMOC as a case, is what the chapters that follow undertake.

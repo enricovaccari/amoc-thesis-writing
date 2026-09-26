@@ -1,0 +1,171 @@
+% =========================================================================
+% CHAPTER 5 — METHODOLOGY
+% Partial draft: stable sections describing choices already made and work
+% already done. Language simplified for readability.
+%   5.1 Research Design (DSR framing; detect-translate-evaluate as its
+%       instantiation; mapping to Peffers' six-phase model; justification)
+%   5.2 Philosophical Positioning (pragmatism)
+%   5.3 Detect: Analytical Methodology (methods, not results)
+% Sections 5.4-5.7 added later.
+% =========================================================================
+
+\chapter{Methodology}
+\label{ch:methodology}
+
+\noindent
+{\rmfamily\itshape
+\begin{tabular}[t]{@{}l@{\hspace{0.3cm}}p{12.5cm}@{}}
+\textls[50]{\textbf{Addressed:}} &
+\textls[50]{Research Approach (DSR) · Hypotheses \& Experiments (H1--H3, E3.1--E3.2) · Evidence Collection · Methodological Justification}
+\end{tabular}
+}
+
+% -------------------------------------------------------------------------
+\section{Research Design: A Design Science Research Approach}
+\label{sec:research-design}
+
+This thesis asks whether a machine-learning-driven experiential representation helps non-specialists understand a complex climate system better than a conventional one. The question cannot be answered by observation alone, nor by building an artefact alone. It needs both: the artefact has to be built, and its effect has to be measured. This places the work within \emph{Design Science Research} (DSR), the tradition made for research whose main contribution is a built artefact and whose knowledge comes from building and testing it \citep{hevner2004, peffers2007}. As Hevner puts it, understanding of a problem and its solution is gained in the building and use of the artefact \citep{hevner2004}. Here the artefact is the experiential representation, and the knowledge is what its construction and evaluation reveal about turning an invisible system into something perceptible.
+
+DSR is a family of methods rather than one fixed procedure. This thesis follows the six-phase process model of \citet{peffers2007}, the most widely used in the field: identify the problem, define objectives, design and develop, demonstrate, evaluate, and communicate. The thesis maps onto this model through its \emph{detect--translate--evaluate} arc. The match is direct. \emph{Detect} covers problem identification and the analytical recovery of the material to be represented. \emph{Translate} covers the design and development of the artefact. \emph{Evaluate} covers its demonstration and testing with participants. The thesis itself is the communication. The detect--translate--evaluate arc is therefore not a new methodology but a domain-specific version of an established one, using labels that describe what the work does with a climate system more plainly than the generic phase names would.
+
+Two features of DSR shape how the thesis defends its rigour and reliability. The first is Hevner's rule that an artefact must be evaluated, not just built: an artefact whose usefulness is claimed but not shown is not a research contribution \citep{hevner2004}. This is why the \emph{evaluate} phase is essential, and why the central research question is comparative --- \emph{to what extent}, \emph{compared with} --- rather than a question a finished artefact would answer just by existing. The second is that DSR shares its commitments with \emph{design-based research} (DBR) in the learning sciences \citep{barab2004, andersonshattuck2012}, the tradition cited in Chapter~\ref{ch:rqs}. Both treat a designed artefact as a genuine source of knowledge, and both move back and forth between theory and empirical test. Naming both is deliberate: it places the thesis where information-systems design science meets learning-sciences design research, which is the right place for an artefact meant to support understanding.
+
+One point about the evaluation needs stating early, because it sets what the evidence can show. Within the DSR frame, the artefact is evaluated through an \emph{exploratory, mixed-methods user study}: mainly qualitative, with descriptive quantitative support as a part of the DSR design. The clarification matters because ``mixed methods'' is sometimes treated as a whole paradigm; here it refers only to how the \emph{evaluate} phase gathers and analyses evidence, inside the larger design-science structure. The full study --- its two-group comparison, its instruments, its analysis --- is specified in \S\ref{sec:evaluate-methodology} and \S\ref{sec:instruments}.
+
+One thread ties these choices together, and stating it plainly is the justification the design rests on. The problem is representational, so the contribution is an artefact that represents --- not a new measurement or forecast. An artefact's value cannot simply be claimed, so it is tested against the alternative it aims to improve on --- hence a conventional baseline and a comparison. The phenomenon is under-studied and the study is small, so the evaluation is exploratory and mainly qualitative rather than inferential --- hence the care about what the evidence can support. Every methodological choice below follows from this thread, and each is justified where it is made, in keeping with the traceability the thesis treats as a mark of rigour.
+
+% -------------------------------------------------------------------------
+\section{Philosophical Positioning}
+\label{sec:philosophical-positioning}
+
+Every research design rests on assumptions about what counts as knowledge, and stating them is part of methodological honesty. This thesis takes a \emph{pragmatist} position, the epistemology that fits design science and mixed-methods research best \citep{peffers2007}. Pragmatism judges knowledge by whether it works for a purpose, not by whether it matches a single objective reality: a representation is ``true'' to the extent that it does the job it was designed to do. For a thesis whose object is a built artefact judged by whether it supports understanding, this is the right stance. It justifies the central move --- treating a machine-learning latent structure as a valid substrate for representation not because it is uniquely correct, but because it is useful for making an invisible system perceptible. It also frees the evaluation from having to define one objective measure of ``understanding'', asking instead how understanding is expressed under different representational conditions.
+
+Pragmatism also settles a tension in the kinds of evidence the thesis combines. The analytical phase produces quantitative results that look like measurement; the empirical phase produces qualitative accounts of how participants reason. A strict positivist would trust the first and dismiss the second as anecdote; a strict constructivist would do the opposite. The pragmatist treats both as evidence about the same practical question --- does this way of representing the system work, and for whom --- and allows them to be combined without forcing one into the shape of the other. This is the ground on which the mixed-methods evaluation of \S\ref{sec:evaluate-methodology} stands.
+
+% -------------------------------------------------------------------------
+\section{Detect: Analytical Methodology}
+\label{sec:detect-methodology}
+
+The \emph{detect} phase recovers, from the observational and reanalysis records of the AMOC, the latent structure that the \emph{translate} phase will represent. This section specifies the methods used and justifies each against the alternatives; the results they produce are reported in Chapter~\ref{ch:data_pipeline}. The split is kept throughout: here the thesis says \emph{what it does and why}, there it says \emph{what it found}.
+
+\subsection{Data and rationale}
+\label{subsec:detect-data}
+
+The analysis uses two sources of different epistemic status, and the difference governs how each is used. The first is the RAPID-MOCHA-WBTS array at \ang{26.5} north, which since 2004 has produced a continuous, directly \emph{observed} record of AMOC transport and its vertical structure \citep{frajkawilliams2021, moat2026}. The second is the Copernicus Marine GREP ensemble reanalysis, a model-plus-data-assimilation product that reaches back before the observational period, at the cost of model dependence and ensemble spread \citep{copernicus_grep}. The distinction is not incidental: RAPID is observation, the reanalysis is reconstruction, and every claim is framed to respect which of the two it rests on. Using both is a deliberate choice. The observational record anchors the analysis in measurement; the reanalysis supplies the longer context needed to place two decades of observation inside a system that varies over multidecadal periods.
+
+\subsection{Dimensionality reduction}
+\label{subsec:detect-pca}
+
+The core step reduces the AMOC's high-dimensional vertical structure --- transport across many depth levels over many months --- to a few coordinates that capture most of its variability. The primary method is \emph{Principal Component Analysis} (PCA), chosen for a specific reason: its components are linear, orthogonal and directly interpretable against the physical modes described in the oceanographic literature \citep{hannachi2007, buckley2016}. Interpretability is not a convenience here but a requirement, because these coordinates will later become the substrate a non-specialist inhabits, and a coordinate that cannot be explained physically cannot be defended as faithful. PCA's transparency is therefore an asset, not a simplification.
+
+Being linear, PCA cannot by itself show whether the AMOC's vertical structure hides non-linear relationships it would miss. To check this, the analysis compares PCA against a \emph{non-linear autoencoder} at the same latent dimensionality. The comparison is diagnostic: if the non-linear model reconstructs the record no better than PCA at equal dimensionality, the manifold is effectively flat, and the interpretable linear coordinates lose nothing to a more expressive but less transparent model. This is what lets the thesis justify, rather than merely assert, its use of linear coordinates as the representational substrate. The reconstruction error is measured in the physical unit of transport (Sverdrup), so the two methods are compared on a scale with oceanographic meaning rather than on an abstract loss.
+
+\subsection{Anomaly detection and early-warning analysis}
+\label{subsec:detect-ews}
+
+Two further analyses describe the record's behaviour over time. The first is \emph{anomaly detection}: an unsupervised characterisation of departures from the normal regime, used to find the episodes a representation should be able to convey. The second is \emph{Early Warning Signal} (EWS) analysis, which tests the record for the statistical precursors --- rising variance and rising lag-1 autocorrelation --- that theory links to a system nearing a critical transition \citep{scheffer2009, dakos2012}.
+
+The EWS analysis carries one methodological subtlety that is central to the thesis's claim of rigour, and it belongs here because it is a choice about \emph{how} the test is run, not a result. Computing EWS trends over a rolling window produces overlapping, and therefore statistically dependent, samples. Treating them as independent inflates the effective sample size and, with it, the apparent significance of any trend. The analysis therefore corrects the significance test for this dependence, estimating the effective number of independent windows rather than counting the raw ones. The correction is applied before any conclusion about a warning signal is drawn. Whether the corrected test finds a significant trend is left to Chapter~\ref{ch:data_pipeline}; the commitment made here is that the test is run honestly, with the dependence in the data properly handled, so the phase cannot manufacture a signal out of a statistical artefact.
+
+\subsection{Scope of the analytical phase}
+\label{subsec:detect-scope}
+
+One boundary is set from the start. A predictive layer --- a recurrent model trained to forecast transport with calibrated uncertainty --- would be a natural extension, and it is deliberately excluded and specified as future work in Chapter~\ref{ch:conclusion}. The exclusion is a methodological decision, not a limit of data or computation. The \emph{detect} phase exists to recover structure for representation, not to predict, and adding a forecasting goal would move the thesis's centre of gravity from the representational contribution it claims toward a predictive one it does not. The methods above are those, and only those, needed to recover a faithful substrate for the \emph{translate} phase. The boundary is recorded, with its rationale, in Appendix~\ref{app:ethics}.
+
+% -------------------------------------------------------------------------
+\section{Translate: Design Methodology}
+\label{sec:translate-methodology}
+ 
+The \emph{translate} phase turns the latent structure recovered in \emph{detect} into something a non-specialist can perceive. This section explains how that translation is done and why the choices are defensible. The artefact it produces is described in full in Chapter~\ref{ch:translate}; here the thesis states the method, not the result.
+ 
+\subsection{From design grammar to design decisions}
+\label{subsec:translate-grammar}
+ 
+The translation is not free invention. It applies the design grammar built in \S\ref{sec:design-grammar}, which maps a system property to a perceptual channel through a documented cognitive principle. The grammar was stated there in general form; the method of the \emph{translate} phase is to apply it to the specific features the analysis recovered from the AMOC. Intensity, a continuous ordered quantity, is carried by spatial position (grammar principle P1). Change over time is carried by real motion rather than left for the viewer to imagine (P2). Departures from the normal regime are carried by changes in density or texture (P3). Uncertainty is carried by animated variability rather than a static band (P4), and sound carries a secondary ordered variable in parallel with vision (P5). Each mapping in Chapter~\ref{ch:translate} points back to the grammar principle that licenses it, so that no design choice stands on taste alone. This traceability --- from a mark on the screen, to a principle, to a source --- is what separates the artefact from decorative data art, and it is the method's central commitment.
+ 
+\subsection{The three representational conditions}
+\label{subsec:translate-conditions}
+ 
+The design produces three conditions, built so that they differ in \emph{form} while carrying the same \emph{information}. C1 is a conventional static representation, reconstructed faithfully from the published forms in which the AMOC is actually communicated (\S\ref{subsec:amoc-baseline}). C2 adds interactivity and motion: the same data, now dynamic and explorable. C3 adds the experiential, machine-learning-driven layer, in which the latent structure itself becomes the space the viewer inhabits. Holding the information constant across conditions is deliberate and methodological: it means any difference a participant shows can be attributed to representational form, not to being given more or different facts. How the conditions are grouped for the study --- C1 alone against C2 and C3 together --- is a decision of the \emph{evaluate} phase, explained in \S\ref{sec:evaluate-methodology}.
+ 
+\subsection{Fidelity principle: every value derives from the data}
+\label{subsec:translate-fidelity}
+ 
+One rule governs the whole build: every value shown on screen derives from the analytical bundle produced in \emph{detect}, never from an invented scaling chosen to look good. A profile shown to the viewer is reconstructed from the recovered components and their coefficients, not drawn by hand to seem plausible. This rule is what earns the representation the right to be called faithful rather than illustrative. It also has a cost, accepted deliberately: it constrains the aesthetics to what the data support, and where a purely artistic choice would conflict with the data, the data win. The fidelity principle is recorded as a design boundary in Appendix~\ref{app:ethics}.
+ 
+\subsection{Implementation medium and its justification}
+\label{subsec:translate-stack}
+ 
+The artefact is built for the browser, using WebGL for real-time three-dimensional rendering (through the Three.js library) and the Web Audio API for sonification. This choice is methodological, not incidental. The browser makes the artefact runnable on an ordinary laptop in a participant's own setting, without specialist hardware --- which suits a study of non-specialists and keeps the evaluation practical. WebGL and the Web Audio API bring the embodied, immersive affordances discussed in \S\ref{sec:embodied-viz} within reach of a single research project, where a decade ago they would have needed dedicated equipment. The medium is therefore chosen to serve the representational goal and the evaluation at once, not for its own sake. Its limits --- that a browser prototype is a research artefact, not a production system --- are stated in the scope discipline of Chapter~\ref{ch:rqs} and in Appendix~\ref{app:ethics}.
+ 
+% -------------------------------------------------------------------------
+\section{Evaluate: Empirical Methodology}
+\label{sec:evaluate-methodology}
+ 
+The \emph{evaluate} phase tests whether the artefact does what it was designed to do. Design Science Research requires this step: an artefact whose usefulness is claimed but not shown is not a contribution \citep{hevner2004}. This section specifies how the test is designed. The hypotheses and expectations it addresses were formalised in Chapter~\ref{ch:rqs} (\S\ref{sec:hypotheses}); they are not restated here. What follows is the design through which the empirical expectations E3.1 and E3.2, and through them the umbrella hypothesis H-B, are examined.
+ 
+\subsection{Design: a two-group comparison}
+\label{subsec:evaluate-design}
+ 
+The study compares two groups of non-specialist participants in a between-subjects design. A control group sees only the conventional static condition (C1). An experimental group sees the dynamic and experiential conditions (C2 and C3). Each participant is in one group and sees one kind of representation. The comparison is therefore between two whole representational experiences: a conventional one, and an enriched one.
+ 
+Framing the treatment this way is a deliberate response to a real feature of the design, and stating it plainly is part of the thesis's honesty. The experimental group experiences more than one representation, so its exposure differs from the control's not only in kind but in extent. The thesis does not claim to isolate the effect of the experiential format from the effect of richer exposure. It claims to compare two representational experiences as wholes: the conventional baseline, and the enriched dynamic-experiential path. This is the question the central research question actually asks --- whether dynamic and experiential representation improves understanding compared with the conventional format --- and the design answers that question directly. The residual confound, that form and amount of exposure are not fully separable, is acknowledged rather than hidden, and is recorded in Appendix~\ref{app:ethics}. Separating the contributions of C2 and C3 is left to future work.
+ 
+\subsection{Participants}
+\label{subsec:evaluate-participants}
+ 
+The study recruits non-specialists only --- people without specialist training in climate science, oceanography or a closely related field --- because they are the audience the research question concerns. Roughly 24 to 30 participants are split evenly between the two groups. This number is realistic for the project's timeframe and sufficient for the rich thematic analysis the study relies on; it is not, and is not intended to be, large enough for statistically powered inference. The distinction between specialists and non-specialists, and how a scientist's prior knowledge might interact with representational form, is a natural extension noted as future work rather than tested here, to keep the design focused and the cells large enough to interpret.
+ 
+\subsection{Procedure}
+\label{subsec:evaluate-procedure}
+ 
+Each participant follows the same sequence. First, a short probe of prior understanding of the AMOC. Then exposure to the assigned condition, during which the participant thinks aloud. Then a repeat of the understanding probe, followed by a brief semi-structured interview. The think-aloud captures reasoning as it happens; the before-and-after probe gives a descriptive picture of change; the interview surfaces reflections the think-aloud may miss. The exact wording of the probe, the think-aloud prompts and the interview schedule are finalised close to data collection and documented in \S\ref{sec:instruments}; the procedure's shape, given here, is fixed.
+ 
+\subsection{Evidence and its weight}
+\label{subsec:evaluate-weight}
+ 
+The study is exploratory, and the weight of its evidence rests on the qualitative analysis. How participants articulate their understanding --- the words, images and reasoning they use --- is analysed thematically, following \citet{braunclarke2006}. The before-and-after comprehension probe is reported descriptively, as a supporting signal, not as an inferential test: with this sample size, raw differences and directions are honest, p-values would not be. This balance is a deliberate methodological choice, consistent with the exploratory framing set in Chapter~\ref{ch:rqs}. It also allows an outcome the framing anticipates: qualitative differences in how the two groups articulate understanding may appear with or without matching movement in the probe, and both results are reported rather than one suppressed.
+ 
+A note on the absence of market analysis is warranted, since the innovation-methodology template invites it. This thesis contributes a representational method, not a product for a market, so the evidence that bears on it is how participants understand the system, not whether a market demands the artefact. Market analysis is therefore not conducted, and its absence is a scoping decision rather than an omission.
+
+% -------------------------------------------------------------------------
+\section{Data Collection and Analysis Instruments}
+\label{sec:instruments}
+ 
+This section specifies the instruments through which the \emph{evaluate} phase gathers and analyses evidence. The procedure that uses them was given in \S\ref{sec:evaluate-methodology}; here the thesis describes each instrument and justifies it. The exact wording of the probes and prompts is finalised close to data collection, for reasons explained below, and the finished instruments are reproduced in Appendix~\ref{app:ethics}.
+ 
+\subsection{The comprehension probe}
+\label{subsec:instr-probe}
+ 
+Understanding is measured before and after exposure with the same short probe, so that any change can be seen. The probe uses open-ended questions rather than multiple choice, for a specific reason: the thesis is interested in how a participant articulates the system's behaviour --- its dynamics, its non-linearity, its uncertainty --- not in whether they can recognise a correct answer. An open question reveals a mental model; a multiple-choice item hides it behind a tick. The probe targets the three properties the representation is designed to convey, so that it measures understanding of what the artefact actually encodes rather than general climate knowledge.
+ 
+The wording is deliberately not fixed in this chapter. Comprehension items are sensitive to phrasing, and a question that leads the participant toward the desired answer would invalidate the measure. The items are therefore drafted, reviewed with the supervisor and piloted on one or two pilot participants before the study proper, then frozen. The final items appear in Appendix~\ref{app:ethics}. What is fixed here is their form --- open-ended, targeted at the three encoded properties, identical before and after --- and their purpose.
+ 
+\subsection{The think-aloud protocol}
+\label{subsec:instr-thinkaloud}
+ 
+While a participant engages with the assigned condition, they are asked to think aloud: to say what they are looking at, what they notice and what they make of it. The method is standard in usability and cognitive research because it captures reasoning as it happens, before the participant has tidied it into a considered answer \citep{ericsson1993}. For this study its value is specific. The research question is about how understanding forms under a representation; the think-aloud is the instrument that lets that formation be observed rather than only its end state. The prompts that keep a quiet participant talking --- neutral nudges such as asking what they are thinking --- are kept minimal and non-leading, and are listed in Appendix~\ref{app:ethics}.
+ 
+\subsection{The semi-structured interview}
+\label{subsec:instr-interview}
+ 
+After the second probe, a short semi-structured interview asks the participant to reflect: what they felt they understood, what confused them, how the representation seemed to shape their sense of the system. Semi-structured rather than fixed, so that the conversation can follow what each participant found salient while still covering a common core. The interview surfaces reflections the think-aloud misses --- judgements formed in hindsight, reactions the participant did not voice in the moment. Its core questions are documented in Appendix~\ref{app:ethics}.
+ 
+\subsection{Analysis: reflexive thematic analysis}
+\label{subsec:instr-analysis}
+ 
+The transcripts from the think-aloud and interview are the study's primary evidence, and they are analysed through reflexive thematic analysis in the tradition of \citet{braunclarke2006, braunclarke2019}. The method is chosen because it suits exploratory questions about how people make meaning, without forcing the data into categories fixed in advance: themes are built from the transcripts rather than imposed on them. Analysis proceeds through the familiar phases --- familiarisation, coding, generating themes, reviewing them against the data, and reporting --- and stays close to participants' own language. Reflexive thematic analysis also asks the analyst to acknowledge their own part in interpreting the data rather than claiming a view from nowhere; that reflexivity is treated here as a requirement of rigour, and is discussed with the study's limitations in Appendix~\ref{app:ethics}.
+ 
+The before-and-after comprehension probe is analysed descriptively: changes in how fully and accurately participants articulate the three target properties are summarised and compared between the two groups, without inferential testing. As set out in \S\ref{sec:evaluate-methodology}, this reflects what the sample size can honestly support.
+ 
+% -------------------------------------------------------------------------
+\section{Ethical Considerations}
+\label{sec:ethics-methodology}
+ 
+The study involves human participants, so ethics is not an afterthought but part of the design. This section states the commitments; the full documentation --- information sheet, consent form, data-management detail --- is collected in Appendix~\ref{app:ethics}, and the study proceeds only once the supervisor has confirmed that the appropriate ethical approval or exemption for a study of this scale is in place.
+ 
+Participation is informed and voluntary. Before taking part, each person receives a plain-language information sheet explaining what the study involves, what data are collected and how they will be used, and gives written consent. They are told they may stop at any point, without giving a reason and without consequence. No deception is used; the participant knows they are comparing ways of representing an ocean system.
+ 
+The data are handled to protect the participant. Recordings and transcripts are anonymised: names and identifying details are removed or replaced with codes, and no participant is identifiable in the thesis or any output. Data are stored securely, in line with the General Data Protection Regulation, kept only as long as the research needs them, and accessible only to the researcher and, where necessary, the supervisor. The information sheet states this plainly, so consent is genuinely informed. The precise storage, retention and anonymisation procedures are documented in Appendix~\ref{app:ethics}.
+ 
+Two features of the study keep its ethical risk low. The topic is not sensitive --- participants reason about an ocean current, not about anything personal or distressing --- and the participants are adults recruited without coercion. The main ethical duties are therefore the standard ones of consent, anonymity and data protection, all addressed above. Where any residual consideration arises, such as a participant finding the climate subject matter worrying, the researcher pauses and, if needed, ends the session, prioritising the participant's comfort over data collection.
