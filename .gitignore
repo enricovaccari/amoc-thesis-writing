@@ -1,0 +1,52 @@
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+*.glo
+*.gls
+*.glg
+*.glsdefs
+*.ist
+
+# Overleaf local export
+output.pdf
+
+# Editor backups
+*~
+.DS_Store
+
+# Build output (all LaTeX output goes here via build_versions.py)
+/build/
+main_digital.pdf
+main_printable.pdf
+
+# Relocated clutter
+/TO_BE_DELETED/
+
+# iCloud conflict copies ("main 2.pdf", "references.bi.bib", ...)
+* [0-9].*
+*([0-9]).*
+*-SAVE-ERROR
+
+# Backup / archive folders (not part of the thesis build)
+/old4/
+**/old/
+**/old1/
+**/old2/
+**/old3/
+**/fixed/
+references.bi.bib
