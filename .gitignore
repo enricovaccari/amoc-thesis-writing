@@ -38,7 +38,7 @@ main_printable.pdf
 /TO_BE_DELETED/
 
 # iCloud conflict copies ("main 2.pdf", "references.bi.bib", ...)
-* [0-9].*
+* [0-9]*.*
 *([0-9]).*
 *-SAVE-ERROR
 
@@ -50,3 +50,17 @@ main_printable.pdf
 **/old3/
 **/fixed/
 references.bi.bib
+
+# Python cache
+__pycache__/
+**/__pycache__*
+*.pyc
+
+# Scratch prompt notes (not thesis content)
+/prompt_claude_code_bib_and_citations.md
+
+# Stray/legacy stats variant (generate_wordcount.py writes thesis_stats.tex)
+/statistics/thesis_statistics.tex
+
+# Editor workspace (machine-specific absolute paths)
+.vscode/
