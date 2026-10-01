@@ -22,7 +22,7 @@ Project Objectives · Hypotheses \& Design Propositions · Alignment Matrix · S
 
 Chapter~\ref{ch:introduction} identified a representational problem: complex climate tipping systems stay cognitively out of reach for non-specialists even when the data are open and legible. This chapter formalises the programme that addresses it, following the three-phase arc of \emph{detect, translate and evaluate}, adapted from design-based research in the learning sciences, where designing a solution is itself treated as research \citep{andersonshattuck2012, barab2004}. The phases are linked: what is detected sets what can be translated, and what is translated becomes what is evaluated. A single central research question connects them, and three sub-questions --- one per phase --- investigate it through different kinds of evidence.
 
-The three phases do not weigh equally.\footnote{The \emph{detect} phase is analytical and is reported in full; the \emph{evaluate} phase is exploratory, offering an initial assessment rather than definitive validation.} The centre of gravity is the bridge between the first two: translating machine-learning-derived structure into representations built to improve understanding. That bridge is the original methodological contribution; the evaluation asks whether it shows promise, within the limits of a small exploratory study.
+The three phases do not weigh equally.\footnote{The \emph{detect} phase is analytical and is reported in full; the \emph{evaluate} phase is exploratory, offering an initial assessment rather than definitive validation.} The centre of gravity is the bridge between the first two: translating machine-learning-derived structure into representations built to improve understanding. That bridge is the original methodological contribution; the evaluation asks whether it shows promise.
 
 % -------------------------------------------------------------------------
 \section{Research Questions}
@@ -34,7 +34,7 @@ The central question guides the thesis as a whole, and is deliberately evaluativ
 \textbf{RQ.} \emph{To what extent do machine-learning-driven experiential visualisations improve the cognitive understanding of complex climate tipping systems among non-specialist audiences, compared with conventional static visualisations?}
 \end{quote}
 
-Every element here is a choice, and it is worth taking the question apart. The construction \emph{to what extent\ldots compared with} sets a comparative frame: the aim is not to build a visualisation but to test whether it supports understanding better than a conventional one --- design is the means, evaluation is the end. \emph{Non-specialist audiences} names participants characterised by background, not an undefined public. \emph{Complex climate tipping systems} names the class of processes for which the AMOC is the case study. The thesis does not ask whether machine learning can predict or detect an AMOC tipping point --- a question still debated in climate science \citep{benyami2024, ditlevsen2023} --- but whether the latent structure it recovers can be translated into representations that help non-specialists understand an otherwise invisible system.
+Every element is a choice. \emph{To what extent\ldots compared with} sets a comparative frame: the aim is not to build a visualisation but to test whether it supports understanding better than a conventional one. \emph{Non-specialist audiences} names participants characterised by background, not an undefined public; \emph{complex climate tipping systems} names the class of processes for which the AMOC is the case. The thesis does not ask whether machine learning can predict an AMOC tipping point --- a question still debated \citep{benyami2024, ditlevsen2023} --- but whether the latent structure it recovers can be translated into representations that help non-specialists understand an otherwise invisible system.
 
 Three sub-questions follow the three phases:
 
@@ -42,19 +42,19 @@ Three sub-questions follow the three phases:
 \textbf{RQ1} (analytical). \emph{What latent structural patterns and dynamical signatures of AMOC variability can machine learning recover from the RAPID record and the Copernicus reanalysis ensemble; how faithfully do they preserve the underlying dynamics, and does a non-linear autoencoder recover any structure the linear decomposition misses; and are they interpretable enough to serve as the substrate for a representation intended for non-specialists?}
 \end{quote}
 
-RQ1 is descriptive and exploratory, and deliberately modest about what it promises: not a new result about the ocean, but an honest account of what the record actually holds. The word that carries the weight is \emph{faithfully}. Applying a method proves nothing on its own; what matters is showing that the low-dimensional version keeps the structure of the system it stands for. Only then is there any ground for building the rest of the thesis on top of it.
+RQ1 is descriptive and exploratory, modest about what it promises: not a new result about the ocean but an honest account of what the record holds. The word that carries the weight is \emph{faithfully} --- applying a method proves nothing; what matters is that the low-dimensional version keeps the structure of the system it stands for, the only ground for building the rest of the thesis on it.
 
 \begin{quote}
 \textbf{RQ2} (design-based). \emph{How can the latent structures from RQ1 be translated into interactive and experiential representations that communicate the AMOC's dynamics, invisibility and tipping-point risk, grounded in embodied cognition and information visualisation?}
 \end{quote}
 
-RQ2 is generative, which means it has no single right answer --- only a range of answers that can be built and then defended. What it produces is the set of representations RQ3 goes on to test. They are not where the thesis arrives; they are what it examines.
+RQ2 is generative: it has no single right answer, only a range that can be built and defended. What it produces is the set of representations RQ3 tests --- not where the thesis arrives, but what it examines.
 
 \begin{quote}
 \textbf{RQ3} (empirical). \emph{To what extent do dynamic and experiential representations of AMOC dynamics, compared with a conventional static one, support how non-specialist audiences develop and express their understanding of complex system behaviour?}
 \end{quote}
 
-RQ3 is comparative but exploratory: it does not measure effectiveness at population scale but observes how participants describe and organise their understanding under one representation or the other. Its wording mirrors the central question by design --- \emph{to what extent}, \emph{compared with} --- because it is a focused instance of the same enquiry, resting on qualitative depth rather than statistical generalisation. No sub-question answers the central one alone: RQ1 finds the structure, RQ2 builds the representation, RQ3 tests it against the baseline.
+RQ3 is comparative but exploratory: it observes how participants describe and organise their understanding under one representation or the other rather than measuring effectiveness at population scale. No sub-question answers the central one alone: RQ1 finds the structure, RQ2 builds the representation, RQ3 tests it against the baseline.
 
 % -------------------------------------------------------------------------
 \section{Objectives}
@@ -88,7 +88,7 @@ The empirical expectations guide the qualitative analysis. \textbf{E3.1}: the ex
 
 Feasibility rested on infrastructure, time and scope control. The analytical phase drew on the RAPID record and the Copernicus ensemble, processed and reported in Chapter~\ref{ch:data_pipeline}, delivering O1.1--O1.3, with O1.4 left as a scope boundary. The empirical phase required a modest setup: a twenty-minute survey administered to twenty-five non-specialist participants, randomly assigned to two groups --- a static, conventional condition as the control and an experiential condition built on interactive, machine-learning-driven visualisations. A sample of this size suits an exploratory first-stage study aimed at identifying initial patterns in how participants understand the system, rather than supporting statistically powered population-level inference \citep{braunclarke2006, smithmcgannon2018, malterud2016}. The design phase was the main technical undertaking, developed across Chapters~\ref{ch:methodology} and~\ref{ch:translate}.
 
-Time was the main constraint. Theoretical and analytical writing came first, so the riskiest part --- building the experiential condition --- happened once the surrounding text was settled. Keeping scope narrow was therefore a methodological choice: forecasting was left aside to keep the thesis on representation rather than prediction \citep{sonnewald2021}; the prototype stayed a research artefact; and the study remained mainly exploratory and qualitative. Two fallback plans kept the thesis coherent: if the study ran late, the analytical and design chapters would stand alone; and if the experiential build failed technically, the design grammar would still count as a contribution (O2.2), defensible through the simpler conditions. The thesis is ambitious but focused --- each objective matched to the time available, each claim to the evidence it can carry.
+Time was the main constraint, so the riskiest part --- building the experiential condition --- happened once the surrounding text was settled. Keeping scope narrow was a methodological choice: forecasting was left aside to keep the thesis on representation rather than prediction \citep{sonnewald2021}, the prototype stayed a research artefact, and the study remained mainly exploratory. Two fallbacks kept the thesis coherent: if the study ran late, the analytical and design chapters would stand alone; and if the build failed, the design grammar would still count as a contribution (O2.2). The thesis is ambitious but focused --- each objective matched to the time available, each claim to the evidence it can carry.
 
 \begin{table}[!ht]
     \centering
@@ -137,7 +137,7 @@ Time was the main constraint. Theoretical and analytical writing came first, so 
 
         \textbf{Validation method}
             & Comparative model analysis: PCA vs.\ autoencoder at matched dimensionality; EWS with pseudo-replication correction; IsolationForest
-            & Design-science construction against the grammar (Table~\ref{tab:design-grammar}); shared-provenance audit of informational equivalence
+            & Design-science construction against the grammar (Table~\ref{tab:design-grammar}); shared-provenance audit of matched provenance
             & Between-subjects study, twenty-five non-specialist participants (twelve control, thirteen experimental), randomly assigned to static control and interactive, ML-powered experiential conditions; survey-based evaluation and exploratory analysis \\[0.5em]
 
         \textbf{Success criterion}
