@@ -1,0 +1,198 @@
+% =========================================================================
+% APPENDICE C — CODICE E RIPRODUCIBILITÀ
+% =========================================================================
+
+\chapter{Codice e riproducibilità}
+\label{app:code}
+
+Questa appendice documenta il codice che sta dietro alla tesi, così che la pipeline analitica e
+l'artefatto rappresentazionale possano essere ispezionati e riprodotti. Copre i repository,
+l'ambiente computazionale, l'accesso ai dati, i passi per riprodurre l'analisi e un registro di
+provenienza che fa risalire ogni elemento percepibile dell'artefatto alla sua fonte nei dati, al
+principio di design che lo autorizza e alla sua origine computazionale. L'impegno guida è quello che
+percorre l'intera tesi: ogni valore mostrato deriva dai dati, e il percorso dai dati al display è
+aperto all'ispezione. Un'affermazione scientifica che non può essere verificata in modo indipendente
+non è, in un senso significativo, un'affermazione scientifica.
+
+% -------------------------------------------------------------------------
+\section{Repository e struttura del progetto}
+\label{app:c-repos}
+
+Il progetto è suddiviso su tre repository pubblici anziché su uno solo. La separazione è deliberata:
+la pipeline analitica, l'artefatto rappresentazionale e la tesi scritta hanno cicli di vita di
+sviluppo diversi, linguaggi e toolchain diversi, e storie più pulite se tenuti separati. Tutti e tre
+sono ospitati pubblicamente sotto \url{https://github.com/enricovaccari}.
+
+\subsection*{Pipeline analitica}
+\textit{Repository:} \texttt{amoc-thesis-pipeline} ---
+\url{https://github.com/enricovaccari/amoc-thesis-pipeline}.
+
+Questo repository contiene i notebook e i moduli che implementano la fase di \emph{rilevamento}.
+L'analisi è organizzata come una sequenza di notebook numerati, ciascuno uno stadio autonomo il cui
+output alimenta il successivo:
+
+\begin{itemize}
+    \item \texttt{01\_data\_first\_look} --- caricamento e ispezione del record RAPID;
+    \item \texttt{02\_rapid\_vs\_copernicus} --- confronto dell'osservazione con l'ensemble di
+          rianalisi;
+    \item \texttt{03\_PCA\_on\_vertical\_profiles} --- la decomposizione lineare della struttura
+          verticale;
+    \item \texttt{04\_anomalies\_early\_warning\_signals} --- il rilevamento delle anomalie e
+          l'analisi corretta dei segnali di preallarme;
+    \item \texttt{05\_autoencoder\_vertical\_profiles} --- il confronto con un modello non lineare
+          che verifica la planarità della varietà;
+    \item \texttt{06\_export\_for\_translate} --- assemblaggio del bundle di dati consumato
+          dall'artefatto.
+\end{itemize}
+
+\noindent La funzionalità condivisa è fattorizzata in moduli di supporto --- \texttt{data\_loading.py}
+per i reader e \texttt{paths.py} per la disposizione delle directory --- anziché duplicata tra i
+notebook. Il notebook finale esporta un unico bundle JSON,
+\texttt{amoc\_translate\_bundle.json}, che è l'unica fonte di verità per ogni valore che l'artefatto
+mostra (\S\ref{app:c-ledger}).
+
+\subsection*{Artefatto rappresentazionale}
+\textit{Repository:} \texttt{amoc-thesis-translate} ---
+\url{https://github.com/enricovaccari/amoc-thesis-translate}, distribuito tramite GitHub Pages.
+
+Questo repository contiene l'artefatto basato su browser: le tre condizioni rappresentazionali
+costruite per lo studio, animate nel browser, con il suono dalla Web Audio API nativa. La sua
+struttura separa le tre scene dalla macchineria condivisa da cui dipendono:
+
+\begin{itemize}
+    \item i file di scena, uno statico e uno esperienziale per scena ---
+          \nolinkurl{column-static.html}, \nolinkurl{theengine-static.html} e
+          \nolinkurl{thethreshold-static.html}, con le loro controparti \texttt{-experiential};
+    \item uno strato di moduli condivisi --- \texttt{shared/bundle.js} carica il bundle di dati,
+          \texttt{shared/reconstruct.js} ricostruisce ogni profilo attraverso
+          l'Equazione~\ref{eq:reconstruction}, e \texttt{shared/intro-*.js} e
+          \texttt{shared/context-*.js} portano il testo di inquadramento importato in modo identico
+          byte per byte da entrambe le condizioni.
+\end{itemize}
+
+\noindent Questa architettura a moduli condivisi è ciò che permette alla tesi di affermare che le
+condizioni statica ed esperienziale sono allineate per provenienza, inquadramento e unità di misura:
+attingono allo stesso bundle e alla stessa funzione di ricostruzione, e differiscono solo nel modo in
+cui lo rendono --- la versione esperienziale aggiunge la dimensione temporale che lo studio esamina.
+Quella provenienza allineata è garantita da codice condiviso anziché asserita --- un bundle, una
+ricostruzione, import condivisi, non codice duplicato.
+
+\subsection*{Tesi scritta}
+\textit{Repository:} \texttt{amoc-thesis-writing} ---
+\url{https://github.com/enricovaccari/amoc-thesis-writing}. I sorgenti \LaTeX{} e il database
+bibliografico. Non è un contributo di ricerca e non è necessario per riprodurre né l'analisi né
+l'artefatto; è elencato per completezza.
+
+% -------------------------------------------------------------------------
+\section{Ambiente computazionale}
+\label{app:c-environment}
+
+La pipeline analitica gira in Python~3.11 dentro un ambiente Conda chiamato
+\texttt{amoc-thesis}, registrato come kernel Jupyter dedicato così che i notebook girino in modo
+riproducibile da dentro Visual Studio Code. Le librerie principali sono \texttt{xarray} e
+\texttt{netCDF4} per i dati oceanici, \texttt{numpy}, \texttt{pandas}, \texttt{scipy} e
+\texttt{statsmodels} per il lavoro numerico e sulle serie temporali, \texttt{scikit-learn} per la PCA
+e l'Isolation Forest, \texttt{PyTorch} per l'autoencoder, e \texttt{matplotlib} per i grafici. Le
+versioni esatte sono fissate nel file d'ambiente del repository, da cui l'ambiente può essere
+ricreato per intero.
+
+Per riprodurre l'analisi, l'ambiente è ricreato da quel file e i notebook numerati sono eseguiti in
+ordine. Eseguirli in sequenza rigenera il bundle di dati, da cui l'artefatto può poi essere servito
+localmente come file statici.
+
+L'artefatto rappresentazionale non richiede alcun ambiente di build: è scritto in JavaScript puro e
+nella Web Audio API nativa, senza dipendenze di rendering esterne, ed è servito o come file statici
+in locale o tramite GitHub Pages.
+
+% -------------------------------------------------------------------------
+\section{Accesso ai dati}
+\label{app:c-data}
+
+Le due fonti di dati sono ottenute dai rispettivi fornitori anziché incluse con il codice, sia per la
+dimensione dei file sia perché le loro licenze governano la ridistribuzione. Il record osservativo
+RAPID è distribuito pubblicamente dal British Oceanographic Data Centre \citep{moat2026}; l'ensemble
+di rianalisi GREP del Copernicus Marine Service è accessibile sotto la licenza dati Copernicus
+\citep{copernicus_grep}. Il README della pipeline documenta il percorso di download per ciascuno e
+dove ogni file va collocato così che i notebook risolvano i loro path; i dati grezzi stanno fuori dal
+controllo di versione per disegno.
+
+% -------------------------------------------------------------------------
+\section{Registro di provenienza}
+\label{app:c-ledger}
+
+Il registro di provenienza (Tabella~\ref{tab:ledger}) è l'affermazione di riproducibilità resa
+concreta. Per ogni elemento percepibile dell'artefatto, nomina il campo del bundle di dati da cui
+deriva, il principio della grammatica di design che ne autorizza la codifica percettiva e la sua
+origine computazionale --- se empirica, derivata classicamente o prodotta dal machine learning. Nulla
+di percepibile è omesso tranne l'impalcatura non informativa (colori, font, tinte), che non porta
+dati. Il registro è ciò che trasforma il principio di fedeltà da promessa in qualcosa che un lettore
+può verificare riga per riga.
+
+% ============================================================
+% Il registro di provenienza.  Richiede \usepackage{tabularx, booktabs}.
+% ============================================================
+\begin{table}[tbp]
+\centering
+\caption[Registro di provenienza]{Registro di provenienza per le tre scene. Ogni
+elemento percepibile, la sua fonte nel bundle di dati, il principio di design che
+lo autorizza e la sua origine computazionale. Colori, font e tinte sono
+impalcatura non informativa e sono omessi.}
+\label{tab:ledger}
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{1.2cm} X p{3.4cm} p{1.1cm} X@{}}
+\toprule
+\textbf{Scena} & \textbf{Elemento} & \textbf{Campo bundle} & \textbf{Prin.} &
+\textbf{Origine} \\
+\midrule
+I   & Curva $\Psi(z)$, statica (C1) & \texttt{mean\_profile} via Eq.~\ref{eq:reconstruction}, $\mathrm{pc}=0$ & P1 & Empirica (media del record) \\
+I   & Curva $\Psi(z)$, animata (C2/C3) & \texttt{mean\_profile} + \texttt{trajectory\_monthly} & P1, P2 & ML (traiettoria latente; H2) \\
+I   & Campo di particelle & $\partial\Psi/\partial z$ del profilo corrente (Eq.~\ref{eq:velocity}) & P2 & Classica (derivata) \\
+I   & Texture dell'anomalia & \texttt{anomalies.clusters} (score) & P3 & ML (Isolation Forest) \\
+I   & Suono & \texttt{trajectory\_monthly.pc1} & P5 & Input ML, sintesi classica \\
+I   & Lettura profondità / picco & \texttt{depth\_m}; max del profilo & P1 & Derivata \\
+\addlinespace
+II  & Punti mensili & \texttt{trajectory\_monthly.pc1/pc2} & P1 & ML (coordinate latenti) \\
+II  & Moto del percorso & ordine di \texttt{trajectory\_monthly} & P2 & ML (traiettoria latente) \\
+II  & Nube sub-mensile & \texttt{manifold\_cloud.pc} & P1 & ML (coordinate latenti) \\
+II  & Agitazione dell'anomalia & \texttt{anomalies.clusters} (score) & P3 & ML (Isolation Forest) \\
+II  & Bagliore di equilibrio & centroide di \texttt{manifold\_cloud} & P1 & Derivata (media) \\
+II  & Suono & \texttt{trajectory\_monthly.pc1} & P5 & Input ML, sintesi classica \\
+\addlinespace
+III & Tre linee dei membri & \texttt{copernicus\_ensemble.members} & P1 & Rianalisi esterne \\
+III & Mezzo vivente & \texttt{upper} $-$ \texttt{lower} per mese & P4 & Classica (dispersione) \\
+III & Temperatura di colore & \texttt{upper} $-$ \texttt{lower} per mese & P4 & Classica (dispersione) \\
+III & Viste di aggregazione & \texttt{members} (media mobile, inviluppo) & P1 & Derivata \\
+III & Texture sonora & \texttt{upper} $-$ \texttt{lower} per mese & P5 & Classica, sintesi classica \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\noindent La sonificazione delle Scene~I e~II prende lo stesso input, $\mathrm{pc}_1$, e
+differisce solo nella sintesi: la Scena~I lo mappa su un impulso lento, la Scena~II su un tono
+continuo che segue il marcatore. Entrambe sono disattivate di default.
+
+% -------------------------------------------------------------------------
+\section{Strumenti e workflow}
+\label{app:c-tools}
+
+Oltre al codice in sé, la tesi è stata prodotta con un piccolo insieme di strumenti, registrati qui
+per completezza e riproducibilità.
+
+La scrittura è stata fatta in Visual Studio Code con l'estensione LaTeX Workshop, compilando con
+\TeX{}~Live~2026 attraverso \texttt{latexmk}, con \texttt{biblatex} e \texttt{biber} per la
+bibliografia. I riferimenti sono stati gestiti in Zotero con l'estensione Better BibTeX, che esporta
+un unico \texttt{references.bib} dalla collezione della tesi usando una convenzione di chiavi di
+citazione coerente; l'estensione è connessa direttamente all'editor così che le citazioni fluiscano
+nei sorgenti \LaTeX{} senza copiature manuali. Il controllo di versione lungo tutto il lavoro ha
+usato Git con GitHub, un repository per componente come descritto sopra.
+
+Lo studio empirico si è affidato a Google Forms per le quattro varianti del questionario e a
+Microsoft Excel per il dataset delle risposte codificate. L'analisi è girata in notebook Jupyter
+dentro l'ambiente Conda. L'organizzazione del progetto e la presa di appunti sono state tenute in
+Notion, e la comunicazione con il relatore è avvenuta su Slack. Dove le ricerche bibliografiche
+avevano bisogno di un punto di partenza, Perplexity è stato usato per individuare fonti candidate, poi
+verificate e lette di prima mano prima della citazione.
+
+Il ruolo degli assistenti di IA in questo processo, e i confini posti attorno a esso, è discusso
+separatamente come questione di etica della ricerca nell'Appendice~\ref{app:ai-use}.

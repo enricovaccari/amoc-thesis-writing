@@ -1,0 +1,23 @@
+% it/figures/data_pipeline/tab_ae_gap.tex — versione italiana
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[Autoencoder contro PCA a dimensione latente appaiata.]{Ricostruzione
+    dei profili verticali da parte di un autoencoder non lineare contro la PCA lineare,
+    a dimensione latente $k$ appaiata. Lo scarto è negativo a ogni $k$: la PCA non è mai
+    battuta, quindi la varietà è piatta. Gli scarti sono calcolati da valori non
+    arrotondati, perciò possono differire di 0.01 dalla differenza delle colonne
+    arrotondate.}
+    \label{tab:ae-gap}
+    \begin{tabular}{@{}crrr@{}}
+        \toprule
+        \textbf{$k$} & \textbf{PCA cum.\ \%} & \textbf{AE $R^2_{\mathrm{Sv}}$ \%} & \textbf{Scarto (pp)} \\
+        \midrule
+        1 & 89.82 & 89.67 & $-0.15$ \\
+        2 & 97.86 & 97.77 & $-0.08$ \\
+        3 & 99.42 & 99.36 & $-0.06$ \\
+        4 & 99.80 & 99.74 & $-0.06$ \\
+        5 & 99.91 & 99.83 & $-0.08$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}

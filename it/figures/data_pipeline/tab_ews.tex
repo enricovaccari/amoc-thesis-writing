@@ -1,0 +1,19 @@
+% it/figures/data_pipeline/tab_ews.tex — versione italiana
+\begin{table}[!ht]
+    \centering
+    \small
+    \caption[Trend di preallarme: significatività ingenua contro corretta.]{Test di
+    trend con il $\tau$ di Kendall per i due segnali classici di preallarme. I p-value
+    ingenui trattano le finestre sovrapposte come indipendenti; i p-value corretti
+    contano le $\sim$19.5 finestre indipendenti che il record contiene. Nessuno dei due
+    trend è significativo.}
+    \label{tab:ews}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Segnale} & \textbf{Kendall $\tau$} & \textbf{p ingenuo} & \textbf{p corretto} & \textbf{Verdetto} \\
+        \midrule
+        Varianza mobile & $+0.078$ & $2\times10^{-42}$ & 0.634 & non significativo \\
+        AR(1) mobile     & $+0.088$ & $1\times10^{-52}$ & 0.595 & non significativo \\
+        \bottomrule
+    \end{tabular}
+\end{table}
