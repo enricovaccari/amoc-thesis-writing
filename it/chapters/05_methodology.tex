@@ -1,0 +1,112 @@
+% =========================================================================
+% CAPITOLO 5 — METODOLOGIA
+% =========================================================================
+
+\chapter{Metodologia}
+\label{ch:methodology}
+
+\noindent
+{\rmfamily\itshape
+\begin{tabular}[t]{@{}l@{\hspace{0.3cm}}p{12.5cm}@{}}
+\textls[50]{\textbf{Trattati:}} &
+\textls[50]{Approccio · Design Science Research · Disegno e flusso della ricerca · Le ipotesi come
+motori · Raccolta e analisi dei dati · Triangolazione · Etica della ricerca · Giustificazione}
+\end{tabular}
+}
+
+\vspace{0.5cm}
+
+Questo capitolo spiega la logica che tiene insieme la tesi: quale approccio di ricerca è stato scelto, perché questa particolare combinazione di metodi, e come i dati diventano, passo dopo passo, una rappresentazione esperienziale che può essere testata. Non ripete le domande di ricerca e le ipotesi esposte nel Capitolo~\ref{ch:rqs}, né i risultati riportati più avanti. Spiega il ragionamento che li connette.
+
+% -------------------------------------------------------------------------
+\section{Approccio metodologico}
+\label{sec:research-design}
+
+La tesi si chiede se una rappresentazione esperienziale guidata dal machine learning aiuti i non specialisti a comprendere un sistema climatico complesso meglio di una convenzionale. A quella domanda non si può rispondere con la sola analisi o con la sola costruzione: un artefatto va costruito, e il suo effetto misurato. Ciò colloca il lavoro all'interno del \emph{Design Science Research} (DSR), la tradizione concepita per una ricerca il cui contributo centrale è un artefatto costruito e la cui conoscenza deriva dal costruirlo e testarlo \citep{hevner2004, peffers2007}. L'artefatto qui è la rappresentazione esperienziale; la conoscenza è ciò che la sua realizzazione e il suo test rivelano sul trasformare un sistema invisibile in qualcosa che le persone possono percepire.
+
+Il DSR è una famiglia di metodi anziché un'unica ricetta fissa, e questa tesi segue il diffuso modello a sei fasi di \citet{peffers2007}: identificare il problema, definire gli obiettivi, progettare e sviluppare, dimostrare, valutare, comunicare. La tesi si mappa su questo modello attraverso il suo arco \emph{rilevare--tradurre--valutare}. \emph{Rilevare} porta l'identificazione del problema e il recupero del materiale da rappresentare; \emph{tradurre} porta la progettazione e lo sviluppo dell'artefatto; \emph{valutare} porta il suo test con i partecipanti; e la tesi stessa è la comunicazione. L'arco non è una nuova metodologia ma una versione in linguaggio piano di una consolidata, chiamata per ciò che il lavoro fa effettivamente con un sistema climatico.
+
+Entro questa cornice le tre fasi usano strumenti diversi: \emph{rilevare} è quantitativa, \emph{tradurre} è progettuale e \emph{valutare} è uno studio con utenti a metodi misti, prevalentemente qualitativo con supporto quantitativo descrittivo. Questi non sono paradigmi rivali ma tre strumenti per tre stadi di un unico processo di design science, tenuti insieme dal \emph{pragmatismo} --- giudicare la conoscenza da se funzioni per uno scopo anziché da se corrisponda a un'unica realtà fissa.\footnote{Il pragmatismo è l'epistemologia convenzionalmente abbinata al design science e ai metodi misti \citep{peffers2007}. Autorizza a trattare una struttura latente di machine learning come substrato valido per la rappresentazione non perché sia univocamente ``corretta'', ma perché è utile a rendere percepibile un sistema invisibile; e lascia che misurazione quantitativa e resoconti qualitativi contino come evidenza sulla stessa domanda pratica senza forzare l'uno nello stampo dell'altro.}
+
+Una caratteristica del DSR plasma l'intero disegno: un artefatto deve essere valutato, non semplicemente costruito, perché un'utilità affermata ma non mostrata non è un contributo \citep{hevner2004}. È per questo che la domanda centrale è comparativa --- \emph{in che misura}, \emph{rispetto a} una baseline convenzionale --- ed è per questo che la fase di \emph{valutazione} è essenziale.
+
+% -------------------------------------------------------------------------
+\section{Disegno della ricerca e flusso di lavoro}
+\label{sec:workflow}
+
+La tesi procede come una pipeline in cui l'output di ciascuna fase è l'input della successiva (Tabella~\ref{tab:workflow}): l'analisi recupera un piccolo insieme di coordinate che catturano come il sistema si comporta; quelle coordinate, guidate da principi percettivi documentati, diventano rappresentazioni che un non specialista può esperire; e quelle rappresentazioni sono ciò che poi viene dato ai partecipanti. Ogni freccia di quella catena è un impegno metodologico. L'analisi vincola ciò che può essere onestamente mostrato, e la rappresentazione è esattamente ciò che lo studio verifica --- nulla è aggiunto tra le fasi che la fase precedente non abbia giustificato.
+
+\input{figures/methodology/tab_workflow.tex}
+
+Il filo unico che la attraversa è la \emph{fedeltà}: ciò che l'analisi recupera fissa il limite di ciò che la rappresentazione può affermare. È questo a rendere l'artefatto finale difendibile come traduzione della scienza anziché come illustrazione ispirata a essa.
+
+% -------------------------------------------------------------------------
+\section{Le ipotesi come motori metodologici}
+\label{sec:hypotheses-drivers}
+
+Le ipotesi e le domande di ricerca sono state formalizzate nel Capitolo~\ref{ch:rqs}. Ciò che conta metodologicamente è che ciascun tipo di affermazione ha deciso il metodo usato per indagarla. Le ipotesi analitiche (H1--H3) chiedono cosa c'è nei dati, perciò sono indagate con analisi quantitativa che può confermarle o ribaltarle. Le proposizioni progettuali (DP2.1--DP2.2) non sono affermazioni vere-o-false ma impegni di design, perciò sono indagate per costruzione e difese rispetto a criteri di design anziché testate per significatività. Le aspettative empiriche (E3.1--E3.2) riguardano come le persone comprendono, perciò sono indagate qualitativamente --- attraverso ciò che i partecipanti scrivono, non attraverso un test statistico che il campione non potrebbe sostenere. Abbinare ciascuna affermazione al tipo di evidenza che può effettivamente reggere è esso stesso una decisione metodologica, e governa ogni scelta che segue.
+
+% -------------------------------------------------------------------------
+\section{Metodi di raccolta e analisi dei dati}
+\label{sec:data-methods}
+
+\subsection{La fase analitica}
+\label{subsec:analytical}
+
+L'analisi attinge a due fonti di diverso status. L'array RAPID-MOCHA-WBTS a \ang{26.5}~nord ha \emph{osservato} direttamente il rovesciamento dal 2004 \citep{frajkawilliams2021, moat2026}; l'ensemble Copernicus GREP è una \emph{rianalisi} che ricostruisce la circolazione più indietro nel tempo, al prezzo di una dipendenza dai modelli e di una dispersione d'ensemble \citep{copernicus_grep}. La distinzione ne governa l'uso: RAPID àncora l'analisi alla misura, la rianalisi fornisce contesto più lungo e la materia prima per l'incertezza. Ogni affermazione è formulata rispettando su quale delle due poggia.\footnote{Trattare un valore ricostruito come se fosse osservato travisarebbe l'evidenza, perciò i due non sono mai confusi. Questo confine è registrato nell'Appendice~\ref{app:ethics}.}
+
+Tre metodi agiscono poi su questi dati, ciascuno scelto per una ragione specifica; i loro risultati compaiono nel Capitolo~\ref{ch:data_pipeline}. L'\emph{analisi delle componenti principali} riduce la struttura verticale ad alta dimensionalità a poche coordinate, scelta perché le sue componenti sono lineari e fisicamente interpretabili --- un requisito qui, dato che queste coordinate diventano il substrato che un non specialista abiterà, e ciò che non si può spiegare non si può difendere. Poiché la PCA è lineare, un \emph{autoencoder non lineare} è addestrato accanto a essa come controllo: se non ricostruisce i dati meglio a dimensionalità pari, la struttura è genuinamente a bassa dimensionalità e le coordinate interpretabili non perdono nulla. Infine, il \emph{rilevamento di anomalie} e l'\emph{analisi dei segnali di preallarme} caratterizzano il record nel tempo --- il primo per trovare gli eventi che una rappresentazione dovrebbe trasmettere, il secondo per testare segnali di una transizione in avvicinamento, con il test di significatività corretto per la dipendenza delle finestre sovrapposte così che la fase non possa fabbricare un segnale da un artefatto.
+
+Un confine è posto deliberatamente. Un livello predittivo --- un modello che prevede il trasporto futuro --- è escluso e lasciato a lavori futuri, perché la fase di \emph{rilevamento} esiste per recuperare struttura ai fini della rappresentazione, non per predire, e un obiettivo di previsione sposterebbe la tesi lontano dal contributo rappresentativo che rivendica.
+
+\subsection{La fase di progettazione}
+\label{subsec:design}
+
+La traduzione dalla struttura alla percezione non è libera invenzione. Applica la grammatica di design stabilita nel Capitolo~\ref{ch:literature}, che mappa una proprietà del sistema su un canale percettivo attraverso un principio cognitivo documentato. Il metodo di questa fase è applicare quella grammatica generale alle caratteristiche specifiche che l'analisi ha recuperato, così che ogni decisione di design risalga a un principio e a una fonte anziché al gusto. Due impegni mantengono onesta la traduzione. Primo, le condizioni sono allineate per \emph{provenienza, inquadramento e unità di misura} --- lo stesso bundle di dati, la stessa ricostruzione, le stesse etichette e scale --- ma non sono deliberatamente allineate nel contenuto informativo: la condizione esperienziale aggiunge la dimensione temporale, che è esattamente la variabile che lo studio si propone di esaminare. Una differenza che un partecipante mostra è quindi attribuibile alla forma e a quell'unica aggiunta intenzionale, non a fatti extra arbitrari.\footnote{C1 è una rappresentazione statica convenzionale ricostruita da come l'AMOC è effettivamente pubblicata; C2 aggiunge interattività e movimento; C3 aggiunge il livello esperienziale guidato dal machine learning. Come siano raggruppate per lo studio è deciso nel disegno della valutazione più sotto.} Secondo, ogni valore mostrato a schermo deriva dall'output analitico, mai da un ridimensionamento inventato per fare bella figura --- una regola che vincola l'estetica a ciò che i dati sostengono, registrata come confine di design nell'Appendice~\ref{app:ethics}. L'artefatto è costruito per il browser così da girare su un normale portatile nell'ambiente stesso del partecipante, il che mantiene pratica la valutazione; la sua costruzione completa è documentata nel Capitolo~\ref{ch:translate}.
+
+\subsection{La fase di valutazione}
+\label{subsec:evaluation}
+
+La valutazione è uno studio esplorativo, a due gruppi, tra soggetti, con partecipanti non specialisti. Un gruppo di controllo vede solo la condizione statica convenzionale (C1); un gruppo sperimentale vede insieme le condizioni dinamica ed esperienziale (C2 e C3). Ogni persona è in un gruppo e vede un solo tipo di rappresentazione, perciò il confronto è tra due intere esperienze di rappresentazione anziché tra caratteristiche isolate.\footnote{L'esposizione del gruppo sperimentale differisce da quella di controllo per estensione oltre che per tipo, perciò il disegno non isola l'effetto della forma dall'effetto di un'esposizione più ricca. Confronta due esperienze nel loro insieme --- che è esattamente ciò che chiede la domanda centrale. Questo confondimento residuo è riconosciuto, non nascosto, e registrato nell'Appendice~\ref{app:ethics}; separare le condizioni è lavoro futuro.} Venticinque partecipanti sono stati ripartiti tra i gruppi (dodici controllo, tredici sperimentale) --- realistico per i tempi e sufficiente per un'analisi qualitativa strutturata, ma deliberatamente non dimensionato per l'inferenza statistica.
+
+Lo studio è stato erogato come questionario online autoguidato, così che i partecipanti prendessero parte nel proprio ambiente e le rappresentazioni raggiungessero un normale browser senza il ricercatore presente.\footnote{Sono state preparate due versioni parallele, in italiano e in inglese, così che i partecipanti rispondessero nella propria prima lingua; le risposte aperte sono state analizzate nella lingua della risposta, per evitare che la traduzione distorcesse il significato. Altre due versioni dividevano i gruppi, una mostrando la condizione statica e una la condizione dinamica-esperienziale, dando quattro varianti di questionario in totale.} La sua struttura --- domande di background, esposizione guidata con item di comprensione per ciascuna scena e una sequenza conclusiva non valutata che funge da debriefing anziché da dato --- è specificata nel Capitolo~\ref{ch:userstudy} e riprodotta per esteso nell'Appendice~\ref{app:protocols}.
+
+Le domande di comprensione sono l'evidenza dello studio, e si appoggiano a item aperti, con item chiusi di fiducia a supporto.\footnote{Le domande aperte rivelano il modello mentale del sistema di un partecipante --- come ne descrive le dinamiche, la non linearità, l'incertezza --- anziché se sappia riconoscere una risposta fornita; gli item chiusi di fiducia danno un segnale direttamente confrontabile tra i due gruppi.} Le risposte aperte sono l'evidenza primaria, analizzate attraverso un'analisi deduttiva in stile codebook rispetto a una griglia di codifica definita a priori \citep{braunclarke2019}: le risposte sono state assegnate a categorie fissate prima di leggere i dati, nel senso di codebook che \textcite{braunclarke2019} distinguono dallo sviluppo induttivo dei temi. La procedura di codifica è stata assistita: un large language model, data la griglia e le definizioni delle categorie, ha prodotto una prima etichetta per ciascuna risposta, che il ricercatore ha poi riesaminato e deciso voce per voce. La codifica finale è del ricercatore; il passaggio automatico ha funzionato solo come prima bozza, e la procedura, insieme ai limiti che porta, è documentata nella \S\ref{sec:eval-framework} e nell'Appendice~\ref{app:ai-use}. La griglia stessa è riprodotta nell'Appendice~\ref{app:protocols}. Gli item chiusi sono riportati in modo descrittivo, non come test di significatività: con questo campione, direzioni e differenze tra i gruppi sono oneste, ma i p-value non lo sarebbero.\footnote{Non è condotta alcuna analisi di mercato. La tesi contribuisce con un metodo di rappresentazione, non con un prodotto per un mercato, perciò l'evidenza che la riguarda è come i partecipanti comprendono il sistema, non se un mercato richieda l'artefatto --- una scelta di ambito, non un'omissione.}
+
+% -------------------------------------------------------------------------
+\section{Giustificazione metodologica}
+\label{sec:justification}
+
+I metodi rispondono a un'unica esigenza: rendere percepibile un sistema climatico invisibile senza comprometterne l'accuratezza. Ciò tira in due direzioni --- rigore quantitativo (il test di preallarme corretto per la dipendenza, le coordinate validate rispetto a un modello non lineare) e percezione umana (coordinate interpretabili, un design fondato su come le persone vedono e ragionano).
+
+Dove un'affermazione ha peso, è verificata rispetto a una seconda via indipendente alla stessa conclusione --- triangolazione in senso metodologico. L'indebolimento del 2009--2010 compare indipendentemente nel campo grezzo profondità--tempo, nella serie di intensità recuperata e nel rilevatore di anomalie; il risultato nullo di preallarme è corroborato da un metodo che non assume affatto la teoria del preallarme (\S\ref{sec:detect-anomalies}); e nella valutazione, comprensione dimostrata, fiducia percepita e codici emersi spontaneamente sono letti l'uno rispetto all'altro anziché separatamente (\S\ref{sec:eval-framework}). Dove la triangolazione non è stata possibile --- la codifica, svolta da un singolo ricercatore --- ciò è registrato come limite anziché sorvolato (\S\ref{sec:eval-limitations}).
+
+La fedeltà è il filo che lega le due: coordinate interpretabili connettono l'analisi al design, la grammatica connette il design alla cognizione così che ogni scelta percettiva poggi sull'evidenza anziché sulla preferenza, e la valutazione comparativa riconnette l'artefatto al suo scopo --- chiedendo non se la rappresentazione sia ammirata ma se sia compresa.
+
+% -------------------------------------------------------------------------
+\section{Dichiarazione etica}
+\label{sec:ethics-statement}
+
+Lo studio coinvolge partecipanti umani, perciò la sua conduzione è governata da quattro impegni,
+documentati per esteso nell'Appendice~\ref{app:ethics-conduct} e attuati nello strumento
+riprodotto nell'Appendice~\ref{app:protocols}.
+
+\emph{Partecipazione informata e volontaria.} Ogni partecipante ha ricevuto una scheda
+informativa in linguaggio piano e ha dato consenso esplicito prima di iniziare; la partecipazione
+poteva essere interrotta in qualsiasi momento, senza dare una ragione e senza conseguenze. Non è
+stato usato alcun inganno.
+
+\emph{Anonimato e protezione dei dati.} Lo strumento non ha raccolto identificatori diretti. Le
+risposte sono conservate sotto codici, archiviate in modo sicuro e trattate in linea con il
+Regolamento generale sulla protezione dei dati, conservate solo per il tempo che la ricerca
+richiede e accessibili solo al ricercatore e al relatore.
+
+\emph{Proporzionalità del rischio.} Il compito chiede ai partecipanti di ragionare su una corrente
+oceanica, perciò i doveri etici sono quelli standard di consenso, anonimato e protezione dei dati
+anziché quelli di uno studio su tema sensibile. Lo studio è proceduto una volta che il relatore ha
+confermato che l'approvazione o l'esenzione appropriata era in essere.
+
+\emph{Trasparenza sull'assistenza automatizzata.} Un large language model ha prodotto una prima
+etichetta per ciascuna risposta aperta, che il ricercatore ha poi riesaminato e deciso
+(\S\ref{sec:eval-framework}). Il ruolo degli assistenti di IA nell'intera tesi, e i confini posti a
+esso, è esposto nell'Appendice~\ref{app:ai-use}.
