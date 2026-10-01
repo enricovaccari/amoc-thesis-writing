@@ -1,0 +1,60 @@
+% =========================================================================
+% Dichiarazione di originalità
+%   \printversionfalse  -> copia digitale (firma digitata)
+%   \printversiontrue   -> copia cartacea (riga vuota, firma a mano)
+% =========================================================================
+
+\makeatletter
+\@ifundefined{ifprintversion}{\newif\ifprintversion}{}
+\makeatother
+
+\newcommand{\declplace}{Imola, Italia}
+\newcommand{\decldate}{2 ottobre 2026}
+% --------------------------------------------------------------------------
+
+\chapter*{Dichiarazione di originalità}
+\addcontentsline{toc}{chapter}{Dichiarazione di originalità}
+
+Dichiaro che questa tesi è opera mia e che tutte le fonti di informazione e di idee sono state
+pienamente riconosciute. Dove è stato utilizzato il lavoro di altri, esso è citato nel testo
+ed elencato nei riferimenti. Questa tesi non è stata presentata, in tutto o in parte, per
+alcun altro titolo o qualifica.
+
+Nella preparazione di questa tesi sono stati usati assistenti di intelligenza artificiale: per
+supportare la stesura e la revisione del testo, per strutturare le argomentazioni, per scrivere
+ed eseguire il debug del codice analitico, per individuare letteratura candidata che ho poi
+verificato e letto di prima mano, e per produrre una prima bozza della codifica delle risposte
+dei partecipanti, che ho riesaminato e deciso voce per voce. Il disegno della ricerca,
+l'interpretazione dei risultati, le scelte metodologiche e la formulazione finale sono miei. Il
+ruolo di questi strumenti, e i limiti che vi ho posto, è documentato per esteso
+nell'Appendice~\ref{app:ai-use}.
+
+\ifprintversion
+% ---------------------------------------------------------- COPIA CARTACEA --
+\vspace{2.2cm}
+
+\noindent
+\begin{tabular}{@{}p{7.5cm}@{\hspace{1cm}}p{5cm}@{}}
+\rule{7.5cm}{0.4pt} & \rule{5cm}{0.4pt} \\[0.25em]
+Enrico Vaccari & \declplace, \decldate \\
+\end{tabular}
+
+\else
+% ---------------------------------------------------------- COPIA DIGITALE --
+\vspace{1.6cm}
+
+\noindent
+
+\begin{tabular}{@{}p{8cm}@{}}
+
+\textbf{Enrico Vaccari} \\[0.25em]
+
+\declplace, \decldate \\[0.7em]
+
+\mbox{\footnotesize\itshape Consegnata elettronicamente; il nome digitato qui sopra costituisce la firma dell'autore.} \\
+
+\end{tabular}
+
+\fi
+
+\cleardoublepage

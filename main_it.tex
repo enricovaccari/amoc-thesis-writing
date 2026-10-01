@@ -1,0 +1,184 @@
+% =========================================================================
+% Making the Invisible Intelligible — VERSIONE ITALIANA
+% MSc Thesis — Enrico Vaccari
+% Sustainability, Innovation & Technology — Tomorrow University
+%
+% Build (jobname decides print vs digital, exactly as main.tex):
+%   latexmk -pdf -outdir=build -jobname=main_it_digital   main_it.tex
+%   latexmk -pdf -outdir=build -jobname=main_it_printable  main_it.tex
+% =========================================================================
+
+\documentclass[11pt, a4paper, twoside, openright]{book}
+
+% ---------- core packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+
+% ---------- print / digital switch (driven by the job name) ----------
+\newif\ifprintversion
+\ifnum\pdfstrcmp{\jobname}{main_it_printable}=0
+  \printversiontrue
+\else
+  \printversionfalse
+\fi
+
+% ---------- typography ----------
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\linespread{1.15}
+
+% ---------- page geometry ----------
+\usepackage[a4paper, margin=2.5cm, headheight=14pt]{geometry}
+
+% ---------- math & symbols ----------
+\usepackage{amsmath, mathtools}
+\usepackage{siunitx}
+\DeclareSIUnit{\sverdrup}{Sv}
+\sisetup{detect-all}
+
+% ---------- figures, tables ----------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, format=plain}
+\usepackage{subcaption}
+\usepackage{float}
+
+% ---------- float placement ----------
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt plus 1fil}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
+% ---------- lists, layout ----------
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt}
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{0pt plus 1pt}
+
+% ---------- headers & footers ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\textit{\nouppercase{\leftmark}}}
+\fancyhead[LO]{\textit{\nouppercase{\rightmark}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\usepackage{emptypage}
+
+% ---------- chapter / part style ----------
+\usepackage{titlesec}
+\makeatletter
+\renewcommand\part[1]{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \refstepcounter{part}
+  \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}
+  \vspace*{\fill}
+  \begin{center}
+    {\Huge\bfseries Parte \thepart\par}
+    \vspace{1cm}
+    {\Huge\bfseries #1\par}
+    \vspace{0.6cm}
+    {\Large\itshape\partsubtitle\par}
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
+  \setpartsubtitle{}
+}
+\newcommand{\partsubtitle}{}
+\newcommand{\setpartsubtitle}[1]{\renewcommand{\partsubtitle}{#1}}
+\makeatother
+
+\titleformat{\chapter}[display]
+    {\normalfont\Huge\bfseries}
+    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-30pt}{5pt}
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+% ---------- hyperlinks ----------
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black,
+    bookmarksnumbered=true]{hyperref}
+\hypersetup{pdftitle={Complex Climate Tipping Systems}}
+
+% ---------- bibliography: APA 7th ----------
+\usepackage[backend=biber, style=apa, sortlocale=it_IT, natbib=true]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- footnote formatting ----------
+\makeatletter
+\renewcommand\@makefntext[1]{\parindent 0em\noindent\@thefnmark\enspace #1}
+\makeatother
+
+% =========================================================================
+\begin{document}
+
+\frontmatter
+
+\input{it/frontmatter/titlepage}
+\input{it/frontmatter/declaration}
+\input{it/frontmatter/abstract}
+\input{it/frontmatter/acknowledgements}
+
+\tableofcontents
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Elenco delle figure}
+\listoffigures
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Elenco delle tabelle}
+\listoftables
+
+\input{it/frontmatter/abbreviations}
+
+% ---------- main matter ----------
+\mainmatter
+
+\setpartsubtitle{Il contesto, il problema, il metodo e le basi analitiche}
+\part{RILEVARE}
+\input{it/chapters/01_introduction}
+% \input{it/chapters/02_research_questions}
+% \input{it/chapters/03_literature}
+% \input{it/chapters/04_background}
+% \input{it/chapters/05_methodology}
+% \input{it/chapters/06_data_pipeline}
+
+\setpartsubtitle{Dalla struttura latente alla rappresentazione esperienziale}
+\part{TRADURRE}
+% \input{it/chapters/07_translation}
+
+\setpartsubtitle{Capire l'impatto della rappresentazione}
+\part{VALUTARE}
+% \input{it/chapters/08_evaluation}
+% \input{it/chapters/09_results}
+% \input{it/chapters/10_discussion}
+% \input{it/chapters/11_conclusion}
+% \input{it/chapters/12_reflection}
+
+% ---------- appendixes ----------
+% \appendix
+% \input{it/appendix/A_ethics}
+% \input{it/appendix/B_protocols}
+% \input{it/appendix/C_code}
+
+% ---------- back matter ----------
+\backmatter
+\printbibliography[heading=bibintoc, title={Riferimenti bibliografici}]
+
+\end{document}
