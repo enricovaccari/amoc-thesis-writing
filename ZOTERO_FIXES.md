@@ -1,4 +1,4 @@
-# Zotero fixes for `references.bib` (final-fixes-2026-09-25)
+# Zotero fixes for `references.bib
 
 `references.bib` is auto-exported by Better BibTeX from the Zotero collection
 **"MSc Thesis"**, so any hand-edit to the `.bib` is overwritten at the next
